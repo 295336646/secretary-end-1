@@ -9,14 +9,11 @@
         <result column="cno" jdbcType="INTEGER" property="cno"/>
         <result column="tid" jdbcType="VARCHAR" property="tid"/>
         <result column="tjudge" jdbcType="VARCHAR" property="tjudge"/>
+        <result column="gid" jdbcType="INTEGER" property="gid"/>
     </resultMap>
-    <resultMap id="WithGroupResultMap" type="usts.cl.bean.Student" extends="BaseResultMap">
-        <association property="teacher" javaType="usts.cl.bean.Teacher"
-                     resultMap="usts.cl.dao.TeacherMapper.BaseResultMap"></association>
-        <association property="course" javaType="usts.cl.bean.Course"
-                     resultMap="usts.cl.dao.CourseMapper.BaseResultMap"></association>
-    </resultMap>
-    <resultMap id="WithJudgeResultMap" type="usts.cl.bean.Student" extends="WithGroupResultMap">
+    <resultMap id="StudentWithGrade" type="usts.cl.bean.Student" extends="BaseResultMap">
+        <association property="course" resultMap="usts.cl.dao.CourseMapper.BaseResultMap"></association>
+        <association property="grade" resultMap="usts.cl.dao.GradeMapper.BaseResultMap"></association>
     </resultMap>
     <sql id="Example_Where_Clause">
         <where>
@@ -79,36 +76,25 @@
         </where>
     </sql>
     <sql id="Base_Column_List">
-    sid, sname, sclass, sgroup, cno, tid, tjudge
-  </sql>
-    <sql id="WithGroup_Column_List">
-        s.*,t.*,c.*
+        sid, sname, sclass, sgroup, cno, tid, tjudge, gid
     </sql>
-    <sql id="WithJudge_Column_List">
-        s.sid,s.sname,s.tjudge,t.tid,t.tname
+    <sql id="Student_Grade_List">
+        s.*, g.*, c.*
     </sql>
-    <select id="selectByExampleWithGroup" resultMap="WithGroupResultMap">
+    <select id="selectByStudentWithGrade" resultMap="StudentWithGrade">
         select
         <if test="distinct">
             distinct
         </if>
-        <include refid="WithGroup_Column_List"/>
-        FROM tab_student s
-        left join tab_course c on s.cno = c.cno
-        left join tab_teacher t on s.tid=t.tid
+        <include refid="Student_Grade_List"/>
+        from tab_student s inner join tab_course c on s.cno=c.cno
+        inner join tab_grade g on s.gid = g.id
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
         </if>
         <if test="orderByClause != null">
             order by ${orderByClause}
         </if>
-    </select>
-    <select id="selectByExampleWithJudge" resultMap="WithJudgeResultMap" parameterType="java.lang.String">
-        select
-        <include refid="WithJudge_Column_List"/>
-        FROM tab_student s
-        left join tab_teacher t on s.tjudge=t.tid
-        where s.sid=#{sid,jdbcType=VARCHAR}
     </select>
     <select id="selectByExample" parameterType="usts.cl.bean.StudentExample" resultMap="BaseResultMap">
         select
@@ -131,9 +117,9 @@
         where sid = #{sid,jdbcType=VARCHAR}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from tab_student
-    where sid = #{sid,jdbcType=VARCHAR}
-  </delete>
+        delete from tab_student
+        where sid = #{sid,jdbcType=VARCHAR}
+    </delete>
     <delete id="deleteByExample" parameterType="usts.cl.bean.StudentExample">
         delete from tab_student
         <if test="_parameter != null">
@@ -141,13 +127,14 @@
         </if>
     </delete>
     <insert id="insert" parameterType="usts.cl.bean.Student">
-    insert into tab_student (sid, sname, sclass, 
-      sgroup, cno, tid, tjudge
-      )
-    values (#{sid,jdbcType=VARCHAR}, #{sname,jdbcType=VARCHAR}, #{sclass,jdbcType=VARCHAR}, 
-      #{sgroup,jdbcType=INTEGER}, #{cno,jdbcType=INTEGER}, #{tid,jdbcType=VARCHAR}, #{tjudge,jdbcType=VARCHAR}
-      )
-  </insert>
+        insert into tab_student (sid, sname, sclass,
+                                 sgroup, cno, tid, tjudge,
+                                 gid)
+        values (#{sid,jdbcType=VARCHAR}, #{sname,jdbcType=VARCHAR}, #{sclass,jdbcType=VARCHAR},
+                #{sgroup,jdbcType=INTEGER}, #{cno,jdbcType=INTEGER}, #{tid,jdbcType=VARCHAR},
+                #{tjudge,jdbcType=VARCHAR},
+                #{gid,jdbcType=INTEGER})
+    </insert>
     <insert id="insertSelective" parameterType="usts.cl.bean.Student">
         insert into tab_student
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -172,6 +159,9 @@
             <if test="tjudge != null">
                 tjudge,
             </if>
+            <if test="gid != null">
+                gid,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="sid != null">
@@ -194,6 +184,9 @@
             </if>
             <if test="tjudge != null">
                 #{tjudge,jdbcType=VARCHAR},
+            </if>
+            <if test="gid != null">
+                #{gid,jdbcType=INTEGER},
             </if>
         </trim>
     </insert>
@@ -227,6 +220,9 @@
             <if test="record.tjudge != null">
                 tjudge = #{record.tjudge,jdbcType=VARCHAR},
             </if>
+            <if test="record.gid != null">
+                gid = #{record.gid,jdbcType=INTEGER},
+            </if>
         </set>
         <if test="_parameter != null">
             <include refid="Update_By_Example_Where_Clause"/>
@@ -240,7 +236,8 @@
         sgroup = #{record.sgroup,jdbcType=INTEGER},
         cno = #{record.cno,jdbcType=INTEGER},
         tid = #{record.tid,jdbcType=VARCHAR},
-        tjudge = #{record.tjudge,jdbcType=VARCHAR}
+        tjudge = #{record.tjudge,jdbcType=VARCHAR},
+        gid = #{record.gid,jdbcType=INTEGER}
         <if test="_parameter != null">
             <include refid="Update_By_Example_Where_Clause"/>
         </if>
@@ -266,17 +263,21 @@
             <if test="tjudge != null">
                 tjudge = #{tjudge,jdbcType=VARCHAR},
             </if>
+            <if test="gid != null">
+                gid = #{gid,jdbcType=INTEGER},
+            </if>
         </set>
         where sid = #{sid,jdbcType=VARCHAR}
     </update>
     <update id="updateByPrimaryKey" parameterType="usts.cl.bean.Student">
-    update tab_student
-    set sname = #{sname,jdbcType=VARCHAR},
-      sclass = #{sclass,jdbcType=VARCHAR},
-      sgroup = #{sgroup,jdbcType=INTEGER},
-      cno = #{cno,jdbcType=INTEGER},
-      tid = #{tid,jdbcType=VARCHAR},
-      tjudge = #{tjudge,jdbcType=VARCHAR}
-    where sid = #{sid,jdbcType=VARCHAR}
-  </update>
+        update tab_student
+        set sname  = #{sname,jdbcType=VARCHAR},
+            sclass = #{sclass,jdbcType=VARCHAR},
+            sgroup = #{sgroup,jdbcType=INTEGER},
+            cno    = #{cno,jdbcType=INTEGER},
+            tid    = #{tid,jdbcType=VARCHAR},
+            tjudge = #{tjudge,jdbcType=VARCHAR},
+            gid    = #{gid,jdbcType=INTEGER}
+        where sid = #{sid,jdbcType=VARCHAR}
+    </update>
 </mapper>

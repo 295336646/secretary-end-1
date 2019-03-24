@@ -191,12 +191,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _main_group_group_component__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./main/group/group.component */ "./src/app/main/group/group.component.ts");
 /* harmony import */ var _main_group_teacher_teacher_component__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./main/group/teacher/teacher.component */ "./src/app/main/group/teacher/teacher.component.ts");
 /* harmony import */ var _main_group_student_student_component__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./main/group/student/student.component */ "./src/app/main/group/student/student.component.ts");
+/* harmony import */ var _main_secretary_reply_grade_modal_reply_grade_modal_component__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./main/secretary/reply-grade-modal/reply-grade-modal.component */ "./src/app/main/secretary/reply-grade-modal/reply-grade-modal.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -244,6 +246,7 @@ var AppModule = /** @class */ (function () {
                 _main_group_group_component__WEBPACK_IMPORTED_MODULE_23__["GroupComponent"],
                 _main_group_teacher_teacher_component__WEBPACK_IMPORTED_MODULE_24__["TeacherComponent"],
                 _main_group_student_student_component__WEBPACK_IMPORTED_MODULE_25__["StudentComponent"],
+                _main_secretary_reply_grade_modal_reply_grade_modal_component__WEBPACK_IMPORTED_MODULE_26__["ReplyGradeModalComponent"],
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
@@ -330,7 +333,7 @@ var AuthGuard = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--页面加载条-->\n<!--loading为true则显示，反之隐藏-->\n<ngx-loading [show]=\"loading\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n<!--选项卡标题-->\n<ng-template tabHeading>\n  <div class=\"btn\" (click)=\"reset()\" role=\"button\" style=\"width: 100%;height: 100%\" id=\"{{state}}\">{{state}}</div>\n</ng-template>\n<div style=\"padding: 50px 0\">\n  <!--如果是登录界面，则显示登录表单，否则注册表单-->\n  <form class=\"contain-wrapper form-horizontal\" [formGroup]=\"Form\"\n        (ngSubmit)=\"(state=='登录')?login(f.value):register(f.value)\"\n        #f=\"ngForm\">\n    <div class=\"item form-group has-feedback\">\n      <!--填写用户名-->\n      <label for=\"uid{{key}}\" class=\"control-label\">账号</label>\n      <input type=\"text\" id=\"uid{{key}}\" formControlName=\"uid\" class=\"input-lg\">\n      <div class=\"bottom-line\"></div>\n      <span class=\"glyphicon glyphicon-ok form-control-feedback\" [class.sr-only]=\"uid.invalid\"></span>\n      <span class=\"glyphicon glyphicon-remove form-control-feedback\"\n            [class.sr-only]=\"!(uid.invalid && (uid.dirty || uid.touched))\"></span>\n    </div>\n    <br>\n    <!--如果输入不合法，则提示错误信息-->\n    <div *ngIf=\"uid.invalid && (uid.dirty || uid.touched)\" class=\"alert alert-danger small\">\n      <p *ngIf=\"uid.hasError('invalidUserId')\">\n        请填写合法的账号！\n      </p>\n    </div>\n    <!--检查用户是否已注册-->\n    <div *ngIf=\"checkUser\" class=\"alert alert-danger small\">\n      <p>\n        账号已存在！\n      </p>\n    </div>\n\n    <!--注册姓名-->\n    <div *ngIf=\"state=='注册'\" class=\"item form-group has-feedback\">\n      <label for=\"userName{{key}}\" class=\"control-label\">昵称</label>\n      <input type=\"text\" id=\"userName{{key}}\" formControlName=\"userName\" class=\"input-lg\">\n      <div class=\"bottom-line\"></div>\n      <span class=\"glyphicon glyphicon-ok form-control-feedback\" [class.sr-only]=\"userName.hasError('required')\"></span>\n      <div [class.sr-only]=\"!(userName.invalid && (userName.dirty || userName.touched))\">\n        <span class=\"glyphicon glyphicon-remove form-control-feedback\"\n              [class.sr-only]=\"!(userName.invalid && (userName.dirty || userName.touched))\"></span>\n      </div>\n    </div>\n    <!--如果输入不合法，则提示错误信息-->\n    <div *ngIf=\"userName.invalid && (userName.dirty || userName.touched)\" class=\"alert alert-danger small\">\n      <p *ngIf=\"userName.hasError('required')\">\n        请填写姓名！\n      </p>\n    </div>\n\n    <div class=\"item form-group has-feedback\">\n      <!--填写密码-->\n      <label for=\"password{{key}}\" class=\"control-label\">密码</label>\n      <input type=\"password\" id=\"password{{key}}\" formControlName=\"password\" class=\"input-lg\">\n      <div class=\"bottom-line\"></div>\n      <span class=\"glyphicon glyphicon-ok form-control-feedback\" [class.sr-only]=\"password.hasError('required')\"></span>\n      <span class=\"glyphicon glyphicon-remove form-control-feedback\"\n            [class.sr-only]=\"!((password.invalid && (password.dirty || password.touched)))\"></span>\n    </div>\n    <!--如果输入不合法，则提示错误信息-->\n    <div *ngIf=\"password.invalid && (password.dirty || password.touched)\" class=\"alert alert-danger small\">\n      <p *ngIf=\"password.hasError('required')\">\n        请填写密码！\n      </p>\n    </div>\n    <!--区分用户身份-->\n    <div class=\"form-group\">\n      <label class=\"control-label\">身份：</label>\n      <input type=\"radio\" formControlName=\"role\" name=\"role\" value=\"0\">学生\n      <input type=\"radio\" formControlName=\"role\" name=\"role\" value=\"1\">老师\n      <input type=\"radio\" formControlName=\"role\" name=\"role\" value=\"2\">秘书\n    </div>\n    <!--区分登录按钮和注册按钮-->\n    <div *ngIf=\"state=='登录'\">\n      <div class=\"form-group\">\n        <label for=\"input\" class=\"control-label\">验证码:</label>\n        <input type=\"text\" id=\"input\" [(ngModel)]=\"input\" [ngModelOptions]=\"{standalone: true}\"\n               style=\"width: 50px;margin: 0 10px\"/>\n        <input type=\"button\" (click)=\"change()\" id=\"code\" [(ngModel)]=\"code\" [ngModelOptions]=\"{standalone: true}\"/>\n      </div>\n      <button class=\"btn btn-primary confirm\" [disabled]=\"uid.invalid || password.invalid\" type=\"submit\">登录</button>\n    </div>\n    <div *ngIf=\"state=='注册'\">\n      <button class=\"btn btn-primary confirm\" [disabled]=\"Form.invalid\" type=\"submit\">注册\n      </button>\n    </div>\n  </form>\n</div>\n"
+module.exports = "<!--页面加载条-->\n<!--loading为true则显示，反之隐藏-->\n<ngx-loading [show]=\"loading\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n<form class=\"form-horizontal\" [formGroup]=\"Form\" (submit)=\"login()\">\n  <div class=\"form-group\">\n    <div class=\"col-md-10\">\n      <label class=\"control-label\">账号</label>\n      <input type=\"text\" class=\"form-control\" formControlName=\"uid\">\n    </div>\n\n  </div>\n  <div class=\"form-group\">\n    <div class=\"col-md-10\">\n      <label>密码</label>\n      <input type=\"password\" class=\"form-control\" formControlName=\"password\">\n    </div>\n    <img src=\"assets/login.jpg\" style=\"padding-bottom: 10px\">\n  </div>\n  <div class=\"form-group\">\n    <div class=\"col-md-offset-2\">\n      <input type=\"radio\" value=\"0\" name=\"role\" formControlName=\"role\" checked>学生\n      <input type=\"radio\" value=\"1\" name=\"role\" formControlName=\"role\">老师\n      <input type=\"radio\" value=\"2\" name=\"role\" formControlName=\"role\">秘书\n    </div>\n  </div>\n  <div class=\"col-md-offset-1\">\n    <div class=\"form-group\">\n      <label for=\"input\" class=\"control-label\">验证码</label>\n      <input type=\"text\" id=\"input\" [(ngModel)]=\"input\" [ngModelOptions]=\"{standalone: true}\"\n             style=\"width: 50px;margin: 0 10px\"/>\n      <input type=\"button\" (click)=\"change()\" id=\"code\" [(ngModel)]=\"code\" [ngModelOptions]=\"{standalone: true}\"/>\n    </div>\n    <div class=\"col-md-2\">\n      <button class=\"btn btn-success\" type=\"submit\">登录</button>\n    </div>\n    <div class=\"col-md-2 col-md-offset-2\">\n      <button class=\"btn btn-success\">取消</button>\n    </div>\n  </div>\n\n</form>\n\n\n<!--选项卡标题-->\n<!--<ng-template tabHeading>-->\n<!--<div class=\"btn\" (click)=\"reset()\" role=\"button\" style=\"width: 100%;height: 100%\" id=\"{{state}}\">{{state}}</div>-->\n<!--</ng-template>-->\n<!--<div style=\"padding: 50px 0\">-->\n<!--&lt;!&ndash;如果是登录界面，则显示登录表单，否则注册表单&ndash;&gt;-->\n<!--<form class=\"contain-wrapper form-horizontal\" [formGroup]=\"Form\"-->\n<!--(ngSubmit)=\"(state=='登录')?login(f.value):register(f.value)\"-->\n<!--#f=\"ngForm\">-->\n<!--<div class=\"item form-group has-feedback\">-->\n<!--&lt;!&ndash;填写用户名&ndash;&gt;-->\n<!--<label for=\"uid{{key}}\" class=\"control-label\">账号</label>-->\n<!--<input type=\"text\" id=\"uid{{key}}\" formControlName=\"uid\" class=\"input-lg\">-->\n<!--<div class=\"bottom-line\"></div>-->\n<!--<span class=\"glyphicon glyphicon-ok form-control-feedback\" [class.sr-only]=\"uid.invalid\"></span>-->\n<!--<span class=\"glyphicon glyphicon-remove form-control-feedback\"-->\n<!--[class.sr-only]=\"!(uid.invalid && (uid.dirty || uid.touched))\"></span>-->\n<!--</div>-->\n<!--<br>-->\n<!--&lt;!&ndash;如果输入不合法，则提示错误信息&ndash;&gt;-->\n<!--<div *ngIf=\"uid.invalid && (uid.dirty || uid.touched)\" class=\"alert alert-danger small\">-->\n<!--<p *ngIf=\"uid.hasError('invalidUserId')\">-->\n<!--请填写合法的账号！-->\n<!--</p>-->\n<!--</div>-->\n<!--&lt;!&ndash;检查用户是否已注册&ndash;&gt;-->\n<!--<div *ngIf=\"checkUser\" class=\"alert alert-danger small\">-->\n<!--<p>-->\n<!--账号已存在！-->\n<!--</p>-->\n<!--</div>-->\n\n<!--&lt;!&ndash;注册姓名&ndash;&gt;-->\n<!--<div *ngIf=\"state=='注册'\" class=\"item form-group has-feedback\">-->\n<!--<label for=\"userName{{key}}\" class=\"control-label\">昵称</label>-->\n<!--<input type=\"text\" id=\"userName{{key}}\" formControlName=\"userName\" class=\"input-lg\">-->\n<!--<div class=\"bottom-line\"></div>-->\n<!--<span class=\"glyphicon glyphicon-ok form-control-feedback\" [class.sr-only]=\"userName.hasError('required')\"></span>-->\n<!--<div [class.sr-only]=\"!(userName.invalid && (userName.dirty || userName.touched))\">-->\n<!--<span class=\"glyphicon glyphicon-remove form-control-feedback\"-->\n<!--[class.sr-only]=\"!(userName.invalid && (userName.dirty || userName.touched))\"></span>-->\n<!--</div>-->\n<!--</div>-->\n<!--&lt;!&ndash;如果输入不合法，则提示错误信息&ndash;&gt;-->\n<!--<div *ngIf=\"userName.invalid && (userName.dirty || userName.touched)\" class=\"alert alert-danger small\">-->\n<!--<p *ngIf=\"userName.hasError('required')\">-->\n<!--请填写姓名！-->\n<!--</p>-->\n<!--</div>-->\n\n<!--<div class=\"item form-group has-feedback\">-->\n<!--&lt;!&ndash;填写密码&ndash;&gt;-->\n<!--<label for=\"password{{key}}\" class=\"control-label\">密码</label>-->\n<!--<input type=\"password\" id=\"password{{key}}\" formControlName=\"password\" class=\"input-lg\">-->\n<!--<div class=\"bottom-line\"></div>-->\n<!--<span class=\"glyphicon glyphicon-ok form-control-feedback\" [class.sr-only]=\"password.hasError('required')\"></span>-->\n<!--<span class=\"glyphicon glyphicon-remove form-control-feedback\"-->\n<!--[class.sr-only]=\"!((password.invalid && (password.dirty || password.touched)))\"></span>-->\n<!--</div>-->\n<!--&lt;!&ndash;如果输入不合法，则提示错误信息&ndash;&gt;-->\n<!--<div *ngIf=\"password.invalid && (password.dirty || password.touched)\" class=\"alert alert-danger small\">-->\n<!--<p *ngIf=\"password.hasError('required')\">-->\n<!--请填写密码！-->\n<!--</p>-->\n<!--</div>-->\n<!--&lt;!&ndash;区分用户身份&ndash;&gt;-->\n<!--<div class=\"form-group\">-->\n<!--<label class=\"control-label\">身份：</label>-->\n<!--<input type=\"radio\" formControlName=\"role\" name=\"role\" value=\"0\">学生-->\n<!--<input type=\"radio\" formControlName=\"role\" name=\"role\" value=\"1\">老师-->\n<!--<input type=\"radio\" formControlName=\"role\" name=\"role\" value=\"2\">秘书-->\n<!--</div>-->\n<!--&lt;!&ndash;区分登录按钮和注册按钮&ndash;&gt;-->\n<!--<div *ngIf=\"state=='登录'\">-->\n<!--<div class=\"form-group\">-->\n<!--<label for=\"input\" class=\"control-label\">验证码:</label>-->\n<!--<input type=\"text\" id=\"input\" [(ngModel)]=\"input\" [ngModelOptions]=\"{standalone: true}\"-->\n<!--style=\"width: 50px;margin: 0 10px\"/>-->\n<!--<input type=\"button\" (click)=\"change()\" id=\"code\" [(ngModel)]=\"code\" [ngModelOptions]=\"{standalone: true}\"/>-->\n<!--</div>-->\n<!--<button class=\"btn btn-primary confirm\" [disabled]=\"uid.invalid || password.invalid\" type=\"submit\">登录</button>-->\n<!--</div>-->\n<!--<div *ngIf=\"state=='注册'\">-->\n<!--<button class=\"btn btn-primary confirm\" [disabled]=\"Form.invalid\" type=\"submit\">注册-->\n<!--</button>-->\n<!--</div>-->\n<!--</form>-->\n<!--</div>-->\n"
 
 /***/ }),
 
@@ -341,7 +344,7 @@ module.exports = "<!--页面加载条-->\n<!--loading为true则显示，反之�
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".contain-wrapper {\n  width: 200px;\n  margin: 10px auto; }\n\n.confirm {\n  margin-top: 20px;\n  width: 100%; }\n\n.item {\n  position: relative; }\n\n.item label {\n  position: absolute;\n  left: 2px;\n  bottom: 10px;\n  color: #777;\n  cursor: text; }\n\n.item input {\n  padding-top: 35px;\n  width: 200px;\n  height: 50px;\n  border: none;\n  outline: none;\n  border-bottom: 1px solid #c3c3c3; }\n\n.item .bottom-line {\n  position: absolute;\n  bottom: 2px;\n  width: 0;\n  height: 2px;\n  background-color: red; }\n\n#code {\n  width: 80px;\n  height: 30px;\n  font-size: 20px;\n  font-family: Arial;\n  font-style: italic;\n  font-weight: bold;\n  border: 0;\n  letter-spacing: 2px;\n  color: blue; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvaG9tZS9ob21lLWZvcm0vRDpcXEFuZ3VsYXJcXHNlY3JldGFyeVxcc2VjcmV0YXJ5L3NyY1xcYXBwXFxob21lXFxob21lLWZvcm1cXGhvbWUtZm9ybS5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFDQTtFQUNFLGFBQVk7RUFDWixrQkFBaUIsRUFDbEI7O0FBR0Q7RUFDRSxpQkFBZ0I7RUFDaEIsWUFBVyxFQUNaOztBQUVEO0VBQ0UsbUJBQWtCLEVBQ25COztBQUdEO0VBQ0UsbUJBQWtCO0VBQ2xCLFVBQVM7RUFDVCxhQUFZO0VBQ1osWUFBVztFQUNYLGFBQVksRUFDYjs7QUFFRDtFQUNFLGtCQUFpQjtFQUNqQixhQUFZO0VBQ1osYUFBWTtFQUNaLGFBQVk7RUFDWixjQUFhO0VBQ2IsaUNBQWdDLEVBQ2pDOztBQUVEO0VBQ0UsbUJBQWtCO0VBQ2xCLFlBQVc7RUFDWCxTQUFRO0VBQ1IsWUFBVztFQUNYLHNCQUFxQixFQUN0Qjs7QUFFRDtFQUNFLFlBQVc7RUFDWCxhQUFZO0VBQ1osZ0JBQWU7RUFDZixtQkFBa0I7RUFDbEIsbUJBQWtCO0VBQ2xCLGtCQUFpQjtFQUNqQixVQUFTO0VBQ1Qsb0JBQW1CO0VBQ25CLFlBQVcsRUFDWiIsImZpbGUiOiJzcmMvYXBwL2hvbWUvaG9tZS1mb3JtL2hvbWUtZm9ybS5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi8vIGZvcm0g6KGo5Y2VXHJcbi5jb250YWluLXdyYXBwZXIge1xyXG4gIHdpZHRoOiAyMDBweDtcclxuICBtYXJnaW46IDEwcHggYXV0bztcclxufVxyXG5cclxuLy8g56Gu6K6k5oyJ6ZKuXHJcbi5jb25maXJtIHtcclxuICBtYXJnaW4tdG9wOiAyMHB4O1xyXG4gIHdpZHRoOiAxMDAlO1xyXG59XHJcblxyXG4uaXRlbSB7XHJcbiAgcG9zaXRpb246IHJlbGF0aXZlO1xyXG59XHJcblxyXG4vLyDpu5jorqTkuIvlsYJsYWJlbFxyXG4uaXRlbSBsYWJlbCB7XHJcbiAgcG9zaXRpb246IGFic29sdXRlO1xyXG4gIGxlZnQ6IDJweDtcclxuICBib3R0b206IDEwcHg7XHJcbiAgY29sb3I6ICM3Nzc7XHJcbiAgY3Vyc29yOiB0ZXh0O1xyXG59XHJcblxyXG4uaXRlbSBpbnB1dCB7XHJcbiAgcGFkZGluZy10b3A6IDM1cHg7XHJcbiAgd2lkdGg6IDIwMHB4O1xyXG4gIGhlaWdodDogNTBweDtcclxuICBib3JkZXI6IG5vbmU7XHJcbiAgb3V0bGluZTogbm9uZTtcclxuICBib3JkZXItYm90dG9tOiAxcHggc29saWQgI2MzYzNjMztcclxufVxyXG5cclxuLml0ZW0gLmJvdHRvbS1saW5lIHtcclxuICBwb3NpdGlvbjogYWJzb2x1dGU7XHJcbiAgYm90dG9tOiAycHg7XHJcbiAgd2lkdGg6IDA7XHJcbiAgaGVpZ2h0OiAycHg7XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogcmVkO1xyXG59XHJcblxyXG4jY29kZSB7XHJcbiAgd2lkdGg6IDgwcHg7XHJcbiAgaGVpZ2h0OiAzMHB4O1xyXG4gIGZvbnQtc2l6ZTogMjBweDtcclxuICBmb250LWZhbWlseTogQXJpYWw7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiBib2xkO1xyXG4gIGJvcmRlcjogMDtcclxuICBsZXR0ZXItc3BhY2luZzogMnB4O1xyXG4gIGNvbG9yOiBibHVlO1xyXG59XHJcbiJdfQ== */"
+module.exports = "#code {\n  width: 80px;\n  height: 30px;\n  font-size: 20px;\n  font-family: Arial;\n  font-style: italic;\n  font-weight: bold;\n  border: 0;\n  letter-spacing: 2px;\n  color: blue; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvaG9tZS9ob21lLWZvcm0vRDpcXEFuZ3VsYXJcXHNlY3JldGFyeVxcc2VjcmV0YXJ5L3NyY1xcYXBwXFxob21lXFxob21lLWZvcm1cXGhvbWUtZm9ybS5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLFlBQVc7RUFDWCxhQUFZO0VBQ1osZ0JBQWU7RUFDZixtQkFBa0I7RUFDbEIsbUJBQWtCO0VBQ2xCLGtCQUFpQjtFQUNqQixVQUFTO0VBQ1Qsb0JBQW1CO0VBQ25CLFlBQVcsRUFDWiIsImZpbGUiOiJzcmMvYXBwL2hvbWUvaG9tZS1mb3JtL2hvbWUtZm9ybS5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIiNjb2RlIHtcclxuICB3aWR0aDogODBweDtcclxuICBoZWlnaHQ6IDMwcHg7XHJcbiAgZm9udC1zaXplOiAyMHB4O1xyXG4gIGZvbnQtZmFtaWx5OiBBcmlhbDtcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IGJvbGQ7XHJcbiAgYm9yZGVyOiAwO1xyXG4gIGxldHRlci1zcGFjaW5nOiAycHg7XHJcbiAgY29sb3I6IGJsdWU7XHJcbn1cclxuXHJcbiJdfQ== */"
 
 /***/ }),
 
@@ -387,44 +390,25 @@ var HomeFormComponent = /** @class */ (function () {
         this.fb = fb;
         this.loading = false;
         this.user = new _user__WEBPACK_IMPORTED_MODULE_4__["User"]();
-        this.checkUser = false;
         // 验证码
         this.arrays = new Array('1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
         this.code = '';
         this.codes = '';
-        this.input = '';
-        this.inputCode = '';
+        this.input = ''; // 验证码输入框
     }
     HomeFormComponent.prototype.ngOnInit = function () {
         this.change();
-        this.reset();
+        this.Form = this.fb.group({
+            'uid': ['', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required],
+            'userName': ['', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required],
+            'password': ['', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required],
+            'role': ['2']
+        });
     };
     // 重置表单
     HomeFormComponent.prototype.reset = function () {
-        this.Form = this.fb.group({
-            'uid': ['', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].compose([
-                    _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, userIdValidator
-                ])],
-            'userName': ['', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required],
-            'password': ['', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required],
-            'role': ['0']
-        });
-        // 输入框获得焦点时
-        $('input').focus(function (event) {
-            // label动态上升，升至顶部
-            $(this).siblings('label').stop().animate({ 'bottom': '30px' }, 500);
-            // div模拟的下边框伸出，其width动态改变至input的width
-            $(this).next('.bottom-line').stop().animate({ 'width': '200px' }, 500);
-        });
-        // 输入框失去焦点时
-        $('input').blur(function (event) {
-            if ($(this).val() === '') {
-                // label动态下降，恢复原位
-                $(this).siblings('label').stop().animate({ 'bottom': '10px' }, 500);
-                // 用div模拟的下边框缩回，其width动态恢复为默认宽度0
-                $(this).next('.bottom-line').stop().animate({ 'width': '0' }, 500);
-            }
-        });
+        // this.Form.reset({role: '2'});
+        this.password.setValue('');
     };
     // 点击改变验证码
     HomeFormComponent.prototype.change = function () {
@@ -436,26 +420,37 @@ var HomeFormComponent = /** @class */ (function () {
         }
         this.code = this.codes;
     };
-    // 验证验证码
+    // 验证验证码和身份
     HomeFormComponent.prototype.check = function () {
-        this.inputCode = this.input.toUpperCase();
-        if (this.inputCode.length === 0) {
-            alert('请输入验证码！');
+        var inputCode = this.input.toUpperCase();
+        // console.log(this.Form.get('role').value);
+        if (this.uid.invalid || this.password.invalid) {
+            alert('用户名或密码不能为空');
+            this.change();
             return false;
         }
-        else if (this.inputCode !== this.codes.toUpperCase()) {
+        if (this.role.value !== '2') {
+            alert('登录身份必须为秘书');
+            this.change();
+            return false;
+        }
+        if (inputCode.length === 0) {
+            alert('请输入验证码！');
+            this.change();
+            return false;
+        }
+        else if (inputCode !== this.codes.toUpperCase()) {
             alert('验证码输入错误!请重新输入');
             this.change();
             this.input = '';
             return false;
         }
-        else {
-            return true;
-        }
+        return true;
     };
     // 登录主界面
-    HomeFormComponent.prototype.login = function (data) {
+    HomeFormComponent.prototype.login = function () {
         var _this = this;
+        var data = this.Form.getRawValue();
         // 验证码校验错误,则禁止提交
         if (this.check() === false) {
             this.reset();
@@ -477,6 +472,7 @@ var HomeFormComponent = /** @class */ (function () {
             if (_this.user.role === 2) {
                 sessionStorage.setItem('name', _this.user.userName);
                 _this.router.navigate(['/main', { uid: _this.user.uid }]);
+                // this.router.navigate(['/main', {uid: this.user.uid}], {replaceUrl: true, skipLocationChange: true});
             }
             // this.router.navigate(['/main']);
             // skipLocationChange设为true路由跳转时浏览器中的url会保持不变，但是传入的参数依然有效
@@ -490,36 +486,9 @@ var HomeFormComponent = /** @class */ (function () {
             _this.loading = false;
         });
     };
-    // 注册
-    HomeFormComponent.prototype.register = function (data) {
-        var _this = this;
-        this.loading = true;
-        this.httpService.register(data).subscribe(function (res) {
-            if (res.extend.register === false) {
-                _this.loading = false;
-                _this.checkUser = true; // 标记用户已注册
-                return;
-            }
-            alert('注册成功');
-        }, function (error) {
-            _this.loading = false;
-            alert(error);
-        }, function () {
-            $('#登录').click();
-            _this.loading = false;
-        });
-    };
     Object.defineProperty(HomeFormComponent.prototype, "uid", {
-        // getter方法用于页面验证表单
         get: function () {
             return this.Form.get('uid');
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(HomeFormComponent.prototype, "userName", {
-        get: function () {
-            return this.Form.get('userName');
         },
         enumerable: true,
         configurable: true
@@ -531,14 +500,13 @@ var HomeFormComponent = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", String)
-    ], HomeFormComponent.prototype, "state", void 0);
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", Number)
-    ], HomeFormComponent.prototype, "key", void 0);
+    Object.defineProperty(HomeFormComponent.prototype, "role", {
+        get: function () {
+            return this.Form.get('role');
+        },
+        enumerable: true,
+        configurable: true
+    });
     HomeFormComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-home-form',
@@ -561,7 +529,7 @@ var HomeFormComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"wrapper\">\n  <!--justified填充整个宽度-->\n  <tabset type=\"pills\" [justified]=\"true\">\n    <!--循环遍历states=['登录','注册']-->\n    <tab *ngFor=\"let state of states;let key = index;\">\n      <!--显示form表单-->\n      <!--父组件传递一些参数给子组件-->\n      <app-home-form [state]=\"state\" [key]=\"key\"></app-home-form>\n    </tab>\n  </tabset>\n</div>\n\n"
+module.exports = "<!--父组件传递一些参数给子组件-->\n<!--<app-home-form [state]=\"state\" [key]=\"key\"></app-home-form>-->\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-md-10 col-md-offset-1\">\n      <img src=\"assets/sukeLogin.jpg\">\n    </div>\n  </div>\n  <div class=\"row\">\n    <div class=\"col-md-8 col-md-offset-1\">\n      <br>公告\n    </div>\n    <div class=\"col-md-3 col-md-offset-8\">\n      <img src=\"assets/right_01.jpg\" width=\"252px\">\n        <app-home-form></app-home-form>\n    </div>\n  </div>\n</div>\n\n\n\n"
 
 /***/ }),
 
@@ -823,7 +791,7 @@ var File = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n  <tabset>\n    <tab *ngFor=\"let group of groups;let i = index\" [active]=\"i==0\">\n      <ng-template tabHeading>\n        {{group}}\n        <button class=\"btn btn-danger btn-xs\" (click)=\"romoveGroup(i)\" id=\"remove\">\n          <span class=\"glyphicon glyphicon-remove\"></span>\n        </button>\n      </ng-template>\n      <app-teacher (outer)=\"getCheckTeacher($event)\"></app-teacher>\n      <app-student (outer)=\"getCheckStudents($event)\"></app-student>\n      <button class=\"btn btn-success\" (click)=\"submit(group)\">提交</button>\n    </tab>\n    <tab>\n      <ng-template tabHeading>\n        <button class=\"btn btn-success btn-xs\" (click)=\"addGroup()\">\n          <span class=\"glyphicon glyphicon-plus\"></span>\n        </button>\n      </ng-template>\n    </tab>\n  </tabset>\n  <br>\n  <button class=\"btn btn-success\" (click)=\"exportTable()\">导出</button>\n  <br>\n  <table class=\"table table-bordered table-hover\" style=\"width: 90%\" id=\"group\">\n    <thead>\n    <tr>\n      <th>序号</th>\n      <th>所属班级</th>\n      <th>学生学号</th>\n      <th>学生姓名</th>\n      <th>教师工号</th>\n      <th>教师姓名</th>\n      <th>课题名称</th>\n      <th>评阅教师工号</th>\n      <th>评阅教师姓名</th>\n      <th>组号</th>\n    </tr>\n    </thead>\n    <tbody>\n    <tr *ngFor=\"let stu of list;let i =index\">\n      <td>{{i+1}}</td>\n      <td>{{stu.sclass}}</td>\n      <td>{{stu.sid}}</td>\n      <td>{{stu.sname}}</td>\n      <td>{{stu.teacher.tid}}</td>\n      <td>{{stu.teacher.tname}}</td>\n      <td>{{stu.course.cname}}</td>\n      <td>\n        <span *ngIf=\"stu.tjudge!=='0'\">{{stu.tjudge}}</span>\n        <span *ngIf=\"stu.tjudge==='0'\">暂未分配</span>\n      </td>\n      <td>\n        <span *ngIf=\"stu.tjudge!=='0'\">{{stu.judge.teacher.tname}}</span>\n        <span *ngIf=\"stu.tjudge==='0'\">暂未分配</span>\n      </td>\n      <td>\n        <span *ngIf=stu.sgroup>\n          {{stu.sgroup}}组\n        </span>\n        <span *ngIf=!stu.sgroup>\n         暂未分配\n        </span>\n      </td>\n    </tr>\n    </tbody>\n  </table>\n</div>\n\n"
+module.exports = "<div class=\"container\">\n  <tabset>\n    <tab *ngFor=\"let group of groups;let i = index\" [active]=\"i==0\">\n      <ng-template tabHeading>\n        {{group}}\n        <button class=\"btn btn-danger btn-xs\" (click)=\"romoveGroup(i)\" id=\"remove\">\n          <span class=\"glyphicon glyphicon-remove\"></span>\n        </button>\n      </ng-template>\n      <app-teacher (outer)=\"getCheckTeacher($event)\"></app-teacher>\n      <!--<app-student (outer)=\"getCheckStudents($event)\"></app-student>-->\n      <button class=\"btn btn-success\" (click)=\"submit(group)\">提交</button>\n    </tab>\n    <tab>\n      <ng-template tabHeading>\n        <button class=\"btn btn-success btn-xs\" (click)=\"addGroup()\">\n          <span class=\"glyphicon glyphicon-plus\"></span>\n        </button>\n      </ng-template>\n    </tab>\n  </tabset>\n  <br>\n  <button class=\"btn btn-success\" (click)=\"exportTable()\">导出</button>\n  <br>\n  <table class=\"table table-bordered table-hover\" style=\"width: 90%\" id=\"group\">\n    <thead>\n    <tr>\n      <th>序号</th>\n      <th>所属班级</th>\n      <th>学生学号</th>\n      <th>学生姓名</th>\n      <th>教师工号</th>\n      <th>教师姓名</th>\n      <th>课题名称</th>\n      <th>评阅教师工号</th>\n      <th>评阅教师姓名</th>\n      <th>组号</th>\n    </tr>\n    </thead>\n    <tbody>\n    <tr *ngFor=\"let stu of list;let i =index\">\n      <td>{{i+1}}</td>\n      <td>{{stu.sclass}}</td>\n      <td>{{stu.sid}}</td>\n      <td>{{stu.sname}}</td>\n      <td>{{stu.teacher.tid}}</td>\n      <td>{{stu.teacher.tname}}</td>\n      <td>{{stu.course.cname}}</td>\n      <td>\n        <span *ngIf=\"stu.tjudge!=='0'\">{{stu.tjudge}}</span>\n        <span *ngIf=\"stu.tjudge==='0'\">暂未分配</span>\n      </td>\n      <td>\n        <span *ngIf=\"stu.tjudge!=='0'\">{{stu.judge.teacher.tname}}</span>\n        <span *ngIf=\"stu.tjudge==='0'\">暂未分配</span>\n      </td>\n      <td>\n        <span *ngIf=stu.sgroup>\n          {{stu.sgroup}}组\n        </span>\n        <span *ngIf=!stu.sgroup>\n         暂未分配\n        </span>\n      </td>\n    </tr>\n    </tbody>\n  </table>\n</div>\n\n"
 
 /***/ }),
 
@@ -869,16 +837,15 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 var GroupComponent = /** @class */ (function () {
-    function GroupComponent(httpService, fileService, changeDetectorRef) {
+    function GroupComponent(httpService, fileService) {
         this.httpService = httpService;
         this.fileService = fileService;
-        this.changeDetectorRef = changeDetectorRef;
         this.groups = new Array();
         this.checkStudents = new Array();
         this.flag = false;
     }
     GroupComponent.prototype.ngOnInit = function () {
-        this.groupAll();
+        // this.groupAll();
         if (localStorage.getItem('groups') !== null) {
             this.groups = JSON.parse(localStorage.getItem('groups'));
         }
@@ -960,7 +927,7 @@ var GroupComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./group.component.html */ "./src/app/main/group/group.component.html"),
             styles: [__webpack_require__(/*! ./group.component.scss */ "./src/app/main/group/group.component.scss")]
         }),
-        __metadata("design:paramtypes", [_service_http_service__WEBPACK_IMPORTED_MODULE_1__["HttpService"], _service_file_service__WEBPACK_IMPORTED_MODULE_3__["FileService"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectorRef"]])
+        __metadata("design:paramtypes", [_service_http_service__WEBPACK_IMPORTED_MODULE_1__["HttpService"], _service_file_service__WEBPACK_IMPORTED_MODULE_3__["FileService"]])
     ], GroupComponent);
     return GroupComponent;
 }());
@@ -1245,7 +1212,7 @@ var Teacher = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--页面加载条-->\n<!--loading为true则显示，反之隐藏-->\n<ngx-loading [show]=\"loading\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n<!--整体div-->\n<div class=\"wrap\">\n  <!-- 左边内容 -->\n  <div id=\"left\" class=\"left\">\n    <!--显示标题-->\n    <div id=\"logoDiv\" class=\"logoDiv\">\n      <p id=\"logoTitle\" class=\"logoTitle\">\n        <span style=\"font-size:18px;\">毕业设计-秘书端</span>\n      </p>\n    </div>\n    <!--显示用户信息-->\n    <div class=\"menu-title\" id=\"personInfor\">\n      <!--用户标签-->\n      <span class=\"glyphicon glyphicon-user\" style=\"font-size: 20px\">\n        <span style=\"margin-left: 10px\">{{name}}</span>\n      </span>\n      <br><br>\n      <button class=\"btn btn-primary btn-sm\" (click)=\"logout()\">退出登录</button>\n    </div>\n\n    <hr>\n    <br>\n\n    <div class=\"menu-title\">秘书管理</div>\n    <!--选项卡1-->\n    <div class=\"menu-item menu-item-active\" href=\"#one\" data-toggle=\"tab\">\n      －成绩管理\n    </div>\n    <!--选项卡2-->\n    <div class=\"menu-item\" href=\"#two\" data-toggle=\"tab\" (click)=\"showFiles()\">\n      －文件管理\n    </div>\n    <!--选项卡3-->\n    <div class=\"menu-item\" href=\"#three\" data-toggle=\"tab\">\n      －分组管理\n    </div>\n    <!--选项卡4-->\n    <div class=\"menu-item\" href=\"#four\" data-toggle=\"tab\">\n      －修改密码\n    </div>\n  </div>\n\n  <!-- 右边内容 -->\n  <div id=\"right\" class=\"tab-content right\">\n    <!--默认激活内容-->\n    <div id=\"one\" class=\"tab-pane active\">\n      <app-secretary [user]=\"user\"></app-secretary>\n    </div>\n    <!--待激活内容-->\n    <div id=\"two\" class=\"tab-pane\">\n                             <span style=\"text-shadow: 2px 0px 6px\">\n                               <app-file [user]=\"user\" [users]=\"users\"></app-file>\n                            </span>\n    </div>\n    <div id=\"three\" class=\"tab-pane\">\n      <app-group [user]=\"user\"></app-group>\n    </div>\n    <!--待激活内容-->\n    <div id=\"four\" class=\"tab-pane\">\n      <app-update [user]=\"user\"></app-update>\n    </div>\n  </div>\n\n</div>\n\n"
+module.exports = "<!--页面加载条-->\n<!--loading为true则显示，反之隐藏-->\n<ngx-loading [show]=\"loading\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n<img src=\"assets/main_03.jpg\" alt=\"\" width=\"100%\">\n<!--整体div-->\n<div class=\"wrap\">\n  <!-- 左边内容 -->\n  <div id=\"left\" class=\"left\">\n    <!--显示标题-->\n    <div id=\"logoDiv\" class=\"logoDiv\">\n      <p id=\"logoTitle\" class=\"logoTitle\">\n        <span style=\"font-size:18px;\">毕业设计-秘书端</span>\n      </p>\n    </div>\n    <!--显示用户信息-->\n    <div class=\"menu-title\" id=\"personInfor\">\n      <!--用户标签-->\n      <span class=\"glyphicon glyphicon-user\" style=\"font-size: 20px\">\n        <span style=\"margin-left: 10px\">{{name}}</span>\n      </span>\n      <br><br>\n      <button class=\"btn btn-primary btn-sm\" (click)=\"logout()\">退出登录</button>\n    </div>\n\n    <hr>\n    <br>\n\n    <div class=\"menu-title\">秘书管理</div>\n    <!--选项卡1-->\n    <div class=\"menu-item menu-item-active\" href=\"#one\" data-toggle=\"tab\">\n      －成绩管理\n    </div>\n    <!--选项卡2-->\n    <div class=\"menu-item\" href=\"#two\" data-toggle=\"tab\" (click)=\"showFiles()\">\n      －文件管理\n    </div>\n    <!--选项卡3-->\n    <div class=\"menu-item\" href=\"#three\" data-toggle=\"tab\">\n      －分组管理\n    </div>\n    <!--选项卡4-->\n    <div class=\"menu-item\" href=\"#four\" data-toggle=\"tab\">\n      －修改密码\n    </div>\n  </div>\n\n  <!-- 右边内容 -->\n  <div id=\"right\" class=\"tab-content right\">\n    <!--默认激活内容-->\n    <div id=\"one\" class=\"tab-pane active\">\n      <app-secretary [user]=\"user\"></app-secretary>\n    </div>\n    <!--待激活内容-->\n    <div id=\"two\" class=\"tab-pane\">\n                             <span style=\"text-shadow: 2px 0px 6px\">\n                               <app-file [user]=\"user\" [users]=\"users\"></app-file>\n                            </span>\n    </div>\n    <div id=\"three\" class=\"tab-pane\">\n      <app-group [user]=\"user\"></app-group>\n    </div>\n    <!--待激活内容-->\n    <div id=\"four\" class=\"tab-pane\">\n      <app-update [user]=\"user\"></app-update>\n    </div>\n  </div>\n\n</div>\n\n"
 
 /***/ }),
 
@@ -1352,6 +1319,149 @@ var MainComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/main/secretary/grade.ts":
+/*!*****************************************!*\
+  !*** ./src/app/main/secretary/grade.ts ***!
+  \*****************************************/
+/*! exports provided: Grade */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Grade", function() { return Grade; });
+var Grade = /** @class */ (function () {
+    function Grade() {
+    }
+    return Grade;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/main/secretary/reply-grade-modal/reply-grade-modal.component.html":
+/*!***********************************************************************************!*\
+  !*** ./src/app/main/secretary/reply-grade-modal/reply-grade-modal.component.html ***!
+  \***********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<a href=\"javascript:void(0);\" (click)=\"openModal(template)\">{{secretary.grade.replyGrade}}</a>\n<ng-template #template>\n  <div class=\"modal-header\">\n    <h4 class=\"modal-title pull-left\">评分</h4>\n    <button type=\"button\" class=\"close pull-right\" aria-label=\"Close\" (click)=\"decline()\">\n      <span aria-hidden=\"true\">&times;</span>\n    </button>\n  </div>\n\n  <div class=\"modal-body\">\n    <div class=\"form-horizontal\">\n      <div class=\"form-group\">\n        <div class=\"col-md-4 control-label\">\n          <label for=\"task\">任务完成情况</label>\n        </div>\n        <div class=\"col-md-6\">\n          <input type=\"text\" id=\"task\" class=\"form-control\" placeholder=\"任务完成情况\" [(ngModel)]=\"task\" (input)=\"calculate()\">\n        </div>\n      </div>\n      <div class=\"form-group\">\n        <div class=\"col-md-4 control-label\">\n          <label for=\"technology\">技术水平</label>\n        </div>\n        <div class=\"col-md-6\">\n          <input type=\"text\" id=\"technology\" class=\"form-control\" placeholder=\"技术水平\" [(ngModel)]=\"technology\" (input)=\"calculate()\">\n        </div>\n      </div>\n      <div class=\"form-group\">\n        <div class=\"col-md-4 control-label\">\n          <label for=\"language\">语言表达</label>\n        </div>\n        <div class=\"col-md-6\">\n          <input type=\"text\" id=\"language\" class=\"form-control\" placeholder=\"语言表达\" [(ngModel)]=\"language\" (input)=\"calculate()\">\n        </div>\n      </div>\n      <div class=\"form-group\">\n        <div class=\"col-md-4 control-label\">\n          <label for=\"answer\">回答问题</label>\n        </div>\n        <div class=\"col-md-6\">\n          <input type=\"text\" id=\"answer\" class=\"form-control\" placeholder=\"回答问题\" [(ngModel)]=\"answer\" (input)=\"calculate()\">\n        </div>\n      </div>\n      <div class=\"form-group\">\n        <div class=\"col-md-4 control-label\">\n          <label for=\"reply\">答辩评分</label>\n        </div>\n        <div class=\"col-md-6\">\n          <input type=\"text\" id=\"reply\" class=\"form-control\" [value]=secretary.grade.replyGrade\n                 (ngModel)=\"secretary.grade.replyGrade\" disabled>\n        </div>\n      </div>\n    </div>\n\n  </div>\n\n  <div class=\"modal-footer\">\n    <button class=\"btn btn-primary\" (click)=\"submit()\">提交</button>\n    <button class=\"btn btn-primary\" (click)=\"decline()\">关闭</button>\n  </div>\n</ng-template>\n"
+
+/***/ }),
+
+/***/ "./src/app/main/secretary/reply-grade-modal/reply-grade-modal.component.scss":
+/*!***********************************************************************************!*\
+  !*** ./src/app/main/secretary/reply-grade-modal/reply-grade-modal.component.scss ***!
+  \***********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL21haW4vc2VjcmV0YXJ5L3JlcGx5LWdyYWRlLW1vZGFsL3JlcGx5LWdyYWRlLW1vZGFsLmNvbXBvbmVudC5zY3NzIn0= */"
+
+/***/ }),
+
+/***/ "./src/app/main/secretary/reply-grade-modal/reply-grade-modal.component.ts":
+/*!*********************************************************************************!*\
+  !*** ./src/app/main/secretary/reply-grade-modal/reply-grade-modal.component.ts ***!
+  \*********************************************************************************/
+/*! exports provided: ReplyGradeModalComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ReplyGradeModalComponent", function() { return ReplyGradeModalComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var ngx_bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ngx-bootstrap */ "./node_modules/ngx-bootstrap/esm5/ngx-bootstrap.js");
+/* harmony import */ var _service_http_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../service/http.service */ "./src/app/service/http.service.ts");
+/* harmony import */ var _grade__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../grade */ "./src/app/main/secretary/grade.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var ReplyGradeModalComponent = /** @class */ (function () {
+    function ReplyGradeModalComponent(modalService, http) {
+        this.modalService = modalService;
+        this.http = http;
+        this.config = {
+            animated: true,
+            backdrop: 'static',
+            keyboard: false
+        };
+        this.grade = new _grade__WEBPACK_IMPORTED_MODULE_3__["Grade"]();
+    }
+    ReplyGradeModalComponent.prototype.ngOnInit = function () {
+    };
+    ReplyGradeModalComponent.prototype.openModal = function (template) {
+        this.modalRef = this.modalService.show(template, this.config);
+    };
+    ReplyGradeModalComponent.prototype.decline = function () {
+        this.modalRef.hide();
+    };
+    ReplyGradeModalComponent.prototype.calculate = function () {
+        if (this.task && this.technology && this.language && this.answer) {
+            this.secretary.grade.replyGrade = this.task * 0.1 + this.technology * 0.4 + this.language * 0.2 + this.answer * 0.3;
+        }
+    };
+    ReplyGradeModalComponent.prototype.submit = function () {
+        this.grade.replyGrade = this.secretary.grade.replyGrade;
+        this.grade.totalGrade = this.total;
+        this.grade.generalComments = this.check(this.grade.totalGrade);
+        this.http.updateGrade(this.grade, this.secretary.sid).subscribe(function (res) {
+            console.log(res);
+        });
+        this.modalRef.hide();
+    };
+    ReplyGradeModalComponent.prototype.check = function (totalGrade) {
+        var total = Number(totalGrade);
+        if (total < 60) {
+            return '不及格';
+        }
+        else if (total >= 60 && total < 70) {
+            return '及格';
+        }
+        else if (total >= 70 && total < 80) {
+            return '中等';
+        }
+        else if (total >= 80 && total < 90) {
+            return '良好';
+        }
+        else {
+            return '优秀';
+        }
+    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Object)
+    ], ReplyGradeModalComponent.prototype, "secretary", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Object)
+    ], ReplyGradeModalComponent.prototype, "total", void 0);
+    ReplyGradeModalComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-reply-grade-modal',
+            template: __webpack_require__(/*! ./reply-grade-modal.component.html */ "./src/app/main/secretary/reply-grade-modal/reply-grade-modal.component.html"),
+            styles: [__webpack_require__(/*! ./reply-grade-modal.component.scss */ "./src/app/main/secretary/reply-grade-modal/reply-grade-modal.component.scss")]
+        }),
+        __metadata("design:paramtypes", [ngx_bootstrap__WEBPACK_IMPORTED_MODULE_1__["BsModalService"], _service_http_service__WEBPACK_IMPORTED_MODULE_2__["HttpService"]])
+    ], ReplyGradeModalComponent);
+    return ReplyGradeModalComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/main/secretary/secretary-modal-view/secretary-modal.component.html":
 /*!************************************************************************************!*\
   !*** ./src/app/main/secretary/secretary-modal-view/secretary-modal.component.html ***!
@@ -1359,7 +1469,7 @@ var MainComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<button class=\"btn btn-primary btn-sm\" (click)=\"openModal(template)\">查看</button>\n<ng-template #template>\n  <div class=\"modal-header\">\n    <h4 class=\"modal-title pull-left\">信息</h4>\n    <button type=\"button\" class=\"close pull-right\" aria-label=\"Close\" (click)=\"decline()\">\n      <span aria-hidden=\"true\">&times;</span>\n    </button>\n  </div>\n\n  <div class=\"modal-body\">\n    <p>课题名称:{{secretary.subjectName}}</p>\n    <p>学生:{{secretary.student}}</p>\n    <p>课题类型:{{secretary.subjectType}}</p>\n    <p>指导评分:{{secretary.guidanceScore}}</p>\n    <p>评阅评分:{{secretary.ratingScore}}</p>\n    <p>答辩评分:{{secretary.replyScore}}</p>\n    <p>总成绩:{{secretary.guidanceScore*0.3+secretary.ratingScore*0.3+secretary.replyScore*0.4 | number :\n      '1.0-2'}}\n    </p>\n  </div>\n\n  <div class=\"modal-footer\">\n    <button class=\"btn btn-primary\" (click)=\"decline()\">关闭</button>\n  </div>\n</ng-template>\n"
+module.exports = "<button class=\"btn btn-primary btn-sm\" (click)=\"openModal(template)\">查看</button>\n<ng-template #template>\n  <div class=\"modal-header\">\n    <h4 class=\"modal-title pull-left\">信息</h4>\n    <button type=\"button\" class=\"close pull-right\" aria-label=\"Close\" (click)=\"decline()\">\n      <span aria-hidden=\"true\">&times;</span>\n    </button>\n  </div>\n\n  <div class=\"modal-body\">\n    <p>课题名称:{{secretary.course.cname}}</p>\n    <p>学生:{{secretary.sname}}</p>\n    <p>课题类型:{{secretary.course.ctype}}</p>\n    <p>指导评分:{{secretary.grade.advisorGrade}}</p>\n    <p>评阅评分:{{secretary.grade.reviewGrade}}</p>\n    <p>答辩评分:{{secretary.grade.replyGrade}}</p>\n    <p>总成绩:{{secretary.grade.advisorGrade*0.4+secretary.grade.reviewGrade*0.2+secretary.grade.replyGrade*0.4 | number : '1.0-0'}}\n    </p>\n  </div>\n\n  <div class=\"modal-footer\">\n    <button class=\"btn btn-primary\" (click)=\"decline()\">关闭</button>\n  </div>\n</ng-template>\n"
 
 /***/ }),
 
@@ -1386,7 +1496,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SecretaryModalComponent", function() { return SecretaryModalComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var ngx_bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ngx-bootstrap */ "./node_modules/ngx-bootstrap/esm5/ngx-bootstrap.js");
-/* harmony import */ var _secretary__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../secretary */ "./src/app/main/secretary/secretary.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1396,7 +1505,6 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
 
 
 var SecretaryModalComponent = /** @class */ (function () {
@@ -1418,7 +1526,7 @@ var SecretaryModalComponent = /** @class */ (function () {
     };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", _secretary__WEBPACK_IMPORTED_MODULE_2__["Secretary"])
+        __metadata("design:type", Object)
     ], SecretaryModalComponent.prototype, "secretary", void 0);
     SecretaryModalComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -1442,7 +1550,7 @@ var SecretaryModalComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--显示时间-->\n<div class=\"check-div form-inline\">\n  <span>{{today | date : 'yyyy-MM-dd HH:mm:ss'}}</span>\n  <!--自定义星期管道，显示星期几-->\n  <span style=\"padding-left:2em;\">{{today | weekDay}}</span>\n  <button class=\"btn btn-primary pull-right\" (click)=\"exportTable()\"\n          style=\"margin-top: 20px;margin-right: 30px\">导出\n  </button>\n  <button class=\"btn btn-primary pull-right\"\n          style=\"margin-top: 20px;margin-right: 10px\">保存\n  </button>\n</div>\n<!--显示评分表-->\n<!--赋予表格id用来将表格导出成excel-->\n<table class=\"table table-bordered table-hover\" id=\"table\">\n  <thead>\n  <tr>\n    <th style=\"width: 300px;\">课题名称</th>\n    <th style=\"width: 10px\">学生</th>\n    <th>课题类型</th>\n    <th>指导评分</th>\n    <th>评阅评分</th>\n    <th>答辩评分</th>\n    <th>总成绩</th>\n    <th>总评</th>\n    <th>状态</th>\n    <th>信息操作</th>\n    <th>表格</th>\n  </tr>\n  </thead>\n  <tbody>\n  <tr *ngFor=\"let secretary of secretaries;let i = index;\">\n    <td>\n      <span>{{secretary.subjectName}}</span>\n    </td>\n    <td>\n      <span>{{secretary.student}}</span>\n    </td>\n    <td>\n      <span>{{secretary.subjectType}}</span>\n    </td>\n    <td *ngFor=\"let flag of flags\">\n      <form #f=\"ngForm\">\n        <span (click)=\"edit($event)\">{{secretary[flag]}}</span>\n        <input type=\"text\" (blur)=\"inputEdit($event,f.value,secretary.id)\" [value]=\"secretary[flag]\"\n               style=\"display: none;width: 50px\" [(ngModel)]=\"secretaries[i][flag]\" [name]=\"flag\">\n      </form>\n    </td>\n    <td>\n      <!--按比例计算总成绩，并规定计算出的数值至少是1位整数，0到2位小数-->\n      <span>{{secretaries[i].guidanceScore*0.3+secretaries[i].ratingScore*0.3+secretaries[i].replyScore*0.4 | number : '1.0-2'}}</span>\n    </td>\n    <td>\n      <div\n        [ngSwitch]=\"check(secretaries[i].guidanceScore*0.3+secretaries[i].ratingScore*0.3+secretaries[i].replyScore*0.4 | number : '1.0-2')\">\n        <span *ngSwitchCase=\"0\">不及格</span>\n        <span *ngSwitchCase=\"1\">及格</span>\n        <span *ngSwitchCase=\"2\">中等</span>\n        <span *ngSwitchCase=\"3\">良好</span>\n        <span *ngSwitchDefault>优秀</span>\n      </div>\n    </td>\n    <td>\n      <span>{{secretary.state}}</span>\n    </td>\n    <td>\n      <app-secretary-modal [secretary]=\"secretary\"></app-secretary-modal>\n    </td>\n    <td>\n      <a href=\"javascript:void(0);\">答辩评分表</a><br>\n      <a href=\"javascript:void(0);\">答辩评议书</a>\n    </td>\n  </tr>\n  </tbody>\n</table>\n"
+module.exports = "<!--显示时间-->\n<div class=\"check-div form-inline\">\n  <span>{{today | date : 'yyyy-MM-dd HH:mm:ss'}}</span>\n  <!--自定义星期管道，显示星期几-->\n  <span style=\"padding-left:2em;\">{{today | weekDay}}</span>\n  <button class=\"btn btn-primary pull-right\" (click)=\"exportTable()\"\n          style=\"margin-top: 20px;margin-right: 30px\">导出\n  </button>\n  <button class=\"btn btn-primary pull-right\"\n          style=\"margin-top: 20px;margin-right: 10px\">保存\n  </button>\n</div>\n<!--显示评分表-->\n<!--赋予表格id用来将表格导出成excel-->\n<table class=\"table table-bordered table-hover\" id=\"table\">\n  <thead>\n  <tr>\n    <th style=\"width: 300px;\">课题名称</th>\n    <th style=\"width: 10px\">学生</th>\n    <th>课题类型</th>\n    <th>指导评分</th>\n    <th>评阅评分</th>\n    <th>答辩评分</th>\n    <th>总成绩</th>\n    <th>总评</th>\n    <th>状态</th>\n    <th>信息操作</th>\n    <th>表格</th>\n  </tr>\n  </thead>\n  <tbody>\n  <tr *ngFor=\"let secretary of secretaries;let i = index;\">\n    <td>\n      <span>{{secretary.course.cname}}</span>\n    </td>\n    <td>\n      <span>{{secretary.sname}}</span>\n    </td>\n    <td>\n      <span>{{secretary.course.ctype}}</span>\n    </td>\n    <!--<td *ngFor=\"let flag of flags\">-->\n    <!--<form #f=\"ngForm\">-->\n    <!--<span (click)=\"edit($event)\">{{secretary[flag]}}</span>-->\n    <!--<input type=\"text\" (blur)=\"inputEdit($event,f.value,secretary.id)\" [value]=\"secretary[flag]\"-->\n    <!--style=\"display: none;width: 50px\" [(ngModel)]=\"secretaries[i][flag]\" [name]=\"flag\">-->\n    <!--</form>-->\n    <!--</td>-->\n    <td>\n      <span>{{secretary.grade.advisorGrade}}</span>\n    </td>\n    <td>\n      <span>{{secretary.grade.reviewGrade}}</span>\n    </td>\n    <td>\n      <app-reply-grade-modal [secretary]=\"secretary\"\n                             [total]=\"secretary.grade.advisorGrade*0.4+secretary.grade.reviewGrade*0.2+secretary.grade.replyGrade*0.4 | number : '1.0-0'\"></app-reply-grade-modal>\n    </td>\n    <td>\n      <!--按比例计算总成绩，并规定计算出的数值至少是1位整数，0到2位小数-->\n      <span>{{secretary.grade.advisorGrade*0.4+secretary.grade.reviewGrade*0.2+secretary.grade.replyGrade*0.4 | number : '1.0-0'}}</span>\n    </td>\n    <td>\n      <div\n        [ngSwitch]=\"check(secretary.grade.advisorGrade*0.4+secretary.grade.reviewGrade*0.2+secretary.grade.replyGrade*0.4 | number : '1.0-0')\">\n        <span *ngSwitchCase=\"0\">不及格</span>\n        <span *ngSwitchCase=\"1\">及格</span>\n        <span *ngSwitchCase=\"2\">中等</span>\n        <span *ngSwitchCase=\"3\">良好</span>\n        <span *ngSwitchDefault>优秀</span>\n      </div>\n    </td>\n    <td>\n      <span>已发布</span>\n    </td>\n    <td>\n      <app-secretary-modal [secretary]=\"secretary\"></app-secretary-modal>\n    </td>\n    <td>\n      <a href=\"javascript:void(0);\">答辩评分表</a><br>\n      <a href=\"javascript:void(0);\">答辩评议书</a>\n    </td>\n  </tr>\n  </tbody>\n</table>\n"
 
 /***/ }),
 
@@ -1493,7 +1601,6 @@ var SecretaryComponent = /** @class */ (function () {
         this.http = http;
         this.fileService = fileService;
         this.secretaries = [];
-        this.flags = ['guidanceScore', 'ratingScore', 'replyScore'];
         this.timer = setInterval(function () {
             _this.today = new Date();
         }, 50);
@@ -1501,7 +1608,7 @@ var SecretaryComponent = /** @class */ (function () {
     SecretaryComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.http.reply().subscribe(function (res) {
-            _this.secretaries = res.extend.secretaries;
+            _this.secretaries = res;
         }, function (error) {
             alert(error);
         });
@@ -1509,16 +1616,16 @@ var SecretaryComponent = /** @class */ (function () {
     SecretaryComponent.prototype.check = function (data) {
         var total = Number(data);
         if (total < 60) {
-            return '0';
+            return 0;
         }
         else if (total >= 60 && total < 70) {
-            return '1';
+            return 1;
         }
         else if (total >= 70 && total < 80) {
-            return '2';
+            return 2;
         }
         else if (total >= 80 && total < 90) {
-            return '3';
+            return 3;
         }
     };
     // 修改表中数据
@@ -1598,34 +1705,6 @@ var SecretaryComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [_service_http_service__WEBPACK_IMPORTED_MODULE_2__["HttpService"], _service_file_service__WEBPACK_IMPORTED_MODULE_3__["FileService"]])
     ], SecretaryComponent);
     return SecretaryComponent;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/main/secretary/secretary.ts":
-/*!*********************************************!*\
-  !*** ./src/app/main/secretary/secretary.ts ***!
-  \*********************************************/
-/*! exports provided: Secretary */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Secretary", function() { return Secretary; });
-var Secretary = /** @class */ (function () {
-    function Secretary(id, subjectName, student, subjectType, guidanceScore, ratingScore, replyScore, state) {
-        this.id = id;
-        this.subjectName = subjectName;
-        this.student = student;
-        this.subjectType = subjectType;
-        this.guidanceScore = guidanceScore;
-        this.ratingScore = ratingScore;
-        this.replyScore = replyScore;
-        this.state = state;
-    }
-    return Secretary;
 }());
 
 
@@ -2041,6 +2120,10 @@ var HttpService = /** @class */ (function () {
     HttpService.prototype.dividedGroup = function (id, sgroup, tjudge) {
         var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"]().set('sgroup', sgroup).set('tjudge', tjudge);
         return this.http.put(this.Url + "/dividedGroup/" + id, null, { params: params }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.config.handleError));
+    };
+    // 更新成绩
+    HttpService.prototype.updateGrade = function (grade, sid) {
+        return this.http.put(this.Url + "/updateGrade/" + sid, grade, { headers: headers }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.config.handleError));
     };
     HttpService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({

@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="usts.cl.bean.Course">
     <id column="cno" jdbcType="INTEGER" property="cno" />
     <result column="cname" jdbcType="VARCHAR" property="cname" />
+    <result column="ctype" jdbcType="VARCHAR" property="ctype" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -64,7 +65,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    cno, cname
+    cno, cname, ctype
   </sql>
   <select id="selectByExample" parameterType="usts.cl.bean.CourseExample" resultMap="BaseResultMap">
     select
@@ -97,8 +98,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="usts.cl.bean.Course">
-    insert into tab_course (cno, cname)
-    values (#{cno,jdbcType=INTEGER}, #{cname,jdbcType=VARCHAR})
+    insert into tab_course (cno, cname, ctype
+      )
+    values (#{cno,jdbcType=INTEGER}, #{cname,jdbcType=VARCHAR}, #{ctype,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="usts.cl.bean.Course">
     insert into tab_course
@@ -109,6 +112,9 @@
       <if test="cname != null">
         cname,
       </if>
+      <if test="ctype != null">
+        ctype,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="cno != null">
@@ -116,6 +122,9 @@
       </if>
       <if test="cname != null">
         #{cname,jdbcType=VARCHAR},
+      </if>
+      <if test="ctype != null">
+        #{ctype,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -134,6 +143,9 @@
       <if test="record.cname != null">
         cname = #{record.cname,jdbcType=VARCHAR},
       </if>
+      <if test="record.ctype != null">
+        ctype = #{record.ctype,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -142,7 +154,8 @@
   <update id="updateByExample" parameterType="map">
     update tab_course
     set cno = #{record.cno,jdbcType=INTEGER},
-      cname = #{record.cname,jdbcType=VARCHAR}
+      cname = #{record.cname,jdbcType=VARCHAR},
+      ctype = #{record.ctype,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -153,12 +166,16 @@
       <if test="cname != null">
         cname = #{cname,jdbcType=VARCHAR},
       </if>
+      <if test="ctype != null">
+        ctype = #{ctype,jdbcType=VARCHAR},
+      </if>
     </set>
     where cno = #{cno,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="usts.cl.bean.Course">
     update tab_course
-    set cname = #{cname,jdbcType=VARCHAR}
+    set cname = #{cname,jdbcType=VARCHAR},
+      ctype = #{ctype,jdbcType=VARCHAR}
     where cno = #{cno,jdbcType=INTEGER}
   </update>
 </mapper>

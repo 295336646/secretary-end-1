@@ -22,6 +22,7 @@ public class FileController {
     FileService fileService;
 
     /**
+     * 测试
      * 文件上传
      */
     @PostMapping("/upload/{uid}")
@@ -37,7 +38,7 @@ public class FileController {
             fileDomain.setFileName(fileName);
             fileDomain.setFileType(fileType);
             fileDomain.setFile(file.getBytes());
-            fileDomain.setUid(uid);
+            fileDomain.setUid("152040135202");
             fileService.uploadFile(fileDomain);
         } catch (Exception e) {
             e.printStackTrace();

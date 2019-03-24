@@ -233,6 +233,76 @@ public class CourseExample {
             addCriterion("cname not between", value1, value2, "cname");
             return (Criteria) this;
         }
+
+        public Criteria andCtypeIsNull() {
+            addCriterion("ctype is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCtypeIsNotNull() {
+            addCriterion("ctype is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCtypeEqualTo(String value) {
+            addCriterion("ctype =", value, "ctype");
+            return (Criteria) this;
+        }
+
+        public Criteria andCtypeNotEqualTo(String value) {
+            addCriterion("ctype <>", value, "ctype");
+            return (Criteria) this;
+        }
+
+        public Criteria andCtypeGreaterThan(String value) {
+            addCriterion("ctype >", value, "ctype");
+            return (Criteria) this;
+        }
+
+        public Criteria andCtypeGreaterThanOrEqualTo(String value) {
+            addCriterion("ctype >=", value, "ctype");
+            return (Criteria) this;
+        }
+
+        public Criteria andCtypeLessThan(String value) {
+            addCriterion("ctype <", value, "ctype");
+            return (Criteria) this;
+        }
+
+        public Criteria andCtypeLessThanOrEqualTo(String value) {
+            addCriterion("ctype <=", value, "ctype");
+            return (Criteria) this;
+        }
+
+        public Criteria andCtypeLike(String value) {
+            addCriterion("ctype like", value, "ctype");
+            return (Criteria) this;
+        }
+
+        public Criteria andCtypeNotLike(String value) {
+            addCriterion("ctype not like", value, "ctype");
+            return (Criteria) this;
+        }
+
+        public Criteria andCtypeIn(List<String> values) {
+            addCriterion("ctype in", values, "ctype");
+            return (Criteria) this;
+        }
+
+        public Criteria andCtypeNotIn(List<String> values) {
+            addCriterion("ctype not in", values, "ctype");
+            return (Criteria) this;
+        }
+
+        public Criteria andCtypeBetween(String value1, String value2) {
+            addCriterion("ctype between", value1, value2, "ctype");
+            return (Criteria) this;
+        }
+
+        public Criteria andCtypeNotBetween(String value1, String value2) {
+            addCriterion("ctype not between", value1, value2, "ctype");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

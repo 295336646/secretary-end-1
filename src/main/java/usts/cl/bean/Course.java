@@ -5,6 +5,8 @@ public class Course {
 
     private String cname;
 
+    private String ctype;
+
     public Integer getCno() {
         return cno;
     }
@@ -21,11 +23,11 @@ public class Course {
         this.cname = cname == null ? null : cname.trim();
     }
 
-    @Override
-    public String toString() {
-        return "Course{" +
-                "cno=" + cno +
-                ", cname='" + cname + '\'' +
-                '}';
+    public String getCtype() {
+        return ctype;
+    }
+
+    public void setCtype(String ctype) {
+        this.ctype = ctype == null ? null : ctype.trim();
     }
 }

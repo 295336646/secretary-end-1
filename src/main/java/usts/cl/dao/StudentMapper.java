@@ -17,9 +17,7 @@ public interface StudentMapper {
 
     int insertSelective(Student record);
 
-    Student selectByExampleWithJudge(String sid);
-
-    List<Student> selectByExampleWithGroup(StudentExample example);
+    List<Student> selectByStudentWithGrade(StudentExample example);
 
     List<Student> selectByExample(StudentExample example);
 

@@ -32,10 +32,11 @@
         </javaClientGenerator>
         <!--table指定-->
         <!--<table tableName="tab_user" domainObjectName="User"></table>-->
-        <!--<table tableName="tab_reply" domainObjectName="Reply"></table>-->
+        <!--<table tableName="tab_grade" domainObjectName="Grade"></table>-->
         <!--<table tableName="tab_file" domainObjectName="File"></table>-->
-        <!--<table tableName="tab_course" domainObjectName="Course"></table>-->
-        <table tableName="tab_student" domainObjectName="Student"></table>
+        <table tableName="tab_course" domainObjectName="Course"></table>
+        <!--<table tableName="tab_student" domainObjectName="Student"></table>-->
+        <!--<table tableName="selectsubject" domainObjectName="General"></table>-->
         <!--<table tableName="tab_teacher" domainObjectName="Teacher"></table>-->
     </context>
 </generatorConfiguration>

@@ -11,8 +11,7 @@ import usts.cl.dao.*;
 import usts.cl.service.UserService;
 import usts.cl.utils.PasswordHash;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * 测试dao层的工作
@@ -25,17 +24,16 @@ public class MapperTest {
     @Autowired
     UserMapper userMapper;
     @Autowired
-    ReplyMapper replyMapper;
-    @Autowired
     FileMapper fileMapper;
     @Autowired
     UserService userService;
-
     @Autowired
     StudentMapper studentMapper;
-
     @Autowired
     TeacherMapper teacherMapper;
+
+    @Autowired
+    GradeMapper gradeMapper;
 
     @Test
     @Ignore
@@ -67,14 +65,18 @@ public class MapperTest {
     }
 
     @Test
-    @Ignore
     public void test2() {
-//        ReplyExample replyExample = new ReplyExample();
-//        List<Reply> list = replyMapper.selectByExample(replyExample);
-//        System.out.println(list);
-
-        Reply reply = new Reply(1, null, null, null, (byte) 86, null, null, null);
-        System.out.println(replyMapper.updateByPrimaryKeySelective(reply));
+        List<Student> list = studentMapper.selectByStudentWithGrade(null);
+        for (Student student : list) {
+            System.out.println("课题名称:" + student.getCourse().getCname());
+            System.out.println("学生:" + student.getSname());
+            System.out.println("课题类型:" + student.getCourse().getCtype());
+            System.out.println("指导评分:" + student.getGrade().getAdvisorGrade());
+            System.out.println("评阅评分:" + student.getGrade().getReviewGrade());
+            System.out.println("答辩评分:" + student.getGrade().getReplyGrade());
+            System.out.println("总成绩:" + student.getGrade().getTotalGrade());
+            System.out.println("总评:" + student.getGrade().getGeneralComments());
+        }
     }
 
     @Test
@@ -97,51 +99,182 @@ public class MapperTest {
 
     @Test
     public void test5() {
-        System.out.println(userMapper.selectByExampleWithFile(null));
+        Grade grade = new Grade();
+        grade.setReplyGrade((byte) 72);
+        grade.setTotalGrade((byte) 72);
+        System.out.println(gradeMapper.updateBySidSelective(grade, "1220126125"));
     }
 
     @Test
     public void test6() {
-        List<Student> list = studentMapper.selectByExampleWithGroup(null);
-        for (Student student : list) {
-            Student judge = studentMapper.selectByExampleWithJudge(student.getSid());
-            student.setJudge(judge);
-//            System.out.println("班级:" + student.getSclass());
-//            System.out.println("学生学号:" + student.getSid());
-//            System.out.println("学生姓名:" + student.getSname());
-//            System.out.println("教师工号:" + student.getTeacher().getTid());
-//            System.out.println("教师姓名:" + student.getTeacher().getTname());
-//            System.out.println("课题名称:" + student.getCourse().getCname());
-//            System.out.println("评阅教师工号:"+student.getJudge().getTeacher().getTid());
-//            System.out.println("评阅教师姓名:"+student.getJudge().getTeacher().getTname());
-//            System.out.println("组号:" + student.getSgroup());
+        List<Teacher> teacherList = teacherMapper.selectByExample(null);
+        List<Student> studentList = studentMapper.selectByExample(null);
+        List<Team> teams = new ArrayList<>();
+        int si = studentList.size();
+        int tj = teacherList.size();
+        int avg = si / tj;
+        int sb = 0, tb = 0;
+        int k = 0;
+        while (sb != studentList.size() && tb != teacherList.size()) {
+            for (; avg > 0; avg--) {
+                teacherList.get(tb).getStudents().add(studentList.get(sb));
+                ++sb;
+                --si;
+            }
+//            Team team = new Team();
+//            if (tb % 3 == 0) {
+//                k++;
+//                List<Teacher> teachers = new ArrayList<>();
+//                teachers.add(teacherList.get(tb));
+//                teachers.add(teacherList.get(tb + 1));
+//                teachers.add(teacherList.get(tb + 2));
+//                team.setTeachers(teachers);
+//                team.setNumber(k);
+//                teacherList.get(tb).setTeam(team);
+//                teams.add(team);
+//            } else {
+//                team.setNumber(k);
+//                teacherList.get(tb).setTeam(team);
+//            }
+//            for (Student student : teacherList.get(tb).getStudents()) {
+//                student.setTeam(team);
+//            }
+            --tj;
+            ++tb;
+            if (0 == si || 0 == tj) break;
+            avg = si / tj;
         }
-        for (Student student : list) {
-            System.out.println("班级:" + student.getSclass());
-            System.out.println("学生学号:" + student.getSid());
-            System.out.println("学生姓名:" + student.getSname());
-            System.out.println("教师工号:" + student.getTeacher().getTid());
-            System.out.println("教师姓名:" + student.getTeacher().getTname());
-            System.out.println("课题名称:" + student.getCourse().getCname());
-            System.out.println("评阅教师工号:" + student.getJudge().getTeacher().getTid());
-            System.out.println("评阅教师姓名:" + student.getJudge().getTeacher().getTname());
-            System.out.println("组号:" + student.getSgroup());
-        }
+//        for (Teacher t : teacherList) {
+//            teams.get(t.getTeam().getNumber() - 1).getStudents().addAll(t.getStudents());
+//        }
+//        List<Student> temp = new ArrayList<>();
+//        temp.addAll(teacherList1.get(0).getStudents());
+//        temp.addAll(teacherList1.get(1).getStudents());
+//        temp.addAll(teacherList1.get(2).getStudents());
+//        Map<String, Student> map = new HashMap<>();
+//        for (Student s : teams.get(0).getStudents()) {
+//            map.put(s.getSid(), s);
+//        }
+//        for (Student s : temp) {
+//            if (map.containsKey(s.getSid())) {
+//                teams.get(0).getStudents().remove(map.get(s.getSid()));
+//                teams.get(0).getExchangeStudents().add(map.get(s.getSid()));
+//            }
+//        }
+//
+//        for (Student student : teams.get(0).getStudents()) {
+//            System.out.println(student.getSname());
+//        }
+//        for (Student exchange: teams.get(0).getExchangeStudents()) {
+//            System.out.println(exchange.getSname());
+//        }
+//        System.out.println(teams.get(1).getStudents());
+//        System.out.println(teacherList.get(1).getStudents().size());
+
     }
 
     @Test
     public void test7() {
-        System.out.println(studentMapper.selectByExample(null));
+
+        List<Team> teams = new ArrayList<>();// 答辩分组
+        this.group(teams);
+        List<Integer> list = new ArrayList<>();
+        for (Team team : teams) {
+            if (team.getExchangeStudents().isEmpty()) list.add(team.getNumber());
+        }
+        int count = 0;
+        while (!list.isEmpty()) {
+            count++;
+            teams.clear();
+            list.clear();
+            this.group(teams);
+            for (Team team : teams) {
+                if (team.getExchangeStudents().isEmpty()) list.add(team.getNumber());
+            }
+        }
+        System.out.println(count);
+        for (Team team : teams) {
+            for (Student student : team.getStudents()) {
+                System.out.print(student.getSname() + ",");
+            }
+            System.out.println();
+        }
+
+//        int group = 0;
+//        for (; group < teams.size() - 1; group++) {
+//            if ((group + 1) == teams.size() - 1 && teams.get(group + 1).getExchangeStudents().isEmpty()) break;
+//            if (teams.get(group + 1).getExchangeStudents().isEmpty()) {
+//                List<Student> students = teams.get(group).getExchangeStudents();
+//                teams.get(group).setExchangeStudents(teams.get(group + 2).getExchangeStudents());
+//                teams.get(group + 2).setExchangeStudents(students);
+//                group = group + 2;
+//            } else {
+//                List<Student> students = teams.get(group + 1).getExchangeStudents();
+//                teams.get(group + 1).setExchangeStudents(teams.get(group).getExchangeStudents());
+//                teams.get(group).setExchangeStudents(students);
+//            }
+//        }
+//
+//        System.out.println("-------------------------------------------");
+//        for (Team team : teams) {
+//            for (Student student : team.getExchangeStudents()) {
+//                System.out.print(student.getSname() + ",");
+//            }
+//            System.out.println();
+//        }
+//        System.out.println(teams.get(1).getExchangeStudents().isEmpty());
     }
 
-    @Test
-    public void test8() {
-//        StudentExample studentExample = new StudentExample();
-//        StudentExample.Criteria criteria = studentExample.createCriteria();
-//        criteria.andSidEqualTo("152040135120");
-//        Student student = new Student(0, "0");
-//        System.out.println(studentMapper.updateByExampleSelective(student, studentExample));
-        Student student = studentMapper.selectByPrimaryKey("152040135120");
-        System.out.println(student.getTid());
+    public void group(List<Team> teams) {
+        long groupSize = teacherMapper.groupSize();// 分组总数
+        List<Student> studentList = studentMapper.selectByExample(null);// 所有学生
+        List<Teacher> teacherList = teacherMapper.selectByExample(null);//所有老师
+        Collections.shuffle(studentList);
+        //将分配好的老师录入答辩分组
+        for (int i = 1; i <= groupSize; i++) {
+            Team team = new Team();
+            team.setTeachers(teacherMapper.selectByTeacherWithGroup(i));
+            team.setNumber(i);
+            teams.add(team);
+        }
+        int scount = studentList.size(); // 学生总数
+        int tcount = teacherList.size();//老师总数
+        int sbegin = 0;
+        int avg = scount / tcount;//每个老师平均分配多少学生
+        int k = 0, count = 0;
+//        Set
+        // 学生平均分组
+        for (Student student : studentList) {
+            while (avg > 0) {
+                //学生答辩组
+                teams.get(k).getStudents().add(studentList.get(sbegin));
+                ++sbegin;
+                --scount;
+                avg--;
+            }
+
+            if ((count + 1) % 3 == 0) {
+                k++;
+            }
+            ++count;// 记录每隔3次换组
+            --tcount;
+            if (0 == scount || 0 == tcount) break;
+            avg = scount / tcount;
+        }
+        Map<String, Student> map = new HashMap<>();
+        for (Team team : teams) {
+            map.clear();
+            for (Student student : team.getStudents()) {
+                map.put(student.getSid(), student);
+            }
+            for (Teacher teacher : team.getTeachers()) {
+                for (Student student : teacher.getStudents()) {
+                    if (map.containsKey(student.getSid())) {
+                        team.getStudents().remove(map.get(student.getSid()));
+                        team.getExchangeStudents().add(map.get(student.getSid()));
+                    }
+                }
+            }
+        }
     }
 }

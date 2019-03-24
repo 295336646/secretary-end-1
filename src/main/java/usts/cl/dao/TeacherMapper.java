@@ -1,11 +1,14 @@
 package usts.cl.dao;
 
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 import usts.cl.bean.Teacher;
 import usts.cl.bean.TeacherExample;
 
 public interface TeacherMapper {
+    long groupSize();
+
     long countByExample(TeacherExample example);
 
     int deleteByExample(TeacherExample example);
@@ -15,6 +18,8 @@ public interface TeacherMapper {
     int insert(Teacher record);
 
     int insertSelective(Teacher record);
+
+    List<Teacher> selectByTeacherWithGroup(int group);
 
     List<Teacher> selectByExample(TeacherExample example);
 

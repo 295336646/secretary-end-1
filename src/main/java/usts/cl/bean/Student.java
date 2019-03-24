@@ -15,18 +15,22 @@ public class Student {
 
     private String tjudge;
 
-    private Student judge; // 存放该学生的评阅教师信息
-
-    private Teacher teacher;
+    private Integer gid;
 
     private Course course;
 
-    public Student() {
+    private Grade grade;
+
+    private Teacher teacher;
+
+    private Team team = new Team();
+
+    public Team getTeam() {
+        return team;
     }
 
-    public Student(Integer sgroup, String tjudge) {
-        this.sgroup = sgroup;
-        this.tjudge = tjudge;
+    public void setTeam(Team team) {
+        this.team = team;
     }
 
     public String getSid() {
@@ -85,12 +89,12 @@ public class Student {
         this.tjudge = tjudge == null ? null : tjudge.trim();
     }
 
-    public Teacher getTeacher() {
-        return teacher;
+    public Integer getGid() {
+        return gid;
     }
 
-    public void setTeacher(Teacher teacher) {
-        this.teacher = teacher;
+    public void setGid(Integer gid) {
+        this.gid = gid;
     }
 
     public Course getCourse() {
@@ -101,12 +105,20 @@ public class Student {
         this.course = course;
     }
 
-    public Student getJudge() {
-        return judge;
+    public Grade getGrade() {
+        return grade;
     }
 
-    public void setJudge(Student judge) {
-        this.judge = judge;
+    public void setGrade(Grade grade) {
+        this.grade = grade;
+    }
+
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
 
     @Override
@@ -119,9 +131,11 @@ public class Student {
                 ", cno=" + cno +
                 ", tid='" + tid + '\'' +
                 ", tjudge='" + tjudge + '\'' +
-                ", judge=" + judge +
-                ", teacher=" + teacher +
+                ", gid=" + gid +
                 ", course=" + course +
+                ", grade=" + grade +
+                ", teacher=" + teacher +
+                ", team=" + team +
                 '}';
     }
 }
