@@ -14,4 +14,8 @@ public class GradeService {
         gradeMapper.updateBySidSelective(grade, sid);
         return true;
     }
+
+    public Grade selectGrade(String sid) {
+        return gradeMapper.selectBySid(sid);
+    }
 }

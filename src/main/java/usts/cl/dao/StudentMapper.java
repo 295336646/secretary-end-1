@@ -17,6 +17,8 @@ public interface StudentMapper {
 
     int insertSelective(Student record);
 
+    List<Student> selectByStudentWithGroup(StudentExample example);
+
     List<Student> selectByStudentWithGrade(StudentExample example);
 
     List<Student> selectByExample(StudentExample example);

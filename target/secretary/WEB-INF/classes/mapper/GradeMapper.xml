@@ -7,6 +7,11 @@
         <result column="review_grade" jdbcType="TINYINT" property="reviewGrade"/>
         <result column="reply_grade" jdbcType="TINYINT" property="replyGrade"/>
         <result column="total_grade" jdbcType="TINYINT" property="totalGrade"/>
+        <result column="task" jdbcType="TINYINT" property="task"/>
+        <result column="technology" jdbcType="TINYINT" property="technology"/>
+        <result column="language" jdbcType="TINYINT" property="language"/>
+        <result column="answer" jdbcType="TINYINT" property="answer"/>
+        <result column="comments" jdbcType="VARCHAR" property="comments"/>
         <result column="general_comments" jdbcType="VARCHAR" property="generalComments"/>
     </resultMap>
     <sql id="Example_Where_Clause">
@@ -70,8 +75,16 @@
         </where>
     </sql>
     <sql id="Base_Column_List">
-        id, advisor_grade, review_grade, reply_grade, total_grade, general_comments
+        id, advisor_grade, review_grade, reply_grade, total_grade, task, technology, language,
+        answer, comments, general_comments
     </sql>
+    <select id="selectBySid" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tab_grade
+        where id=(select gid from tab_student where
+        sid=#{sid,jdbcType=VARCHAR});
+    </select>
     <select id="selectByExample" parameterType="usts.cl.bean.GradeExample" resultMap="BaseResultMap">
         select
         <if test="distinct">
@@ -104,11 +117,13 @@
     </delete>
     <insert id="insert" parameterType="usts.cl.bean.Grade">
         insert into tab_grade (id, advisor_grade, review_grade,
-                               reply_grade, total_grade, general_comments
-        )
+                               reply_grade, total_grade, task,
+                               technology, language, answer,
+                               comments, general_comments)
         values (#{id,jdbcType=INTEGER}, #{advisorGrade,jdbcType=TINYINT}, #{reviewGrade,jdbcType=TINYINT},
-                #{replyGrade,jdbcType=TINYINT}, #{totalGrade,jdbcType=TINYINT}, #{generalComments,jdbcType=VARCHAR}
-        )
+            #{replyGrade,jdbcType=TINYINT}, #{totalGrade,jdbcType=TINYINT}, #{task,jdbcType=TINYINT},
+            #{technology,jdbcType=TINYINT}, #{language,jdbcType=TINYINT}, #{answer,jdbcType=TINYINT},
+            #{comments,jdbcType=VARCHAR}, #{generalComments,jdbcType=VARCHAR})
     </insert>
     <insert id="insertSelective" parameterType="usts.cl.bean.Grade">
         insert into tab_grade
@@ -127,6 +142,21 @@
             </if>
             <if test="totalGrade != null">
                 total_grade,
+            </if>
+            <if test="task != null">
+                task,
+            </if>
+            <if test="technology != null">
+                technology,
+            </if>
+            <if test="language != null">
+                language,
+            </if>
+            <if test="answer != null">
+                answer,
+            </if>
+            <if test="comments != null">
+                comments,
             </if>
             <if test="generalComments != null">
                 general_comments,
@@ -148,6 +178,21 @@
             <if test="totalGrade != null">
                 #{totalGrade,jdbcType=TINYINT},
             </if>
+            <if test="task != null">
+                #{task,jdbcType=TINYINT},
+            </if>
+            <if test="technology != null">
+                #{technology,jdbcType=TINYINT},
+            </if>
+            <if test="language != null">
+                #{language,jdbcType=TINYINT},
+            </if>
+            <if test="answer != null">
+                #{answer,jdbcType=TINYINT},
+            </if>
+            <if test="comments != null">
+                #{comments,jdbcType=VARCHAR},
+            </if>
             <if test="generalComments != null">
                 #{generalComments,jdbcType=VARCHAR},
             </if>
@@ -159,6 +204,7 @@
             <include refid="Example_Where_Clause"/>
         </if>
     </select>
+
     <update id="updateBySidSelective" parameterType="map">
         update tab_grade
         <set>
@@ -177,6 +223,21 @@
             <if test="record.totalGrade != null">
                 total_grade = #{record.totalGrade,jdbcType=TINYINT},
             </if>
+            <if test="record.task != null">
+                task = #{record.task,jdbcType=TINYINT},
+            </if>
+            <if test="record.technology != null">
+                technology = #{record.technology,jdbcType=TINYINT},
+            </if>
+            <if test="record.language != null">
+                language = #{record.language,jdbcType=TINYINT},
+            </if>
+            <if test="record.answer != null">
+                answer = #{record.answer,jdbcType=TINYINT},
+            </if>
+            <if test="record.comments != null">
+                comments = #{record.comments,jdbcType=VARCHAR},
+            </if>
             <if test="record.generalComments != null">
                 general_comments = #{record.generalComments,jdbcType=VARCHAR},
             </if>
@@ -184,6 +245,7 @@
         where id=(select gid from tab_student where
         sid=#{sid,jdbcType=VARCHAR});
     </update>
+
     <update id="updateByExampleSelective" parameterType="map">
         update tab_grade
         <set>
@@ -202,6 +264,21 @@
             <if test="record.totalGrade != null">
                 total_grade = #{record.totalGrade,jdbcType=TINYINT},
             </if>
+            <if test="record.task != null">
+                task = #{record.task,jdbcType=TINYINT},
+            </if>
+            <if test="record.technology != null">
+                technology = #{record.technology,jdbcType=TINYINT},
+            </if>
+            <if test="record.language != null">
+                language = #{record.language,jdbcType=TINYINT},
+            </if>
+            <if test="record.answer != null">
+                answer = #{record.answer,jdbcType=TINYINT},
+            </if>
+            <if test="record.comments != null">
+                comments = #{record.comments,jdbcType=VARCHAR},
+            </if>
             <if test="record.generalComments != null">
                 general_comments = #{record.generalComments,jdbcType=VARCHAR},
             </if>
@@ -217,6 +294,11 @@
         review_grade = #{record.reviewGrade,jdbcType=TINYINT},
         reply_grade = #{record.replyGrade,jdbcType=TINYINT},
         total_grade = #{record.totalGrade,jdbcType=TINYINT},
+        task = #{record.task,jdbcType=TINYINT},
+        technology = #{record.technology,jdbcType=TINYINT},
+        language = #{record.language,jdbcType=TINYINT},
+        answer = #{record.answer,jdbcType=TINYINT},
+        comments = #{record.comments,jdbcType=VARCHAR},
         general_comments = #{record.generalComments,jdbcType=VARCHAR}
         <if test="_parameter != null">
             <include refid="Update_By_Example_Where_Clause"/>
@@ -237,6 +319,21 @@
             <if test="totalGrade != null">
                 total_grade = #{totalGrade,jdbcType=TINYINT},
             </if>
+            <if test="task != null">
+                task = #{task,jdbcType=TINYINT},
+            </if>
+            <if test="technology != null">
+                technology = #{technology,jdbcType=TINYINT},
+            </if>
+            <if test="language != null">
+                language = #{language,jdbcType=TINYINT},
+            </if>
+            <if test="answer != null">
+                answer = #{answer,jdbcType=TINYINT},
+            </if>
+            <if test="comments != null">
+                comments = #{comments,jdbcType=VARCHAR},
+            </if>
             <if test="generalComments != null">
                 general_comments = #{generalComments,jdbcType=VARCHAR},
             </if>
@@ -249,6 +346,11 @@
             review_grade     = #{reviewGrade,jdbcType=TINYINT},
             reply_grade      = #{replyGrade,jdbcType=TINYINT},
             total_grade      = #{totalGrade,jdbcType=TINYINT},
+            task             = #{task,jdbcType=TINYINT},
+            technology       = #{technology,jdbcType=TINYINT},
+            language         = #{language,jdbcType=TINYINT},
+            answer           = #{answer,jdbcType=TINYINT},
+            comments         = #{comments,jdbcType=VARCHAR},
             general_comments = #{generalComments,jdbcType=VARCHAR}
         where id = #{id,jdbcType=INTEGER}
     </update>

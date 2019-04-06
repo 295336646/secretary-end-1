@@ -18,4 +18,10 @@ public class GradeController {
         gradeService.updateGrade(grade, sid);
         return true;
     }
+
+    @GetMapping("/getGrade")
+    @ResponseBody
+    public Grade selectGrade(String sid) {
+        return gradeService.selectGrade(sid);
+    }
 }

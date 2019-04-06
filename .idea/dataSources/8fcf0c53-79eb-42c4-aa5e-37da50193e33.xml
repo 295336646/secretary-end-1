@@ -1109,12 +1109,12 @@
     </column>
     <column id="272" parent="234" name="advisor_grade">
       <Position>2</Position>
-      <DataType>tinyint(255)|0s</DataType>
+      <DataType>tinyint(4)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="273" parent="234" name="review_grade">
       <Position>3</Position>
-      <DataType>tinyint(255)|0s</DataType>
+      <DataType>tinyint(4)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="274" parent="234" name="reply_grade">
@@ -1127,76 +1127,106 @@
       <DataType>tinyint(4)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="276" parent="234" name="general_comments">
+    <column id="276" parent="234" name="task">
       <Position>6</Position>
+      <DataType>tinyint(4)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="277" parent="234" name="technology">
+      <Position>7</Position>
+      <DataType>tinyint(4)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="278" parent="234" name="language">
+      <Position>8</Position>
+      <DataType>tinyint(4)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="279" parent="234" name="answer">
+      <Position>9</Position>
+      <DataType>tinyint(4)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="280" parent="234" name="comments">
+      <Position>10</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="277" parent="234" name="PRIMARY">
+    <column id="281" parent="234" name="general_comments">
+      <Position>11</Position>
+      <DataType>varchar(255)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="282" parent="234" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="278" parent="235" name="sid">
+    <column id="283" parent="235" name="sid">
       <Position>1</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="279" parent="235" name="sname">
+    <column id="284" parent="235" name="sname">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="280" parent="235" name="sclass">
+    <column id="285" parent="235" name="sclass">
       <Position>3</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="281" parent="235" name="sgroup">
+    <column id="286" parent="235" name="sgroup">
       <Position>4</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="282" parent="235" name="cno">
+    <column id="287" parent="235" name="cno">
       <Position>5</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="283" parent="235" name="tid">
+    <column id="288" parent="235" name="tid">
       <Position>6</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="284" parent="235" name="tjudge">
+    <column id="289" parent="235" name="tjudge">
       <Position>7</Position>
       <DataType>varchar(255)|0s</DataType>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="285" parent="235" name="gid">
+    <column id="290" parent="235" name="gid">
       <Position>8</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="286" parent="235" name="s_c">
+    <index id="291" parent="235" name="grade">
+      <ColNames>gid</ColNames>
+      <Unique>1</Unique>
+      <Type>btree</Type>
+    </index>
+    <index id="292" parent="235" name="s_c">
       <ColNames>cno</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="287" parent="235" name="s_t">
+    <index id="293" parent="235" name="s_t">
       <ColNames>tid</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="288" parent="235" name="s_g">
-      <ColNames>gid</ColNames>
-      <Type>btree</Type>
-    </index>
-    <key id="289" parent="235" name="PRIMARY">
+    <key id="294" parent="235" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>sid</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="290" parent="235" name="s_c">
+    <key id="295" parent="235" name="grade">
+      <ColNames>gid</ColNames>
+      <UnderlyingIndexName>grade</UnderlyingIndexName>
+    </key>
+    <foreign-key id="296" parent="235" name="s_c">
       <ColNames>cno</ColNames>
       <RefSchemaName>secretary</RefSchemaName>
       <RefTableName>tab_course</RefTableName>
@@ -1204,7 +1234,7 @@
       <OnUpdate>cascade</OnUpdate>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="291" parent="235" name="s_t">
+    <foreign-key id="297" parent="235" name="s_t">
       <ColNames>tid</ColNames>
       <RefSchemaName>secretary</RefSchemaName>
       <RefTableName>tab_teacher</RefTableName>
@@ -1212,7 +1242,7 @@
       <OnUpdate>cascade</OnUpdate>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="292" parent="235" name="s_g">
+    <foreign-key id="298" parent="235" name="s_g">
       <ColNames>gid</ColNames>
       <RefSchemaName>secretary</RefSchemaName>
       <RefTableName>tab_grade</RefTableName>
@@ -1220,61 +1250,61 @@
       <OnUpdate>cascade</OnUpdate>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="293" parent="236" name="tid">
+    <column id="299" parent="236" name="tid">
       <Position>1</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="294" parent="236" name="tname">
+    <column id="300" parent="236" name="tname">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="295" parent="236" name="tgroup">
+    <column id="301" parent="236" name="tgroup">
       <Position>3</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="296" parent="236" name="tgroup">
+    <index id="302" parent="236" name="tgroup">
       <ColNames>tgroup</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="297" parent="236" name="PRIMARY">
+    <key id="303" parent="236" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>tid</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="298" parent="237" name="uid">
+    <column id="304" parent="237" name="uid">
       <Position>1</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="299" parent="237" name="user_name">
+    <column id="305" parent="237" name="user_name">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="300" parent="237" name="password">
+    <column id="306" parent="237" name="password">
       <Position>3</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="301" parent="237" name="salt">
+    <column id="307" parent="237" name="salt">
       <Position>4</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="302" parent="237" name="role">
+    <column id="308" parent="237" name="role">
       <Position>5</Position>
       <DataType>int(1)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="303" parent="237" name="PRIMARY">
+    <key id="309" parent="237" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>uid</ColNames>
       <Primary>1</Primary>

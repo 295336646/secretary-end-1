@@ -15,6 +15,9 @@
         <association property="course" resultMap="usts.cl.dao.CourseMapper.BaseResultMap"></association>
         <association property="grade" resultMap="usts.cl.dao.GradeMapper.BaseResultMap"></association>
     </resultMap>
+    <resultMap id="StudentWithGroup" type="usts.cl.bean.Student" extends="BaseResultMap">
+        <association property="course" resultMap="usts.cl.dao.CourseMapper.BaseResultMap"></association>
+    </resultMap>
     <sql id="Example_Where_Clause">
         <where>
             <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -81,6 +84,23 @@
     <sql id="Student_Grade_List">
         s.*, g.*, c.*
     </sql>
+    <sql id="Student_Group_List">
+        s.*, c.*
+    </sql>
+    <select id="selectByStudentWithGroup" resultMap="StudentWithGroup">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Student_Group_List"/>
+        from tab_student s inner join tab_course c on s.cno=c.cno
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
     <select id="selectByStudentWithGrade" resultMap="StudentWithGrade">
         select
         <if test="distinct">

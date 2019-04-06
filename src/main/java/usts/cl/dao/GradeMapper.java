@@ -21,7 +21,9 @@ public interface GradeMapper {
 
     Grade selectByPrimaryKey(Integer id);
 
-    int updateBySidSelective(@Param("record") Grade record,@Param("sid") String sid);
+    Grade selectBySid(@Param("sid") String sid);
+
+    int updateBySidSelective(@Param("record") Grade record, @Param("sid") String sid);
 
     int updateByExampleSelective(@Param("record") Grade record, @Param("example") GradeExample example);
 
