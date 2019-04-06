@@ -29,7 +29,7 @@ module.exports = [[module.i, "/* based on angular-toastr css https://github.com/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = [[module.i, "/* You can add global styles to this file, and also import other style files */\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9EOlxcQW5ndWxhclxcc2VjcmV0YXJ5XFxzZWNyZXRhcnkvc3JjXFxzdHlsZXMuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSwrRUFBK0UiLCJmaWxlIjoic3JjL3N0eWxlcy5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLyogWW91IGNhbiBhZGQgZ2xvYmFsIHN0eWxlcyB0byB0aGlzIGZpbGUsIGFuZCBhbHNvIGltcG9ydCBvdGhlciBzdHlsZSBmaWxlcyAqL1xuIl19 */", '', '']]
+module.exports = [[module.i, "/* You can add global styles to this file, and also import other style files */\n.check-div {\n  height: 70px;\n  line-height: 70px;\n  background-color: #fff;\n  padding-left: 30px;\n  min-width: 824px !important; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9EOlxcQW5ndWxhclxcc2VjcmV0YXJ5XFxzZWNyZXRhcnkvc3JjXFxzdHlsZXMuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSwrRUFBK0U7QUFFL0U7RUFDRSxhQUFZO0VBQ1osa0JBQWlCO0VBQ2pCLHVCQUFzQjtFQUN0QixtQkFBa0I7RUFDbEIsNEJBQTJCLEVBRTVCIiwiZmlsZSI6InNyYy9zdHlsZXMuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi8qIFlvdSBjYW4gYWRkIGdsb2JhbCBzdHlsZXMgdG8gdGhpcyBmaWxlLCBhbmQgYWxzbyBpbXBvcnQgb3RoZXIgc3R5bGUgZmlsZXMgKi9cbi8vIOacgOS4iuaWueepuuWHuuepuueZvemDqOWIhueUqOadpeaYvuekuuS4gOS6m+W/heimgeS/oeaBr+WSjOaTjeS9nFxuLmNoZWNrLWRpdiB7XG4gIGhlaWdodDogNzBweDtcbiAgbGluZS1oZWlnaHQ6IDcwcHg7XG4gIGJhY2tncm91bmQtY29sb3I6ICNmZmY7XG4gIHBhZGRpbmctbGVmdDogMzBweDtcbiAgbWluLXdpZHRoOiA4MjRweCAhaW1wb3J0YW50O1xuICAvL2JveC1zaXppbmc6IGJvcmRlci1ib3g7XG59XG4iXX0= */", '', '']]
 
 /***/ }),
 

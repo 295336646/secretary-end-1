@@ -279,7 +279,8 @@ var AppModule = /** @class */ (function () {
                 // 动画模块
                 _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_29__["BrowserAnimationsModule"],
                 // 提示框模块
-                ngx_toastr__WEBPACK_IMPORTED_MODULE_30__["ToastrModule"].forRoot(),
+                ngx_toastr__WEBPACK_IMPORTED_MODULE_30__["ToastrModule"].forRoot({ positionClass: 'inline' }),
+                ngx_toastr__WEBPACK_IMPORTED_MODULE_30__["ToastContainerModule"]
             ],
             // 注册服务
             providers: [{ provide: _angular_common__WEBPACK_IMPORTED_MODULE_12__["LocationStrategy"], useClass: _angular_common__WEBPACK_IMPORTED_MODULE_12__["HashLocationStrategy"] }, _service_http_service__WEBPACK_IMPORTED_MODULE_6__["HttpService"], _service_auth_service__WEBPACK_IMPORTED_MODULE_10__["AuthService"], _service_config_service__WEBPACK_IMPORTED_MODULE_13__["ConfigService"], _service_file_service__WEBPACK_IMPORTED_MODULE_22__["FileService"]],
@@ -1250,7 +1251,7 @@ var Teacher = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--页面加载条-->\n<!--loading为true则显示，反之隐藏-->\n<ngx-loading [show]=\"loading\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n<img src=\"assets/main_03.jpg\" alt=\"\" width=\"100%\">\n<!--整体div-->\n<div class=\"wrap\">\n  <!-- 左边内容 -->\n  <div id=\"left\" class=\"left\">\n    <!--显示标题-->\n    <div id=\"logoDiv\" class=\"logoDiv\">\n      <p id=\"logoTitle\" class=\"logoTitle\">\n        <span style=\"font-size:18px;\">毕业设计-秘书端</span>\n      </p>\n    </div>\n    <!--显示用户信息-->\n    <div class=\"menu-title\" id=\"personInfor\">\n      <!--用户标签-->\n      <span class=\"glyphicon glyphicon-user\" style=\"font-size: 20px\">\n        <span style=\"margin-left: 10px\">{{name}}</span>\n      </span>\n      <br><br>\n      <button class=\"btn btn-primary btn-sm\" (click)=\"logout()\">退出登录</button>\n    </div>\n\n    <hr>\n    <br>\n\n    <div class=\"menu-title\">秘书管理</div>\n    <!--选项卡1-->\n    <div class=\"menu-item\" href=\"#one\" data-toggle=\"tab\">\n      －成绩管理\n    </div>\n    <!--选项卡2-->\n    <div class=\"menu-item\" href=\"#two\" data-toggle=\"tab\" (click)=\"showFiles()\">\n      －文件管理\n    </div>\n    <!--选项卡3-->\n    <div class=\"menu-item\" href=\"#three\" data-toggle=\"tab\">\n      －分组管理\n    </div>\n    <!--选项卡4-->\n    <div class=\"menu-item\" href=\"#four\" data-toggle=\"tab\">\n      －修改密码\n    </div>\n  </div>\n\n  <!-- 右边内容 -->\n  <div id=\"right\" class=\"tab-content right\">\n    <!--默认激活内容-->\n    <div id=\"one\" class=\"tab-pane\">\n      <app-secretary [user]=\"user\"></app-secretary>\n    </div>\n    <!--待激活内容-->\n    <div id=\"two\" class=\"tab-pane\">\n                             <span style=\"text-shadow: 2px 0px 6px\">\n                               <app-file [user]=\"user\" [users]=\"users\"></app-file>\n                            </span>\n    </div>\n    <div id=\"three\" class=\"tab-pane\">\n      <app-group [user]=\"user\"></app-group>\n    </div>\n    <!--待激活内容-->\n    <div id=\"four\" class=\"tab-pane\">\n      <app-update [user]=\"user\"></app-update>\n    </div>\n  </div>\n\n</div>\n\n"
+module.exports = "<!--页面加载条-->\n<!--loading为true则显示，反之隐藏-->\n<ngx-loading [show]=\"loading\" [config]=\"{ backdropBorderRadius: '14px' }\"></ngx-loading>\n<img src=\"assets/main_03.jpg\" alt=\"\" width=\"100%\">\n<!--整体div-->\n<div class=\"wrap\">\n  <!-- 左边内容 -->\n  <div id=\"left\" class=\"left\">\n    <!--显示标题-->\n    <div id=\"logoDiv\" class=\"logoDiv\">\n      <p id=\"logoTitle\" class=\"logoTitle\">\n        <span style=\"font-size:18px;\">{{role}}端</span>\n      </p>\n    </div>\n    <!--显示用户信息-->\n    <div class=\"menu-title\" id=\"personInfor\">\n      <!--用户标签-->\n      <span class=\"glyphicon glyphicon-user\" style=\"font-size: 20px\">\n        <span style=\"margin-left: 10px\">{{name}}</span>\n      </span>\n      <br><br>\n      <button class=\"btn btn-primary btn-sm\" (click)=\"logout()\">退出登录</button>\n    </div>\n\n    <hr>\n    <br>\n\n    <div class=\"menu-title\">秘书管理</div>\n    <!--选项卡1-->\n    <div class=\"menu-item reply\" href=\"#one\" data-toggle=\"tab\">\n      －成绩管理\n    </div>\n    <!--选项卡2-->\n    <div class=\"menu-item manage\" id=\"file\" href=\"#two\" data-toggle=\"tab\" (click)=\"showFiles()\">\n      －文件管理\n    </div>\n    <!--选项卡3-->\n    <div class=\"menu-item manage\" href=\"#three\" data-toggle=\"tab\">\n      －分组管理\n    </div>\n    <!--选项卡4-->\n    <div class=\"menu-item manage\" href=\"#four\" data-toggle=\"tab\">\n      －修改密码\n    </div>\n  </div>\n\n  <!-- 右边内容 -->\n  <div id=\"right\" class=\"tab-content right\">\n\n    <!--显示时间-->\n    <div class=\"check-div form-inline\">\n      <span>{{today | date : 'yyyy-MM-dd HH:mm:ss'}}</span>\n      <!--自定义星期管道，显示星期几-->\n      <span style=\"padding-left:2em;\">{{today | weekDay}}</span>\n    </div>\n\n    <!--默认激活内容-->\n    <div id=\"one\" class=\"tab-pane\">\n      <app-secretary [user]=\"user\"></app-secretary>\n    </div>\n    <!--待激活内容-->\n    <div id=\"two\" class=\"tab-pane\">\n                             <span style=\"text-shadow: 2px 0px 6px\">\n                               <app-file [user]=\"user\" [users]=\"users\"></app-file>\n                            </span>\n    </div>\n    <div id=\"three\" class=\"tab-pane\">\n      <app-group [user]=\"user\"></app-group>\n    </div>\n    <!--待激活内容-->\n    <div id=\"four\" class=\"tab-pane\">\n      <app-update [user]=\"user\"></app-update>\n    </div>\n\n    <div id=\"report\" class=\"pull-right\" style=\"margin-top: 16%\">\n      <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"decline()\"\n              style=\"padding-top: 5px;padding-right: 10px\">\n        <span aria-hidden=\"true\">&times;</span>\n      </button>\n      <p style=\"padding-top: 40px;padding-left: 40px\">等待老师审核开题报告 <br>\n        <a href=\"javascript:void(0);\" style=\"padding-left: 10px\" (click)=\"report()\">查看</a>\n      </p>\n    </div>\n\n    <div id=\"role\" class=\"row\" style=\"margin-top: 20%\">\n      <div class=\"col-md-1 col-md-offset-5\">\n        <button class=\"btn btn-primary\" (click)=\"reply()\">答辩秘书</button>\n      </div>\n      <div class=\"col-md-1\">\n        <button class=\"btn btn-primary\" (click)=\"manage()\">管理秘书</button>\n      </div>\n    </div>\n\n  </div>\n</div>\n\n"
 
 /***/ }),
 
@@ -1261,7 +1262,7 @@ module.exports = "<!--页面加载条-->\n<!--loading为true则显示，反之�
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "body {\n  margin: 0;\n  padding: 0;\n  font-family: Lato, Helvetica, Arial, sans-serif;\n  font-size: 14px;\n  line-height: 1.72222;\n  color: #34495e;\n  background-color: #fff; }\n\n.wrap {\n  min-width: 100%;\n  position: absolute;\n  background: #eff3f6 bottom;\n  min-height: 100%;\n  overflow: hidden; }\n\n.left {\n  margin-left: 0px;\n  position: absolute;\n  box-sizing: border-box;\n  width: 200px;\n  height: 100%;\n  background: #4d5e70 bottom; }\n\n.logoDiv {\n  padding-top: 20px;\n  padding-bottom: 20px;\n  height: 70px;\n  background-color: #354457;\n  font-size: 17px;\n  color: #fff;\n  vertical-align: bottom; }\n\n.logoTitle {\n  margin-left: 15px;\n  line-height: 1.7; }\n\n.menu-title {\n  margin-left: 15px;\n  color: #828e9a;\n  padding-top: 10px;\n  padding-bottom: 10px;\n  font-size: 14px;\n  font-weight: bold; }\n\n.menu-item {\n  padding-left: 15px;\n  line-height: 40px;\n  height: 40px;\n  color: #aab1b7;\n  cursor: pointer; }\n\n.menu-item-active {\n  background-color: #3d4e60;\n  border-right: 4px solid #647f9d;\n  color: #fff; }\n\n.right {\n  float: left;\n  box-sizing: border-box;\n  padding-left: 200px;\n  clear: both;\n  color: #717592;\n  min-width: 100%;\n  min-height: 500px; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbWFpbi9EOlxcQW5ndWxhclxcc2VjcmV0YXJ5XFxzZWNyZXRhcnkvc3JjXFxhcHBcXG1haW5cXG1haW4uY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQ0E7RUFDRSxVQUFTO0VBQ1QsV0FBVTtFQUNWLGdEQUErQztFQUMvQyxnQkFBZTtFQUNmLHFCQUFvQjtFQUNwQixlQUFjO0VBQ2QsdUJBQXNCLEVBQ3ZCOztBQUdEO0VBQ0UsZ0JBQWU7RUFDZixtQkFBa0I7RUFDbEIsMkJBQTBCO0VBQzFCLGlCQUFnQjtFQUNoQixpQkFBZ0IsRUFDakI7O0FBR0Q7RUFDRSxpQkFBZ0I7RUFDaEIsbUJBQWtCO0VBQ2xCLHVCQUFzQjtFQUN0QixhQUFZO0VBQ1osYUFBWTtFQUNaLDJCQUEwQixFQUMzQjs7QUFFRDtFQUNFLGtCQUFpQjtFQUNqQixxQkFBb0I7RUFDcEIsYUFBWTtFQUNaLDBCQUF5QjtFQUN6QixnQkFBZTtFQUNmLFlBQVc7RUFDWCx1QkFBc0IsRUFDdkI7O0FBR0Q7RUFDRSxrQkFBaUI7RUFDakIsaUJBQWdCLEVBQ2pCOztBQUdEO0VBQ0Usa0JBQWlCO0VBQ2pCLGVBQWM7RUFDZCxrQkFBaUI7RUFDakIscUJBQW9CO0VBQ3BCLGdCQUFlO0VBQ2Ysa0JBQWlCLEVBQ2xCOztBQUdEO0VBQ0UsbUJBQWtCO0VBQ2xCLGtCQUFpQjtFQUNqQixhQUFZO0VBQ1osZUFBYztFQUNkLGdCQUFlLEVBQ2hCOztBQUdEO0VBQ0UsMEJBQXlCO0VBQ3pCLGdDQUErQjtFQUMvQixZQUFXLEVBQ1o7O0FBR0Q7RUFDRSxZQUFXO0VBQ1gsdUJBQXNCO0VBQ3RCLG9CQUFtQjtFQUNuQixZQUFXO0VBQ1gsZUFBYztFQUNkLGdCQUFlO0VBQ2Ysa0JBQWlCLEVBQ2xCIiwiZmlsZSI6InNyYy9hcHAvbWFpbi9tYWluLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLy8g5pW05L2T5biD5bGAXHJcbmJvZHkge1xyXG4gIG1hcmdpbjogMDtcclxuICBwYWRkaW5nOiAwO1xyXG4gIGZvbnQtZmFtaWx5OiBMYXRvLCBIZWx2ZXRpY2EsIEFyaWFsLCBzYW5zLXNlcmlmO1xyXG4gIGZvbnQtc2l6ZTogMTRweDtcclxuICBsaW5lLWhlaWdodDogMS43MjIyMjtcclxuICBjb2xvcjogIzM0NDk1ZTtcclxuICBiYWNrZ3JvdW5kLWNvbG9yOiAjZmZmO1xyXG59XHJcblxyXG4vLyBkaXbmlbTkvZPosIPmlbRcclxuLndyYXAge1xyXG4gIG1pbi13aWR0aDogMTAwJTtcclxuICBwb3NpdGlvbjogYWJzb2x1dGU7XHJcbiAgYmFja2dyb3VuZDogI2VmZjNmNiBib3R0b207XHJcbiAgbWluLWhlaWdodDogMTAwJTtcclxuICBvdmVyZmxvdzogaGlkZGVuO1xyXG59XHJcblxyXG4vLyDlt6bovrlkaXbluIPlsYBcclxuLmxlZnQge1xyXG4gIG1hcmdpbi1sZWZ0OiAwcHg7XHJcbiAgcG9zaXRpb246IGFic29sdXRlO1xyXG4gIGJveC1zaXppbmc6IGJvcmRlci1ib3g7XHJcbiAgd2lkdGg6IDIwMHB4O1xyXG4gIGhlaWdodDogMTAwJTtcclxuICBiYWNrZ3JvdW5kOiAjNGQ1ZTcwIGJvdHRvbTtcclxufVxyXG5cclxuLmxvZ29EaXYge1xyXG4gIHBhZGRpbmctdG9wOiAyMHB4O1xyXG4gIHBhZGRpbmctYm90dG9tOiAyMHB4O1xyXG4gIGhlaWdodDogNzBweDtcclxuICBiYWNrZ3JvdW5kLWNvbG9yOiAjMzU0NDU3O1xyXG4gIGZvbnQtc2l6ZTogMTdweDtcclxuICBjb2xvcjogI2ZmZjtcclxuICB2ZXJ0aWNhbC1hbGlnbjogYm90dG9tO1xyXG59XHJcblxyXG4vLyDmoIfpopjluIPlsYBcclxuLmxvZ29UaXRsZSB7XHJcbiAgbWFyZ2luLWxlZnQ6IDE1cHg7XHJcbiAgbGluZS1oZWlnaHQ6IDEuNztcclxufVxyXG5cclxuLy8g6YCJ6aG55qCH6aKYXHJcbi5tZW51LXRpdGxlIHtcclxuICBtYXJnaW4tbGVmdDogMTVweDtcclxuICBjb2xvcjogIzgyOGU5YTtcclxuICBwYWRkaW5nLXRvcDogMTBweDtcclxuICBwYWRkaW5nLWJvdHRvbTogMTBweDtcclxuICBmb250LXNpemU6IDE0cHg7XHJcbiAgZm9udC13ZWlnaHQ6IGJvbGQ7XHJcbn1cclxuXHJcbi8v5pyq6YCJ5Lit55qE5Yid5aeL54q25oCBXHJcbi5tZW51LWl0ZW0ge1xyXG4gIHBhZGRpbmctbGVmdDogMTVweDtcclxuICBsaW5lLWhlaWdodDogNDBweDtcclxuICBoZWlnaHQ6IDQwcHg7XHJcbiAgY29sb3I6ICNhYWIxYjc7XHJcbiAgY3Vyc29yOiBwb2ludGVyO1xyXG59XHJcblxyXG4vLyDpgInkuK3nirbmgIFcclxuLm1lbnUtaXRlbS1hY3RpdmUge1xyXG4gIGJhY2tncm91bmQtY29sb3I6ICMzZDRlNjA7XHJcbiAgYm9yZGVyLXJpZ2h0OiA0cHggc29saWQgIzY0N2Y5ZDtcclxuICBjb2xvcjogI2ZmZjtcclxufVxyXG5cclxuLy8g5Y+z6L65ZGl25biD5bGAXHJcbi5yaWdodCB7XHJcbiAgZmxvYXQ6IGxlZnQ7XHJcbiAgYm94LXNpemluZzogYm9yZGVyLWJveDtcclxuICBwYWRkaW5nLWxlZnQ6IDIwMHB4O1xyXG4gIGNsZWFyOiBib3RoO1xyXG4gIGNvbG9yOiAjNzE3NTkyO1xyXG4gIG1pbi13aWR0aDogMTAwJTtcclxuICBtaW4taGVpZ2h0OiA1MDBweDtcclxufVxyXG5cclxuIl19 */"
+module.exports = "body {\n  margin: 0;\n  padding: 0;\n  font-family: Lato, Helvetica, Arial, sans-serif;\n  font-size: 14px;\n  line-height: 1.72222;\n  color: #34495e;\n  background-color: #fff; }\n\n.wrap {\n  min-width: 100%;\n  position: absolute;\n  background: #eff3f6 bottom;\n  min-height: 100%;\n  overflow: hidden; }\n\n.left {\n  margin-left: 0px;\n  position: absolute;\n  box-sizing: border-box;\n  width: 200px;\n  height: 100%;\n  background: #4d5e70 bottom; }\n\n.logoDiv {\n  padding-top: 20px;\n  padding-bottom: 20px;\n  height: 70px;\n  background-color: #354457;\n  font-size: 17px;\n  color: #fff;\n  vertical-align: bottom; }\n\n.logoTitle {\n  margin-left: 15px;\n  line-height: 1.7; }\n\n.menu-title {\n  margin-left: 15px;\n  color: #828e9a;\n  padding-top: 10px;\n  padding-bottom: 10px;\n  font-size: 14px;\n  font-weight: bold; }\n\n.menu-item {\n  padding-left: 15px;\n  line-height: 40px;\n  height: 40px;\n  color: #aab1b7;\n  cursor: pointer; }\n\n.menu-item-active {\n  background-color: #3d4e60;\n  border-right: 4px solid #647f9d;\n  color: #fff; }\n\n.right {\n  float: left;\n  box-sizing: border-box;\n  padding-left: 200px;\n  clear: both;\n  color: #717592;\n  min-width: 100%;\n  min-height: 500px; }\n\n#report {\n  background: url('report.jpg') no-repeat 4px 5px;\n  width: 210px;\n  height: 100px;\n  margin-top: 10%; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbWFpbi9EOlxcQW5ndWxhclxcc2VjcmV0YXJ5XFxzZWNyZXRhcnkvc3JjXFxhcHBcXG1haW5cXG1haW4uY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQ0E7RUFDRSxVQUFTO0VBQ1QsV0FBVTtFQUNWLGdEQUErQztFQUMvQyxnQkFBZTtFQUNmLHFCQUFvQjtFQUNwQixlQUFjO0VBQ2QsdUJBQXNCLEVBQ3ZCOztBQUdEO0VBQ0UsZ0JBQWU7RUFDZixtQkFBa0I7RUFDbEIsMkJBQTBCO0VBQzFCLGlCQUFnQjtFQUNoQixpQkFBZ0IsRUFDakI7O0FBR0Q7RUFDRSxpQkFBZ0I7RUFDaEIsbUJBQWtCO0VBQ2xCLHVCQUFzQjtFQUN0QixhQUFZO0VBQ1osYUFBWTtFQUNaLDJCQUEwQixFQUMzQjs7QUFFRDtFQUNFLGtCQUFpQjtFQUNqQixxQkFBb0I7RUFDcEIsYUFBWTtFQUNaLDBCQUF5QjtFQUN6QixnQkFBZTtFQUNmLFlBQVc7RUFDWCx1QkFBc0IsRUFDdkI7O0FBR0Q7RUFDRSxrQkFBaUI7RUFDakIsaUJBQWdCLEVBQ2pCOztBQUdEO0VBQ0Usa0JBQWlCO0VBQ2pCLGVBQWM7RUFDZCxrQkFBaUI7RUFDakIscUJBQW9CO0VBQ3BCLGdCQUFlO0VBQ2Ysa0JBQWlCLEVBQ2xCOztBQUdEO0VBQ0UsbUJBQWtCO0VBQ2xCLGtCQUFpQjtFQUNqQixhQUFZO0VBQ1osZUFBYztFQUNkLGdCQUFlLEVBQ2hCOztBQUdEO0VBQ0UsMEJBQXlCO0VBQ3pCLGdDQUErQjtFQUMvQixZQUFXLEVBQ1o7O0FBR0Q7RUFDRSxZQUFXO0VBQ1gsdUJBQXNCO0VBQ3RCLG9CQUFtQjtFQUNuQixZQUFXO0VBQ1gsZUFBYztFQUNkLGdCQUFlO0VBQ2Ysa0JBQWlCLEVBQ2xCOztBQUVEO0VBQ0UsZ0RBQTREO0VBQzVELGFBQVk7RUFDWixjQUFhO0VBQ2IsZ0JBQWUsRUFDaEIiLCJmaWxlIjoic3JjL2FwcC9tYWluL21haW4uY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIvLyDmlbTkvZPluIPlsYBcclxuYm9keSB7XHJcbiAgbWFyZ2luOiAwO1xyXG4gIHBhZGRpbmc6IDA7XHJcbiAgZm9udC1mYW1pbHk6IExhdG8sIEhlbHZldGljYSwgQXJpYWwsIHNhbnMtc2VyaWY7XHJcbiAgZm9udC1zaXplOiAxNHB4O1xyXG4gIGxpbmUtaGVpZ2h0OiAxLjcyMjIyO1xyXG4gIGNvbG9yOiAjMzQ0OTVlO1xyXG4gIGJhY2tncm91bmQtY29sb3I6ICNmZmY7XHJcbn1cclxuXHJcbi8vIGRpduaVtOS9k+iwg+aVtFxyXG4ud3JhcCB7XHJcbiAgbWluLXdpZHRoOiAxMDAlO1xyXG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcclxuICBiYWNrZ3JvdW5kOiAjZWZmM2Y2IGJvdHRvbTtcclxuICBtaW4taGVpZ2h0OiAxMDAlO1xyXG4gIG92ZXJmbG93OiBoaWRkZW47XHJcbn1cclxuXHJcbi8vIOW3pui+uWRpduW4g+WxgFxyXG4ubGVmdCB7XHJcbiAgbWFyZ2luLWxlZnQ6IDBweDtcclxuICBwb3NpdGlvbjogYWJzb2x1dGU7XHJcbiAgYm94LXNpemluZzogYm9yZGVyLWJveDtcclxuICB3aWR0aDogMjAwcHg7XHJcbiAgaGVpZ2h0OiAxMDAlO1xyXG4gIGJhY2tncm91bmQ6ICM0ZDVlNzAgYm90dG9tO1xyXG59XHJcblxyXG4ubG9nb0RpdiB7XHJcbiAgcGFkZGluZy10b3A6IDIwcHg7XHJcbiAgcGFkZGluZy1ib3R0b206IDIwcHg7XHJcbiAgaGVpZ2h0OiA3MHB4O1xyXG4gIGJhY2tncm91bmQtY29sb3I6ICMzNTQ0NTc7XHJcbiAgZm9udC1zaXplOiAxN3B4O1xyXG4gIGNvbG9yOiAjZmZmO1xyXG4gIHZlcnRpY2FsLWFsaWduOiBib3R0b207XHJcbn1cclxuXHJcbi8vIOagh+mimOW4g+WxgFxyXG4ubG9nb1RpdGxlIHtcclxuICBtYXJnaW4tbGVmdDogMTVweDtcclxuICBsaW5lLWhlaWdodDogMS43O1xyXG59XHJcblxyXG4vLyDpgInpobnmoIfpophcclxuLm1lbnUtdGl0bGUge1xyXG4gIG1hcmdpbi1sZWZ0OiAxNXB4O1xyXG4gIGNvbG9yOiAjODI4ZTlhO1xyXG4gIHBhZGRpbmctdG9wOiAxMHB4O1xyXG4gIHBhZGRpbmctYm90dG9tOiAxMHB4O1xyXG4gIGZvbnQtc2l6ZTogMTRweDtcclxuICBmb250LXdlaWdodDogYm9sZDtcclxufVxyXG5cclxuLy/mnKrpgInkuK3nmoTliJ3lp4vnirbmgIFcclxuLm1lbnUtaXRlbSB7XHJcbiAgcGFkZGluZy1sZWZ0OiAxNXB4O1xyXG4gIGxpbmUtaGVpZ2h0OiA0MHB4O1xyXG4gIGhlaWdodDogNDBweDtcclxuICBjb2xvcjogI2FhYjFiNztcclxuICBjdXJzb3I6IHBvaW50ZXI7XHJcbn1cclxuXHJcbi8vIOmAieS4reeKtuaAgVxyXG4ubWVudS1pdGVtLWFjdGl2ZSB7XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogIzNkNGU2MDtcclxuICBib3JkZXItcmlnaHQ6IDRweCBzb2xpZCAjNjQ3ZjlkO1xyXG4gIGNvbG9yOiAjZmZmO1xyXG59XHJcblxyXG4vLyDlj7PovrlkaXbluIPlsYBcclxuLnJpZ2h0IHtcclxuICBmbG9hdDogbGVmdDtcclxuICBib3gtc2l6aW5nOiBib3JkZXItYm94O1xyXG4gIHBhZGRpbmctbGVmdDogMjAwcHg7XHJcbiAgY2xlYXI6IGJvdGg7XHJcbiAgY29sb3I6ICM3MTc1OTI7XHJcbiAgbWluLXdpZHRoOiAxMDAlO1xyXG4gIG1pbi1oZWlnaHQ6IDUwMHB4O1xyXG59XHJcblxyXG4jcmVwb3J0IHtcclxuICBiYWNrZ3JvdW5kOiB1cmwoXCIuLi8uLi9hc3NldHMvcmVwb3J0LmpwZ1wiKSBuby1yZXBlYXQgNHB4IDVweDtcclxuICB3aWR0aDogMjEwcHg7XHJcbiAgaGVpZ2h0OiAxMDBweDtcclxuICBtYXJnaW4tdG9wOiAxMCU7XHJcbn1cclxuXHJcbiJdfQ== */"
 
 /***/ }),
 
@@ -1282,7 +1283,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _service_auth_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../service/auth.service */ "./src/app/service/auth.service.ts");
 /* harmony import */ var _home_user__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../home/user */ "./src/app/home/user.ts");
 /* harmony import */ var _service_file_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../service/file.service */ "./src/app/service/file.service.ts");
-/* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ngx-toastr */ "./node_modules/ngx-toastr/fesm5/ngx-toastr.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1298,21 +1298,24 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-
 var MainComponent = /** @class */ (function () {
-    function MainComponent(authService, route, fileService, _toastrService) {
+    function MainComponent(authService, route, fileService) {
+        var _this = this;
         this.authService = authService;
         this.route = route;
         this.fileService = fileService;
-        this._toastrService = _toastrService;
         this.user = new _home_user__WEBPACK_IMPORTED_MODULE_4__["User"]();
+        this.config = {
+            animated: true,
+            backdrop: 'static',
+            keyboard: false
+        };
+        this.role = '答辩秘书';
         this.name = sessionStorage.getItem('name');
         this.loading = true;
-        this._toastrService.warning('请等待老师审核您的开题报告', '开题报告', {
-            closeButton: true,
-            disableTimeOut: true,
-            positionClass: 'toast-top-center',
-        });
+        setInterval(function () {
+            _this.today = new Date();
+        }, 50);
     }
     MainComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -1324,8 +1327,29 @@ var MainComponent = /** @class */ (function () {
         jquery__WEBPACK_IMPORTED_MODULE_2__('.menu-item').click(function () {
             jquery__WEBPACK_IMPORTED_MODULE_2__('.menu-item').removeClass('menu-item-active');
             jquery__WEBPACK_IMPORTED_MODULE_2__(this).addClass('menu-item-active');
-            jquery__WEBPACK_IMPORTED_MODULE_2__('.toast-warning.ngx-toastr.ng-trigger.ng-trigger-flyInOut').hide();
+            jquery__WEBPACK_IMPORTED_MODULE_2__('#report').hide();
+            jquery__WEBPACK_IMPORTED_MODULE_2__('#role').hide();
+            // $('.toast-warning.ngx-toastr.ng-trigger.ng-trigger-flyInOut').hide();
         });
+        jquery__WEBPACK_IMPORTED_MODULE_2__('.manage').hide();
+    };
+    MainComponent.prototype.reply = function () {
+        this.role = '答辩秘书';
+        jquery__WEBPACK_IMPORTED_MODULE_2__('.reply').show();
+        jquery__WEBPACK_IMPORTED_MODULE_2__('.manage').hide();
+    };
+    MainComponent.prototype.manage = function () {
+        this.role = '管理秘书';
+        jquery__WEBPACK_IMPORTED_MODULE_2__('.manage').show();
+        jquery__WEBPACK_IMPORTED_MODULE_2__('.reply').hide();
+    };
+    MainComponent.prototype.report = function () {
+        this.manage();
+        jquery__WEBPACK_IMPORTED_MODULE_2__('#file').click();
+        jquery__WEBPACK_IMPORTED_MODULE_2__('#report').hide();
+    };
+    MainComponent.prototype.decline = function () {
+        jquery__WEBPACK_IMPORTED_MODULE_2__('#report').hide();
     };
     // // 视图加载好后去除加载条
     MainComponent.prototype.ngAfterViewInit = function () {
@@ -1336,7 +1360,6 @@ var MainComponent = /** @class */ (function () {
     };
     // 登出，清除信息并跳转至初始页面
     MainComponent.prototype.logout = function () {
-        this._toastrService.clear();
         this.authService.logout();
     };
     MainComponent.prototype.showFiles = function () {
@@ -1359,7 +1382,7 @@ var MainComponent = /** @class */ (function () {
             styles: [__webpack_require__(/*! ./main.component.scss */ "./src/app/main/main.component.scss")]
         }),
         __metadata("design:paramtypes", [_service_auth_service__WEBPACK_IMPORTED_MODULE_3__["AuthService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"],
-            _service_file_service__WEBPACK_IMPORTED_MODULE_5__["FileService"], ngx_toastr__WEBPACK_IMPORTED_MODULE_6__["ToastrService"]])
+            _service_file_service__WEBPACK_IMPORTED_MODULE_5__["FileService"]])
     ], MainComponent);
     return MainComponent;
 }());
@@ -1634,7 +1657,7 @@ var MarkSheetComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<a href=\"javascript:void(0);\" (click)=\"openModal(template)\">{{secretary.grade.replyGrade}}</a>\n<ng-template #template>\n  <div class=\"modal-header\">\n    <h4 class=\"modal-title pull-left\">评分</h4>\n    <button type=\"button\" class=\"close pull-right\" aria-label=\"Close\" (click)=\"decline()\">\n      <span aria-hidden=\"true\">&times;</span>\n    </button>\n  </div>\n\n  <div class=\"modal-body\">\n    <div class=\"form-horizontal\">\n      <div class=\"form-group\">\n        <div class=\"col-md-4 control-label\">\n          <label for=\"task\">任务完成情况</label>\n        </div>\n        <div class=\"col-md-6\">\n          <input type=\"text\" id=\"task\" class=\"form-control\" placeholder=\"任务完成情况\" [(ngModel)]=\"reply.task\"\n                 (input)=\"calculate()\">\n        </div>\n      </div>\n      <div class=\"form-group\">\n        <div class=\"col-md-4 control-label\">\n          <label for=\"technology\">技术水平</label>\n        </div>\n        <div class=\"col-md-6\">\n          <input type=\"text\" id=\"technology\" class=\"form-control\" placeholder=\"技术水平\" [(ngModel)]=\"reply.technology\"\n                 (input)=\"calculate()\">\n        </div>\n      </div>\n      <div class=\"form-group\">\n        <div class=\"col-md-4 control-label\">\n          <label for=\"language\">语言表达</label>\n        </div>\n        <div class=\"col-md-6\">\n          <input type=\"text\" id=\"language\" class=\"form-control\" placeholder=\"语言表达\" [(ngModel)]=\"reply.language\"\n                 (input)=\"calculate()\">\n        </div>\n      </div>\n      <div class=\"form-group\">\n        <div class=\"col-md-4 control-label\">\n          <label for=\"answer\">回答问题</label>\n        </div>\n        <div class=\"col-md-6\">\n          <input type=\"text\" id=\"answer\" class=\"form-control\" placeholder=\"回答问题\" [(ngModel)]=\"reply.answer\"\n                 (input)=\"calculate()\">\n        </div>\n      </div>\n      <div class=\"form-group\">\n        <div class=\"col-md-4 control-label\">\n          <label for=\"reply\">答辩评分</label>\n        </div>\n        <div class=\"col-md-6\">\n          <input type=\"text\" id=\"reply\" class=\"form-control\" [value]=secretary.grade.replyGrade\n                 (ngModel)=\"secretary.grade.replyGrade\" disabled>\n        </div>\n      </div>\n    </div>\n\n  </div>\n\n  <div class=\"modal-footer\">\n    <button class=\"btn btn-primary\" (click)=\"submit()\">提交</button>\n    <button class=\"btn btn-primary\" (click)=\"decline()\">关闭</button>\n  </div>\n</ng-template>\n"
+module.exports = "<a href=\"javascript:void(0);\" (click)=\"openModal(template)\">{{secretary.grade.replyGrade}}</a>\n<ng-template #template>\n  <div class=\"modal-header\">\n    <h4 class=\"modal-title pull-left\">评分</h4>\n    <button type=\"button\" class=\"close pull-right\" aria-label=\"Close\" (click)=\"decline()\">\n      <span aria-hidden=\"true\">&times;</span>\n    </button>\n  </div>\n\n  <div class=\"modal-body\">\n    <div class=\"form-horizontal\">\n      <div class=\"form-group\">\n        <div class=\"col-md-4 control-label\">\n          <label for=\"task\">任务完成情况</label>\n        </div>\n        <div class=\"col-md-6\">\n          <input type=\"text\" id=\"task\" class=\"form-control\" placeholder=\"任务完成情况\" [(ngModel)]=\"reply.task\"\n                 (input)=\"calculate()\">\n        </div>\n      </div>\n      <div class=\"form-group\">\n        <div class=\"col-md-4 control-label\">\n          <label for=\"technology\">技术水平</label>\n        </div>\n        <div class=\"col-md-6\">\n          <input type=\"text\" id=\"technology\" class=\"form-control\" placeholder=\"技术水平\" [(ngModel)]=\"reply.technology\"\n                 (input)=\"calculate()\">\n        </div>\n      </div>\n      <div class=\"form-group\">\n        <div class=\"col-md-4 control-label\">\n          <label for=\"language\">语言表达</label>\n        </div>\n        <div class=\"col-md-6\">\n          <input type=\"text\" id=\"language\" class=\"form-control\" placeholder=\"语言表达\" [(ngModel)]=\"reply.language\"\n                 (input)=\"calculate()\">\n        </div>\n      </div>\n      <div class=\"form-group\">\n        <div class=\"col-md-4 control-label\">\n          <label for=\"answer\">回答问题</label>\n        </div>\n        <div class=\"col-md-6\">\n          <input type=\"text\" id=\"answer\" class=\"form-control\" placeholder=\"回答问题\" [(ngModel)]=\"reply.answer\"\n                 (input)=\"calculate()\">\n        </div>\n      </div>\n\n      <div class=\"form-group\">\n        <div class=\"col-md-4 control-label\">\n          <label for=\"comments\">评语</label>\n        </div>\n        <div class=\"col-md-6\">\n          <input type=\"text\" id=\"comments\" class=\"form-control\" placeholder=\"评语\" [(ngModel)]=\"reply.comments\"\n                 (input)=\"calculate()\">\n        </div>\n      </div>\n\n      <div class=\"form-group\">\n        <div class=\"col-md-4 control-label\">\n          <label for=\"reply\">答辩评分</label>\n        </div>\n        <div class=\"col-md-6\">\n          <input type=\"text\" id=\"reply\" class=\"form-control\" [value]=secretary.grade.replyGrade\n                 (ngModel)=\"secretary.grade.replyGrade\" disabled>\n        </div>\n      </div>\n    </div>\n\n  </div>\n\n  <div class=\"modal-footer\">\n    <button class=\"btn btn-primary\" (click)=\"submit()\">提交</button>\n    <button class=\"btn btn-primary\" (click)=\"decline()\">关闭</button>\n  </div>\n</ng-template>\n"
 
 /***/ }),
 
@@ -1663,6 +1686,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ngx_bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ngx-bootstrap */ "./node_modules/ngx-bootstrap/esm5/ngx-bootstrap.js");
 /* harmony import */ var _service_http_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../service/http.service */ "./src/app/service/http.service.ts");
 /* harmony import */ var _grade__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../grade */ "./src/app/main/secretary/grade.ts");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1672,6 +1696,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -1690,16 +1715,22 @@ var ReplyGradeModalComponent = /** @class */ (function () {
             technology: '',
             language: '',
             answer: '',
+            comments: ''
         };
         this.grade = new _grade__WEBPACK_IMPORTED_MODULE_3__["Grade"]();
     }
     ReplyGradeModalComponent.prototype.ngOnInit = function () {
-        if (localStorage.getItem(this.secretary.sid)) {
-            this.reply = JSON.parse(localStorage.getItem(this.secretary.sid));
-        }
     };
     ReplyGradeModalComponent.prototype.openModal = function (template) {
-        this.modalRef = this.modalService.show(template, this.config);
+        var _this = this;
+        var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpParams"]().set('sid', this.secretary.sid);
+        this.http.getGrade(params).subscribe(function (res) {
+            _this.reply = res;
+        }, function (error) {
+            alert(error);
+        }, function () {
+            _this.modalRef = _this.modalService.show(template, _this.config);
+        });
     };
     ReplyGradeModalComponent.prototype.decline = function () {
         this.modalRef.hide();
@@ -1715,6 +1746,15 @@ var ReplyGradeModalComponent = /** @class */ (function () {
         this.grade.replyGrade = this.secretary.grade.replyGrade;
         this.grade.totalGrade = this.total;
         this.grade.generalComments = this.check(this.grade.totalGrade);
+        this.grade.task = this.reply.task;
+        this.grade.technology = this.reply.technology;
+        this.grade.language = this.reply.language;
+        this.grade.answer = this.reply.answer;
+        this.grade.comments = this.reply.comments;
+        if (!this.reply.task || !this.reply.technology || !this.reply.language || !this.reply.answer || !this.reply.comments) {
+            alert('请填满!!!');
+            return;
+        }
         this.http.updateGrade(this.grade, this.secretary.sid).subscribe(function (res) {
             if (res === true) {
                 alert('修改成功');
@@ -1722,9 +1762,6 @@ var ReplyGradeModalComponent = /** @class */ (function () {
         }, function (error) {
             alert(error);
         }, function () {
-            if (_this.reply.task && _this.reply.technology && _this.reply.language && _this.reply.answer) {
-                localStorage.setItem(_this.secretary.sid, JSON.stringify(_this.reply));
-            }
             _this.modalRef.hide();
         });
     };
@@ -1857,7 +1894,7 @@ var SecretaryModalComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--显示时间-->\n<div class=\"check-div form-inline\">\n  <span>{{today | date : 'yyyy-MM-dd HH:mm:ss'}}</span>\n  <!--自定义星期管道，显示星期几-->\n  <span style=\"padding-left:2em;\">{{today | weekDay}}</span>\n  <button class=\"btn btn-primary pull-right\" (click)=\"exportTable()\"\n          style=\"margin-top: 20px;margin-right: 30px\">导出\n  </button>\n  <button class=\"btn btn-primary pull-right\"\n          style=\"margin-top: 20px;margin-right: 10px\">保存\n  </button>\n</div>\n<!--显示评分表-->\n<!--赋予表格id用来将表格导出成excel-->\n\n<table class=\"table table-bordered table-hover\" id=\"table\">\n  <thead>\n  <tr>\n    <th style=\"width: 300px;\">课题名称</th>\n    <th style=\"width: 10px\">学生</th>\n    <th>课题类型</th>\n    <th>指导评分</th>\n    <th>评阅评分</th>\n    <th>答辩评分</th>\n    <th>总成绩</th>\n    <th>总评</th>\n    <th>状态</th>\n    <th>信息操作</th>\n    <th>表格</th>\n  </tr>\n  </thead>\n  <tbody>\n  <tr *ngFor=\"let secretary of pageInfo.students\">\n    <td>\n      <span>{{secretary.course.cname}}</span>\n    </td>\n    <td>\n      <span>{{secretary.sname}}</span>\n    </td>\n    <td>\n      <span>{{secretary.course.ctype}}</span>\n    </td>\n    <td>\n      <span>{{secretary.grade.advisorGrade}}</span>\n    </td>\n    <td>\n      <span>{{secretary.grade.reviewGrade}}</span>\n    </td>\n    <td>\n      <app-reply-grade-modal [secretary]=\"secretary\"\n                             [total]=\"secretary.grade.advisorGrade*0.4+secretary.grade.reviewGrade*0.2+secretary.grade.replyGrade*0.4 | number : '1.0-0'\"></app-reply-grade-modal>\n    </td>\n    <td>\n      <!--按比例计算总成绩，并规定计算出的数值至少是1位整数，0到2位小数-->\n      <span>{{secretary.grade.advisorGrade*0.4+secretary.grade.reviewGrade*0.2+secretary.grade.replyGrade*0.4 | number : '1.0-0'}}</span>\n    </td>\n    <td>\n      <div\n        *ngIf=\"check(secretary.grade.advisorGrade*0.4+secretary.grade.reviewGrade*0.2+secretary.grade.replyGrade*0.4 | number : '1.0-0')\">\n        <span>{{review}}</span>\n      </div>\n    </td>\n    <td>\n      <span>已发布</span>\n    </td>\n    <td>\n      <app-secretary-modal [secretary]=\"secretary\"></app-secretary-modal>\n    </td>\n    <td>\n      <!--<app-mark-sheet [secretary]=\"secretary\"></app-mark-sheet>-->\n      <!--<app-mark-review [secretary]=\"secretary\"></app-mark-review>-->\n      <a [href]=down+downAddress[0]+data (click)=\"downWordSheet(secretary)\">答辩评分表</a><br>\n      <a [href]=down+downAddress[1]+data (click)=\"downWordReview(secretary,review)\">答辩评议书</a>\n    </td>\n  </tr>\n  </tbody>\n</table>\n\n<!-- 显示分页信息 -->\n<div class=\"row\" >\n  <!--分页文字信息  -->\n  <div class=\"col-md-6\">当前{{pageInfo.pageNum }}页,总{{pageInfo.pages }}\n    页,总 {{pageInfo.total }} 条记录\n  </div>\n  <!--分页条信息 -->\n  <div class=\"col-md-6\" style=\"position: fixed;bottom: 50px;right: 0px\">\n    <nav aria-label=\"Page navigation\">\n      <ul class=\"pagination\">\n        <li><a href=\"#\" (click)=\"getFirstPage()\">首页</a></li>\n        <li *ngIf=\"pageInfo.hasPreviousPage\"><a href=\"javascript:void(0);\" (click)=\"getPreviousPage()\"\n                                                aria-label=\"Previous\"> <span aria-hidden=\"true\">&laquo;</span>\n        </a></li>\n      </ul>\n      <ul class=\"pagination\" *ngFor=\"let page_Num of pageInfo.navigatepageNums\">\n        <li class=\"active\" *ngIf=\"page_Num===pageInfo.pageNum\"><a href=\"javascript:void(0);\">{{page_Num}}</a></li>\n        <li *ngIf=\"page_Num!==pageInfo.pageNum\"><a href=\"javascript:void(0);\"\n                                                   (click)=\"getPage(page_Num)\">{{page_Num}}</a></li>\n      </ul>\n      <ul class=\"pagination\">\n        <li *ngIf=\"pageInfo.hasNextPage\"><a href=\"javascript:void(0);\" (click)=\"getNextPage()\"\n                                            aria-label=\"Next\"> <span aria-hidden=\"true\">&raquo;</span>\n        </a></li>\n        <li><a href=\"javascript:void(0);\" (click)=\"getLastPage()\">末页</a></li>\n      </ul>\n    </nav>\n  </div>\n</div>\n"
+module.exports = "<!--显示评分表-->\n<!--赋予表格id用来将表格导出成excel-->\n\n<table class=\"table table-bordered table-hover\" id=\"table\">\n  <thead>\n  <tr>\n    <th style=\"width: 300px;\">课题名称</th>\n    <th style=\"width: 10px\">学生</th>\n    <th>课题类型</th>\n    <th>指导评分</th>\n    <th>评阅评分</th>\n    <th>答辩评分</th>\n    <th>总成绩</th>\n    <th>总评</th>\n    <th>状态</th>\n    <th>信息操作</th>\n    <th>表格</th>\n  </tr>\n  </thead>\n  <tbody>\n  <tr *ngFor=\"let secretary of pageInfo.students\">\n    <td>\n      <span>{{secretary.course.cname}}</span>\n    </td>\n    <td>\n      <span>{{secretary.sname}}</span>\n    </td>\n    <td>\n      <span>{{secretary.course.ctype}}</span>\n    </td>\n    <td>\n      <span>{{secretary.grade.advisorGrade}}</span>\n    </td>\n    <td>\n      <span>{{secretary.grade.reviewGrade}}</span>\n    </td>\n    <td>\n      <app-reply-grade-modal [secretary]=\"secretary\"\n                             [total]=\"secretary.grade.advisorGrade*0.4+secretary.grade.reviewGrade*0.2+secretary.grade.replyGrade*0.4 | number : '1.0-0'\"\n                             #reply></app-reply-grade-modal>\n    </td>\n    <td>\n      <!--按比例计算总成绩，并规定计算出的数值至少是1位整数，0到2位小数-->\n      <span>{{secretary.grade.advisorGrade*0.4+secretary.grade.reviewGrade*0.2+secretary.grade.replyGrade*0.4 | number : '1.0-0'}}</span>\n    </td>\n    <td>\n      <div\n        *ngIf=\"check(secretary.grade.advisorGrade*0.4+secretary.grade.reviewGrade*0.2+secretary.grade.replyGrade*0.4 | number : '1.0-0')\">\n        <span>{{review}}</span>\n      </div>\n    </td>\n    <td>\n      <span>已发布</span>\n    </td>\n    <td>\n      <app-secretary-modal [secretary]=\"secretary\"></app-secretary-modal>\n    </td>\n    <td>\n      <!--<app-mark-sheet [secretary]=\"secretary\"></app-mark-sheet>-->\n      <!--<app-mark-review [secretary]=\"secretary\"></app-mark-review>-->\n      <a [href]=down+downAddress[0]+data (click)=\"downWordSheet(secretary)\">答辩评分表</a><br>\n      <!--<a href=\"javascript:void(0);\" (click)=\"downWordSheet(secretary)\">答辩评分表</a><br>-->\n      <a [href]=down+downAddress[1]+data (click)=\"downWordReview(secretary,review)\">答辩评议书</a>\n    </td>\n  </tr>\n  </tbody>\n</table>\n\n<!-- 显示分页信息 -->\n<div class=\"row\">\n  <!--分页文字信息  -->\n  <div class=\"col-md-6\">当前{{pageInfo.pageNum }}页,总{{pageInfo.pages }}\n    页,总 {{pageInfo.total }} 条记录\n  </div>\n  <!--分页条信息 -->\n  <div class=\"col-md-6\" style=\"position: fixed;bottom: 50px;right: 0px\">\n    <nav aria-label=\"Page navigation\">\n      <ul class=\"pagination\">\n        <li><a href=\"#\" (click)=\"getFirstPage()\">首页</a></li>\n        <li *ngIf=\"pageInfo.hasPreviousPage\"><a href=\"javascript:void(0);\" (click)=\"getPreviousPage()\"\n                                                aria-label=\"Previous\"> <span aria-hidden=\"true\">&laquo;</span>\n        </a></li>\n      </ul>\n      <ul class=\"pagination\" *ngFor=\"let page_Num of pageInfo.navigatepageNums\">\n        <li class=\"active\" *ngIf=\"page_Num===pageInfo.pageNum\"><a href=\"javascript:void(0);\">{{page_Num}}</a></li>\n        <li *ngIf=\"page_Num!==pageInfo.pageNum\"><a href=\"javascript:void(0);\"\n                                                   (click)=\"getPage(page_Num)\">{{page_Num}}</a></li>\n      </ul>\n      <ul class=\"pagination\">\n        <li *ngIf=\"pageInfo.hasNextPage\"><a href=\"javascript:void(0);\" (click)=\"getNextPage()\"\n                                            aria-label=\"Next\"> <span aria-hidden=\"true\">&raquo;</span>\n        </a></li>\n        <li><a href=\"javascript:void(0);\" (click)=\"getLastPage()\">末页</a></li>\n      </ul>\n    </nav>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -1868,7 +1905,7 @@ module.exports = "<!--显示时间-->\n<div class=\"check-div form-inline\">\n  
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".check-div {\n  height: 70px;\n  line-height: 70px;\n  background-color: #fff;\n  padding-left: 30px;\n  min-width: 824px !important; }\n\n.check-div button {\n  font-size: 12px;\n  font-weight: bold; }\n\n.table th, .table td {\n  text-align: center;\n  vertical-align: middle !important; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbWFpbi9zZWNyZXRhcnkvRDpcXEFuZ3VsYXJcXHNlY3JldGFyeVxcc2VjcmV0YXJ5L3NyY1xcYXBwXFxtYWluXFxzZWNyZXRhcnlcXHNlY3JldGFyeS5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFDQTtFQUNFLGFBQVk7RUFDWixrQkFBaUI7RUFDakIsdUJBQXNCO0VBQ3RCLG1CQUFrQjtFQUNsQiw0QkFBMkIsRUFFNUI7O0FBRUQ7RUFDRSxnQkFBZTtFQUNmLGtCQUFpQixFQUNsQjs7QUFHRDtFQUNFLG1CQUFrQjtFQUNsQixrQ0FBaUMsRUFDbEMiLCJmaWxlIjoic3JjL2FwcC9tYWluL3NlY3JldGFyeS9zZWNyZXRhcnkuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIvLyDmnIDkuIrmlrnnqbrlh7rnqbrnmb3pg6jliIbnlKjmnaXmmL7npLrkuIDkupvlv4XopoHkv6Hmga/lkozmk43kvZxcclxuLmNoZWNrLWRpdiB7XHJcbiAgaGVpZ2h0OiA3MHB4O1xyXG4gIGxpbmUtaGVpZ2h0OiA3MHB4O1xyXG4gIGJhY2tncm91bmQtY29sb3I6ICNmZmY7XHJcbiAgcGFkZGluZy1sZWZ0OiAzMHB4O1xyXG4gIG1pbi13aWR0aDogODI0cHggIWltcG9ydGFudDtcclxuICAvL2JveC1zaXppbmc6IGJvcmRlci1ib3g7XHJcbn1cclxuXHJcbi5jaGVjay1kaXYgYnV0dG9uIHtcclxuICBmb250LXNpemU6IDEycHg7XHJcbiAgZm9udC13ZWlnaHQ6IGJvbGQ7XHJcbn1cclxuXHJcbi8vIOihqOagvOaWh+acrOWxheS4rVxyXG4udGFibGUgdGgsIC50YWJsZSB0ZCB7XHJcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG4gIHZlcnRpY2FsLWFsaWduOiBtaWRkbGUgIWltcG9ydGFudDtcclxufVxyXG4iXX0= */"
+module.exports = ".table th, .table td {\n  text-align: center;\n  vertical-align: middle !important; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbWFpbi9zZWNyZXRhcnkvRDpcXEFuZ3VsYXJcXHNlY3JldGFyeVxcc2VjcmV0YXJ5L3NyY1xcYXBwXFxtYWluXFxzZWNyZXRhcnlcXHNlY3JldGFyeS5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFDQTtFQUNFLG1CQUFrQjtFQUNsQixrQ0FBaUMsRUFDbEMiLCJmaWxlIjoic3JjL2FwcC9tYWluL3NlY3JldGFyeS9zZWNyZXRhcnkuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIvLyDooajmoLzmlofmnKzlsYXkuK1cclxuLnRhYmxlIHRoLCAudGFibGUgdGQge1xyXG4gIHRleHQtYWxpZ246IGNlbnRlcjtcclxuICB2ZXJ0aWNhbC1hbGlnbjogbWlkZGxlICFpbXBvcnRhbnQ7XHJcbn1cclxuIl19 */"
 
 /***/ }),
 
@@ -1908,22 +1945,12 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 var SecretaryComponent = /** @class */ (function () {
     function SecretaryComponent(http, fileService) {
-        var _this = this;
         this.http = http;
         this.fileService = fileService;
         this.pageInfo = new _PageInfo__WEBPACK_IMPORTED_MODULE_5__["PageInfo"]();
         this.down = 'http://localhost:8080/cl/';
         this.downAddress = ['downWordSheet?', 'downWordReview?'];
-        this.reply = {
-            task: '',
-            technology: '',
-            language: '',
-            answer: '',
-        };
         this.pageInfo.firstPage = '1';
-        this.timer = setInterval(function () {
-            _this.today = new Date();
-        }, 50);
     }
     SecretaryComponent.prototype.ngOnInit = function () {
         var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_6__["HttpParams"]().set('pn', this.pageInfo.firstPage);
@@ -2050,14 +2077,22 @@ var SecretaryComponent = /** @class */ (function () {
         // saveAs(blob, '学生成绩表.xls');
     };
     SecretaryComponent.prototype.downWordSheet = function (secretary) {
-        if (localStorage.getItem(secretary.sid)) {
-            this.reply = JSON.parse(localStorage.getItem(secretary.sid));
+        // if (localStorage.getItem(secretary.sid)) {
+        //   this.reply = JSON.parse(localStorage.getItem(secretary.sid));
+        // }
+        if (!this.rep.reply.task || !this.rep.reply.technology ||
+            !this.rep.reply.language || !this.rep.reply.answer || !this.rep.reply.comments) {
+            this.rep.reply.task = secretary.grade.task;
+            this.rep.reply.technology = secretary.grade.technology;
+            this.rep.reply.language = secretary.grade.language;
+            this.rep.reply.answer = secretary.grade.answer;
+            this.rep.reply.comments = secretary.grade.comments;
         }
         var sid = secretary.sid;
         var sname = secretary.sname;
         var cname = secretary.course.cname;
         var replyGrade = secretary.grade.replyGrade;
-        this.data = "sid=" + sid + "&sname=" + sname + "&cname=" + cname + "\n    &task=" + this.reply.task + "&technology=" + this.reply.technology + "\n   &language=" + this.reply.language + "&answer=" + this.reply.answer + "&replyGrade=" + replyGrade;
+        this.data = "sid=" + sid + "&sname=" + sname + "&cname=" + cname + "\n     &task=" + this.rep.reply.task + "&technology=" + this.rep.reply.technology + "\n    &language=" + this.rep.reply.language + "&answer=" + this.rep.reply.answer + "&replyGrade=" + replyGrade + "\n   &comments=" + this.rep.reply.comments;
     };
     SecretaryComponent.prototype.downWordReview = function (secretary, review) {
         var sid = secretary.sid;
@@ -2070,10 +2105,10 @@ var SecretaryComponent = /** @class */ (function () {
             .toFixed(0);
         this.data = "sid=" + sid + "&sname=" + sname + "&cname=" + cname + "\n    &advisorGrade=" + advisorGrade + "&reviewGrade=" + reviewGrade + "\n    &replyGrade=" + replyGrade + "&total=" + total + "&review=" + this.review;
     };
-    // 页面销毁时，清除时间
-    SecretaryComponent.prototype.ngOnDestroy = function () {
-        clearInterval(this.timer);
-    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('reply'),
+        __metadata("design:type", Object)
+    ], SecretaryComponent.prototype, "rep", void 0);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
         __metadata("design:type", _home_user__WEBPACK_IMPORTED_MODULE_4__["User"])
@@ -2255,7 +2290,6 @@ var WeekDayPipe = /** @class */ (function () {
             var week = weekArray[myDate.getDay()];
             return week;
         }
-        return null;
     };
     WeekDayPipe = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Pipe"])({
@@ -2507,6 +2541,10 @@ var HttpService = /** @class */ (function () {
     // 更新成绩
     HttpService.prototype.updateGrade = function (grade, sid) {
         return this.http.put(this.Url + "/updateGrade/" + sid, grade, { headers: headers }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.config.handleError));
+    };
+    // 查看成绩
+    HttpService.prototype.getGrade = function (params) {
+        return this.http.get(this.Url + "/getGrade", { params: params }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.config.handleError));
     };
     HttpService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
