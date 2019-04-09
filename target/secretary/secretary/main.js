@@ -830,7 +830,7 @@ var File = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n  <tabset>\n    <tab *ngFor=\"let group of groups;let i = index\" [active]=\"i==0\">\n      <ng-template tabHeading>\n        {{group}}\n        <button class=\"btn btn-danger btn-xs\" (click)=\"romoveGroup(i)\" id=\"remove\">\n          <span class=\"glyphicon glyphicon-remove\"></span>\n        </button>\n      </ng-template>\n      <app-teacher (outer)=\"getCheckTeacher($event)\"></app-teacher>\n      <!--<app-student (outer)=\"getCheckStudents($event)\"></app-student>-->\n      <button class=\"btn btn-success\" (click)=\"submit(group)\">提交</button>\n    </tab>\n    <tab>\n      <ng-template tabHeading>\n        <button class=\"btn btn-success btn-xs\" (click)=\"addGroup()\">\n          <span class=\"glyphicon glyphicon-plus\"></span>\n        </button>\n      </ng-template>\n    </tab>\n  </tabset>\n  <br>\n  <button class=\"btn btn-success\" (click)=\"exportTable()\">导出</button>\n  <br>\n  <table class=\"table table-bordered table-hover\" style=\"width: 90%\" id=\"group\">\n    <thead>\n    <tr>\n      <th>序号</th>\n      <th>所属班级</th>\n      <th>学生学号</th>\n      <th>学生姓名</th>\n      <th>教师工号</th>\n      <th>教师姓名</th>\n      <th>课题名称</th>\n      <th>评阅教师工号</th>\n      <th>评阅教师姓名</th>\n      <th>组号</th>\n    </tr>\n    </thead>\n    <tbody>\n    <tr *ngFor=\"let stu of list;let i =index\">\n      <td>{{i+1}}</td>\n      <td>{{stu.sclass}}</td>\n      <td>{{stu.sid}}</td>\n      <td>{{stu.sname}}</td>\n      <td>{{stu.teacher.tid}}</td>\n      <td>{{stu.teacher.tname}}</td>\n      <td>{{stu.course.cname}}</td>\n      <td>\n        <span *ngIf=\"stu.tjudge!=='0'\">{{stu.tjudge}}</span>\n        <span *ngIf=\"stu.tjudge==='0'\">暂未分配</span>\n      </td>\n      <td>\n        <span *ngIf=\"stu.tjudge!=='0'\">{{stu.judge.teacher.tname}}</span>\n        <span *ngIf=\"stu.tjudge==='0'\">暂未分配</span>\n      </td>\n      <td>\n        <span *ngIf=stu.sgroup>\n          {{stu.sgroup}}组\n        </span>\n        <span *ngIf=!stu.sgroup>\n         暂未分配\n        </span>\n      </td>\n    </tr>\n    </tbody>\n  </table>\n</div>\n\n"
+module.exports = "<div class=\"container\">\n  <tabset>\n    <tab *ngFor=\"let group of groups;let i = index\" [active]=\"i==0\">\n      <ng-template tabHeading>\n        {{group}}\n        <button class=\"btn btn-danger btn-xs\" (click)=\"romoveGroup(i)\" id=\"remove\">\n          <span class=\"glyphicon glyphicon-remove\"></span>\n        </button>\n      </ng-template>\n      <app-teacher (outer)=\"getCheckTeacher($event)\"></app-teacher>\n      <!--<app-student (outer)=\"getCheckStudents($event)\"></app-student>-->\n      <button class=\"btn btn-success\" (click)=\"submit(group)\">提交</button>\n    </tab>\n    <tab>\n      <ng-template tabHeading>\n        <button class=\"btn btn-success btn-xs\" (click)=\"addGroup()\">\n          <span class=\"glyphicon glyphicon-plus\"></span>\n        </button>\n      </ng-template>\n    </tab>\n  </tabset>\n\n  <table class=\"table table-bordered table-hover\" style=\"width: 90%\" id=\"group\">\n    <thead>\n    <tr>\n      <th>序号</th>\n      <th>所属班级</th>\n      <th>学生学号</th>\n      <th>学生姓名</th>\n      <th>教师工号</th>\n      <th>教师姓名</th>\n      <th>课题名称</th>\n      <th>评阅教师工号</th>\n      <th>评阅教师姓名</th>\n      <th>组号</th>\n    </tr>\n    </thead>\n    <tbody>\n    <tr *ngFor=\"let g of group;let i=index\">\n      <td>{{i+1}}</td>\n      <td>{{g.sclass}}</td>\n      <td>{{g.sid}}</td>\n      <td>{{g.sname}}</td>\n      <td>{{g.tid}}</td>\n      <td>{{g.tname}}</td>\n      <td>{{g.cname}}</td>\n      <td>{{g.tjudge}}</td>\n      <td>{{g.tjudgename}}</td>\n      <td>{{g.groupnum}}</td>\n    </tr>\n    </tbody>\n  </table>\n</div>\n\n"
 
 /***/ }),
 
@@ -857,10 +857,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GroupComponent", function() { return GroupComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _service_http_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../service/http.service */ "./src/app/service/http.service.ts");
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _service_file_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../service/file.service */ "./src/app/service/file.service.ts");
-/* harmony import */ var _home_user__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../home/user */ "./src/app/home/user.ts");
+/* harmony import */ var _home_user__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../home/user */ "./src/app/home/user.ts");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -874,17 +872,17 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-
 var GroupComponent = /** @class */ (function () {
-    function GroupComponent(httpService, fileService) {
+    function GroupComponent(httpService) {
         this.httpService = httpService;
-        this.fileService = fileService;
         this.groups = new Array();
-        this.checkStudents = new Array();
+        this.checkTeacher = new Array();
+        // checkStudents: Array<Student> = new Array<Student>();
         this.flag = false;
+        this.group = new Array();
     }
     GroupComponent.prototype.ngOnInit = function () {
-        // this.groupAll();
+        this.showGroup();
         if (localStorage.getItem('groups') !== null) {
             this.groups = JSON.parse(localStorage.getItem('groups'));
         }
@@ -892,37 +890,31 @@ var GroupComponent = /** @class */ (function () {
     GroupComponent.prototype.getCheckTeacher = function (e) {
         this.checkTeacher = e;
     };
-    GroupComponent.prototype.getCheckStudents = function (e) {
-        this.checkStudents = e;
-    };
-    GroupComponent.prototype.groupAll = function () {
+    // getCheckStudents(e: any) {
+    //   this.checkStudents = e;
+    // }
+    GroupComponent.prototype.showGroup = function () {
         var _this = this;
-        this.httpService.groupAll().subscribe(function (result) {
-            _this.list = result;
+        var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpParams"]().set('tjudge', this.user.uid);
+        this.httpService.showGroup(params).subscribe(function (result) {
+            _this.group = result;
         }, function (error) {
             alert(error);
         });
     };
-    GroupComponent.prototype.submit = function (group) {
+    GroupComponent.prototype.submit = function (groupNum) {
         var _this = this;
-        if (this.checkStudents.length === 0 || this.checkTeacher == null) {
+        if (this.checkTeacher.length === 0) {
             alert('不能提交空数据');
             return;
         }
-        for (var i = 0; i < this.checkStudents.length; i++) {
-            this.httpService.dividedGroup(this.checkStudents[i].sid, group, this.checkTeacher.tid).subscribe(function (res) {
-                _this.flag = res;
-                if (_this.flag === false) {
-                    alert('不能和指导教师分为一组');
-                    return;
-                }
-                else {
-                    alert('分组成功');
-                }
+        for (var i = 0; i < this.checkTeacher.length; i++) {
+            this.httpService.dividedGroup(this.checkTeacher[i].tid, groupNum).subscribe(function (res) {
+                alert('分组成功');
             }, function (error) {
                 alert(error);
             }, function () {
-                _this.groupAll();
+                _this.showGroup();
             });
         }
     };
@@ -939,26 +931,9 @@ var GroupComponent = /** @class */ (function () {
         this.groups.splice(i, 1);
         localStorage.setItem('groups', JSON.stringify(this.groups));
     };
-    // 导出表格
-    GroupComponent.prototype.exportTable = function () {
-        // 将导出的部分用html包裹，并设置编码格式，以解决导出内容乱码问题
-        var data = "<html><head><meta charset='utf-8' /></head><body>" + jquery__WEBPACK_IMPORTED_MODULE_2__('#group')[0].outerHTML + "</body></html>";
-        // 设置文件导出类型未excel
-        var blob = new Blob([data], {
-            type: 'application/ms-excel'
-        });
-        var fd = new FormData();
-        fd.append('file', blob, '分组表.xls'); // fileData为自定义
-        // 上传blob文件
-        this.fileService.upload(this.user.uid, fd).subscribe(function (res) {
-            alert('文件成功导入数据库');
-            console.log(res);
-        });
-        // saveAs(blob, '学生成绩表.xls');
-    };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", _home_user__WEBPACK_IMPORTED_MODULE_4__["User"])
+        __metadata("design:type", _home_user__WEBPACK_IMPORTED_MODULE_2__["User"])
     ], GroupComponent.prototype, "user", void 0);
     GroupComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -966,9 +941,29 @@ var GroupComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./group.component.html */ "./src/app/main/group/group.component.html"),
             styles: [__webpack_require__(/*! ./group.component.scss */ "./src/app/main/group/group.component.scss")]
         }),
-        __metadata("design:paramtypes", [_service_http_service__WEBPACK_IMPORTED_MODULE_1__["HttpService"], _service_file_service__WEBPACK_IMPORTED_MODULE_3__["FileService"]])
+        __metadata("design:paramtypes", [_service_http_service__WEBPACK_IMPORTED_MODULE_1__["HttpService"]])
     ], GroupComponent);
     return GroupComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/main/group/student/Student.ts":
+/*!***********************************************!*\
+  !*** ./src/app/main/group/student/Student.ts ***!
+  \***********************************************/
+/*! exports provided: Student */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Student", function() { return Student; });
+var Student = /** @class */ (function () {
+    function Student() {
+    }
+    return Student;
 }());
 
 
@@ -1010,7 +1005,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var ngx_bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ngx-bootstrap */ "./node_modules/ngx-bootstrap/esm5/ngx-bootstrap.js");
 /* harmony import */ var _service_http_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../service/http.service */ "./src/app/service/http.service.ts");
-/* harmony import */ var _student__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./student */ "./src/app/main/group/student/student.ts");
+/* harmony import */ var _Student__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Student */ "./src/app/main/group/student/Student.ts");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_4__);
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
@@ -1054,7 +1049,7 @@ var StudentComponent = /** @class */ (function () {
     StudentComponent.prototype.confirm = function (e) {
         this.checkStudents.length = 0;
         for (var i = 0; i < jquery__WEBPACK_IMPORTED_MODULE_4__('.check_item:checked').length; i++) {
-            var student = new _student__WEBPACK_IMPORTED_MODULE_3__["Student"]();
+            var student = new _Student__WEBPACK_IMPORTED_MODULE_3__["Student"]();
             student.sid = jquery__WEBPACK_IMPORTED_MODULE_4__('.check_item:checked').eq(i).attr('id');
             student.sname = jquery__WEBPACK_IMPORTED_MODULE_4__('.check_item:checked').eq(i).attr('name');
             this.checkStudents.push(student);
@@ -1097,20 +1092,21 @@ var StudentComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/main/group/student/student.ts":
+/***/ "./src/app/main/group/teacher/Teacher.ts":
 /*!***********************************************!*\
-  !*** ./src/app/main/group/student/student.ts ***!
+  !*** ./src/app/main/group/teacher/Teacher.ts ***!
   \***********************************************/
-/*! exports provided: Student */
+/*! exports provided: Teacher */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Student", function() { return Student; });
-var Student = /** @class */ (function () {
-    function Student() {
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Teacher", function() { return Teacher; });
+var Teacher = /** @class */ (function () {
+    function Teacher() {
+        this.students = new Array();
     }
-    return Student;
+    return Teacher;
 }());
 
 
@@ -1124,7 +1120,7 @@ var Student = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<button class=\"btn btn-primary btn-sm\" (click)=\"openModal(template)\">选择教师</button>\n<br>\n<label>\n  教师:\n</label>\n<span *ngIf=\"checkTeacher\">\n  <span>{{checkTeacher.tname}}</span>\n  <button class=\"btn btn-default btn-xs\" (click)=\"remove()\">\n    <span class=\"glyphicon glyphicon-remove\"></span>\n  </button>\n  <br>\n</span>\n\n<br *ngIf=\"!checkTeacher\">\n<ng-template #template>\n  <div class=\"modal-header\">\n    <h4 class=\"modal-title text-center\">教师表</h4>\n    <button type=\"button\" class=\"close pull-right\" aria-label=\"Close\" (click)=\"decline()\">\n      <span aria-hidden=\"true\">&times;</span>\n    </button>\n  </div>\n  <div class=\"modal-body\">\n    <div class=\"input-group form-group\">\n      <input type=\"text\" class=\"form-control\" ngModel #search>\n      <span class=\"input-group-addon\"><span class=\"glyphicon glyphicon-search\"></span></span>\n    </div>\n    <table class=\"table table-bordered table-hover\" style=\"width: 90%\">\n      <thead>\n      <tr>\n        <th>\n          #\n        </th>\n        <th>教工号</th>\n        <th>教师姓名</th>\n      </tr>\n      </thead>\n      <tbody>\n      <tr *ngFor=\"let teacher of teachers | filter : 'tid':search.value\"\n          (click)=\"checkLine($event)\">\n        <td>\n          <input type=\"radio\" class=\"{{teacher.tname}}\" name=\"teacher\"\n                 id=\"{{teacher.tid}}\" [checked]=\"false\" (click)=\"$event.stopPropagation()\">\n        </td>\n        <td>{{teacher.tid}}</td>\n        <td>{{teacher.tname}}</td>\n      </tr>\n      </tbody>\n    </table>\n  </div>\n  <div class=\"modal-footer\">\n    <button class=\"btn btn-primary\" (click)=\"confirm($event)\">确认</button>\n    <button class=\"btn btn-primary\" (click)=\"decline()\">关闭</button>\n  </div>\n</ng-template>\n"
+module.exports = "<button class=\"btn btn-primary btn-sm\" (click)=\"openModal(template)\">选择教师</button>\n<br>\n<label>\n  教师:\n</label>\n<span *ngFor=\"let teacher of checkTeacher;let i =index\">\n          <span *ngIf=\"i===0\">{{teacher.tname}}</span>\n          <span *ngIf=\"i!==0\" style=\"padding-left: 42px\">{{teacher.tname}}</span>\n          <button class=\"btn btn-default btn-xs\" (click)=\"remove(teacher)\">\n             <span class=\"glyphicon glyphicon-remove\"></span>\n          </button>\n          <br>\n</span>\n<br *ngIf=\"!checkTeacher.length\">\n<ng-template #template>\n  <div class=\"modal-header\">\n    <h4 class=\"modal-title text-center\">教师表</h4>\n    <button type=\"button\" class=\"close pull-right\" aria-label=\"Close\" (click)=\"decline()\">\n      <span aria-hidden=\"true\">&times;</span>\n    </button>\n  </div>\n  <div class=\"modal-body\">\n    <div class=\"input-group form-group\">\n      <input type=\"text\" class=\"form-control\" ngModel #search>\n      <span class=\"input-group-addon\"><span class=\"glyphicon glyphicon-search\"></span></span>\n    </div>\n    <table class=\"table table-bordered table-hover\" style=\"width: 90%\">\n      <thead>\n      <tr>\n        <th>\n          <input type=\"checkbox\" id=\"check_all\" (click)=\"checkAll()\">\n        </th>\n        <th>教工号</th>\n        <th>教师姓名</th>\n      </tr>\n      </thead>\n      <tbody>\n      <tr *ngFor=\"let teacher of teachers | filter : 'tid':search.value\"\n          (click)=\"checkLine($event)\">\n        <td>\n          <input type=\"checkbox\" class=\"check_item\" (click)=\"checkItem($event)\" name=\"{{teacher.tname}}\"\n                 id=\"{{teacher.tid}}\">\n        </td>\n        <td>{{teacher.tid}}</td>\n        <td>{{teacher.tname}}</td>\n      </tr>\n      </tbody>\n    </table>\n  </div>\n  <div class=\"modal-footer\">\n    <button class=\"btn btn-primary\" (click)=\"confirm($event)\">确认</button>\n    <button class=\"btn btn-primary\" (click)=\"decline()\">关闭</button>\n  </div>\n</ng-template>\n"
 
 /***/ }),
 
@@ -1154,7 +1150,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _service_http_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../service/http.service */ "./src/app/service/http.service.ts");
-/* harmony import */ var _teacher__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./teacher */ "./src/app/main/group/teacher/teacher.ts");
+/* harmony import */ var _Teacher__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Teacher */ "./src/app/main/group/teacher/Teacher.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1179,6 +1175,7 @@ var TeacherComponent = /** @class */ (function () {
             keyboard: false
         };
         this.outer = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+        this.checkTeacher = new Array();
     }
     TeacherComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -1193,17 +1190,31 @@ var TeacherComponent = /** @class */ (function () {
         this.modalRef.hide();
     };
     TeacherComponent.prototype.confirm = function (e) {
-        this.checkTeacher = new _teacher__WEBPACK_IMPORTED_MODULE_4__["Teacher"]();
-        this.checkTeacher.tid = jquery__WEBPACK_IMPORTED_MODULE_2__("input[name='teacher']:checked").attr('id');
-        this.checkTeacher.tname = jquery__WEBPACK_IMPORTED_MODULE_2__("input[name='teacher']:checked").attr('class');
+        this.checkTeacher.length = 0;
+        for (var i = 0; i < jquery__WEBPACK_IMPORTED_MODULE_2__('.check_item:checked').length; i++) {
+            var teacher = new _Teacher__WEBPACK_IMPORTED_MODULE_4__["Teacher"]();
+            teacher.tid = jquery__WEBPACK_IMPORTED_MODULE_2__('.check_item:checked').eq(i).attr('id');
+            teacher.tname = jquery__WEBPACK_IMPORTED_MODULE_2__('.check_item:checked').eq(i).attr('name');
+            this.checkTeacher.push(teacher);
+        }
         this.outer.emit(this.checkTeacher);
         this.decline();
+    };
+    TeacherComponent.prototype.checkAll = function () {
+        jquery__WEBPACK_IMPORTED_MODULE_2__('.check_item').prop('checked', jquery__WEBPACK_IMPORTED_MODULE_2__('#check_all').prop('checked'));
+    };
+    TeacherComponent.prototype.checkItem = function (e) {
+        e.stopPropagation();
+        var flag = jquery__WEBPACK_IMPORTED_MODULE_2__('.check_item:checked').length === jquery__WEBPACK_IMPORTED_MODULE_2__('.check_item').length;
+        jquery__WEBPACK_IMPORTED_MODULE_2__('#check_all').prop('checked', flag);
     };
     TeacherComponent.prototype.checkLine = function (e) {
         e.target.parentNode.firstChild.firstChild.checked = !e.target.parentNode.firstChild.firstChild.checked;
     };
-    TeacherComponent.prototype.remove = function () {
-        this.checkTeacher = null;
+    TeacherComponent.prototype.remove = function (checkTeacher) {
+        this.checkTeacher = this.checkTeacher.filter(function (teacher) {
+            return teacher !== checkTeacher;
+        });
     };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
@@ -1218,26 +1229,6 @@ var TeacherComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [ngx_bootstrap__WEBPACK_IMPORTED_MODULE_1__["BsModalService"], _service_http_service__WEBPACK_IMPORTED_MODULE_3__["HttpService"]])
     ], TeacherComponent);
     return TeacherComponent;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/main/group/teacher/teacher.ts":
-/*!***********************************************!*\
-  !*** ./src/app/main/group/teacher/teacher.ts ***!
-  \***********************************************/
-/*! exports provided: Teacher */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Teacher", function() { return Teacher; });
-var Teacher = /** @class */ (function () {
-    function Teacher() {
-    }
-    return Teacher;
 }());
 
 
@@ -2522,8 +2513,8 @@ var HttpService = /** @class */ (function () {
         return this.http.put(this.Url + "/updatePass/" + uid, null, { params: params }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.config.handleError));
     };
     // 分组
-    HttpService.prototype.groupAll = function () {
-        return this.http.get(this.Url + "/showGroups").pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.config.handleError));
+    HttpService.prototype.showGroup = function (params) {
+        return this.http.get(this.Url + "/showGroup", { params: params }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.config.handleError));
     };
     // 老师
     HttpService.prototype.showTeachers = function () {
@@ -2534,9 +2525,9 @@ var HttpService = /** @class */ (function () {
         return this.http.get(this.Url + "/showStudents").pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.config.handleError));
     };
     // 分组
-    HttpService.prototype.dividedGroup = function (id, sgroup, tjudge) {
-        var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"]().set('sgroup', sgroup).set('tjudge', tjudge);
-        return this.http.put(this.Url + "/dividedGroup/" + id, null, { params: params }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.config.handleError));
+    HttpService.prototype.dividedGroup = function (tid, groupNum) {
+        var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"]().set('groupNum', groupNum);
+        return this.http.put(this.Url + "/dividedGroup/" + tid, null, { params: params }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.config.handleError));
     };
     // 更新成绩
     HttpService.prototype.updateGrade = function (grade, sid) {

@@ -3,10 +3,9 @@ package usts.cl.bean;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Team {
+public class Team implements Cloneable {
     private List<Teacher> teachers = new ArrayList<>();
-    private List<Student> exchangeStudents = new ArrayList<>();
-    private List<Student> students = new ArrayList<>();
+    //    private List<Student> exchangeStudents = new ArrayList<>();
     private int number;
 
     public List<Teacher> getTeachers() {
@@ -15,22 +14,6 @@ public class Team {
 
     public void setTeachers(List<Teacher> teachers) {
         this.teachers = teachers;
-    }
-
-    public List<Student> getExchangeStudents() {
-        return exchangeStudents;
-    }
-
-    public void setExchangeStudents(List<Student> exchangeStudents) {
-        this.exchangeStudents = exchangeStudents;
-    }
-
-    public List<Student> getStudents() {
-        return students;
-    }
-
-    public void setStudents(List<Student> students) {
-        this.students = students;
     }
 
     public int getNumber() {
@@ -42,7 +25,27 @@ public class Team {
     }
 
     @Override
+    public Object clone() {
+        Team team = null;
+        try {
+            //浅克隆
+            team = (Team) super.clone();
+            //深克隆
+            List<Teacher> listBeans = new ArrayList<>();
+            for (Teacher itemList :
+                    teachers) {
+                listBeans.add((Teacher) itemList.clone());
+            }
+            teachers = listBeans;
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return team;
+    }
+
+    @Override
     public String toString() {
         return "Team{number=" + number + '}';
     }
+
 }

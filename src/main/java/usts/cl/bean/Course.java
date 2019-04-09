@@ -1,6 +1,7 @@
 package usts.cl.bean;
 
-public class Course {
+
+public class Course implements Cloneable {
     private Integer cno;
 
     private String cname;
@@ -29,5 +30,26 @@ public class Course {
 
     public void setCtype(String ctype) {
         this.ctype = ctype == null ? null : ctype.trim();
+    }
+
+    @Override
+    public Object clone() {
+        Course course = null;
+        try {
+            //浅克隆
+            course = (Course) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return course;
+    }
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "cno=" + cno +
+                ", cname='" + cname + '\'' +
+                ", ctype='" + ctype + '\'' +
+                '}';
     }
 }

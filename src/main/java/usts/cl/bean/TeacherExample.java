@@ -244,6 +244,146 @@ public class TeacherExample {
             return (Criteria) this;
         }
 
+        public Criteria andProfessionIsNull() {
+            addCriterion("profession is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProfessionIsNotNull() {
+            addCriterion("profession is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProfessionEqualTo(String value) {
+            addCriterion("profession =", value, "profession");
+            return (Criteria) this;
+        }
+
+        public Criteria andProfessionNotEqualTo(String value) {
+            addCriterion("profession <>", value, "profession");
+            return (Criteria) this;
+        }
+
+        public Criteria andProfessionGreaterThan(String value) {
+            addCriterion("profession >", value, "profession");
+            return (Criteria) this;
+        }
+
+        public Criteria andProfessionGreaterThanOrEqualTo(String value) {
+            addCriterion("profession >=", value, "profession");
+            return (Criteria) this;
+        }
+
+        public Criteria andProfessionLessThan(String value) {
+            addCriterion("profession <", value, "profession");
+            return (Criteria) this;
+        }
+
+        public Criteria andProfessionLessThanOrEqualTo(String value) {
+            addCriterion("profession <=", value, "profession");
+            return (Criteria) this;
+        }
+
+        public Criteria andProfessionLike(String value) {
+            addCriterion("profession like", value, "profession");
+            return (Criteria) this;
+        }
+
+        public Criteria andProfessionNotLike(String value) {
+            addCriterion("profession not like", value, "profession");
+            return (Criteria) this;
+        }
+
+        public Criteria andProfessionIn(List<String> values) {
+            addCriterion("profession in", values, "profession");
+            return (Criteria) this;
+        }
+
+        public Criteria andProfessionNotIn(List<String> values) {
+            addCriterion("profession not in", values, "profession");
+            return (Criteria) this;
+        }
+
+        public Criteria andProfessionBetween(String value1, String value2) {
+            addCriterion("profession between", value1, value2, "profession");
+            return (Criteria) this;
+        }
+
+        public Criteria andProfessionNotBetween(String value1, String value2) {
+            addCriterion("profession not between", value1, value2, "profession");
+            return (Criteria) this;
+        }
+
+        public Criteria andResearchDirectionIsNull() {
+            addCriterion("research_direction is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andResearchDirectionIsNotNull() {
+            addCriterion("research_direction is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andResearchDirectionEqualTo(String value) {
+            addCriterion("research_direction =", value, "researchDirection");
+            return (Criteria) this;
+        }
+
+        public Criteria andResearchDirectionNotEqualTo(String value) {
+            addCriterion("research_direction <>", value, "researchDirection");
+            return (Criteria) this;
+        }
+
+        public Criteria andResearchDirectionGreaterThan(String value) {
+            addCriterion("research_direction >", value, "researchDirection");
+            return (Criteria) this;
+        }
+
+        public Criteria andResearchDirectionGreaterThanOrEqualTo(String value) {
+            addCriterion("research_direction >=", value, "researchDirection");
+            return (Criteria) this;
+        }
+
+        public Criteria andResearchDirectionLessThan(String value) {
+            addCriterion("research_direction <", value, "researchDirection");
+            return (Criteria) this;
+        }
+
+        public Criteria andResearchDirectionLessThanOrEqualTo(String value) {
+            addCriterion("research_direction <=", value, "researchDirection");
+            return (Criteria) this;
+        }
+
+        public Criteria andResearchDirectionLike(String value) {
+            addCriterion("research_direction like", value, "researchDirection");
+            return (Criteria) this;
+        }
+
+        public Criteria andResearchDirectionNotLike(String value) {
+            addCriterion("research_direction not like", value, "researchDirection");
+            return (Criteria) this;
+        }
+
+        public Criteria andResearchDirectionIn(List<String> values) {
+            addCriterion("research_direction in", values, "researchDirection");
+            return (Criteria) this;
+        }
+
+        public Criteria andResearchDirectionNotIn(List<String> values) {
+            addCriterion("research_direction not in", values, "researchDirection");
+            return (Criteria) this;
+        }
+
+        public Criteria andResearchDirectionBetween(String value1, String value2) {
+            addCriterion("research_direction between", value1, value2, "researchDirection");
+            return (Criteria) this;
+        }
+
+        public Criteria andResearchDirectionNotBetween(String value1, String value2) {
+            addCriterion("research_direction not between", value1, value2, "researchDirection");
+            return (Criteria) this;
+        }
+
         public Criteria andTgroupIsNull() {
             addCriterion("tgroup is null");
             return (Criteria) this;

@@ -42,16 +42,15 @@ public class MapperTest {
     GradeMapper gradeMapper;
 
     @Test
-    @Ignore
     public void test() throws Exception {
-        User user = userMapper.selectByPrimaryKey("152040135121");
+        User user = userMapper.selectByPrimaryKey("30008");
         if (user != null) {
             System.out.println("用户已注册");
         } else {
             String[] params = PasswordHash.createHash("123").split(":");
             String hash = params[PasswordHash.PBKDF2_INDEX];
             String salt = params[PasswordHash.SALT_INDEX];
-            userMapper.insert(new User("152040135121", "大饼", hash, salt, 2));
+            userMapper.insert(new User("30008", "杨利娟", hash, salt, 2));
         }
 //        UserExample userExample = new UserExample();
 //        Criteria criteria = userExample.createCriteria();
@@ -180,59 +179,6 @@ public class MapperTest {
 
     }
 
-    @Test
-    // 交换式算法
-    public void test7() {
-        List<Team> teams = new ArrayList<>();// 答辩分组
-        this.group(teams);
-//        int count = 0;
-//        while (!this.group().isEmpty()) {
-//            count++;
-//            this.group();
-//        }
-//        System.out.println(count);
-
-//        for (Team team : teams) {
-//            for (Student student : team.getStudents()) {
-//                System.out.print(student.getSname() + ",");
-//            }
-//        }
-        System.out.println("-------------------------------------------");
-        System.out.println("调整前");
-        System.out.println("-------------------------------------------");
-        for (Team team : teams) {
-            System.out.print(team.getNumber() + "组:");
-            for (Student student : team.getExchangeStudents()) {
-                System.out.print(student.getSname() + ",");
-            }
-            System.out.println();
-        }
-        int group = 0;
-        for (; group < teams.size() - 1; group++) {
-            if ((group + 1) == teams.size() - 1 && teams.get(group + 1).getExchangeStudents().isEmpty()) break;
-            if (teams.get(group + 1).getExchangeStudents().isEmpty()) {
-                List<Student> students = teams.get(group).getExchangeStudents();
-                teams.get(group).setExchangeStudents(teams.get(group + 2).getExchangeStudents());
-                teams.get(group + 2).setExchangeStudents(students);
-                group = group + 2;
-            } else {
-                List<Student> students = teams.get(group + 1).getExchangeStudents();
-                teams.get(group + 1).setExchangeStudents(teams.get(group).getExchangeStudents());
-                teams.get(group).setExchangeStudents(students);
-            }
-        }
-        System.out.println("-------------------------------------------");
-        System.out.println("调整后");
-        System.out.println("-------------------------------------------");
-        for (Team team : teams) {
-            System.out.print(team.getNumber() + "组:");
-            for (Student student : team.getExchangeStudents()) {
-                System.out.print(student.getSname() + ",");
-            }
-            System.out.println();
-        }
-//        System.out.println(teams.get(1).getExchangeStudents().isEmpty());
-    }
 
     //矩阵算法
     @Test
@@ -248,108 +194,90 @@ public class MapperTest {
         int i = 0, j = 0;
         for (Team team : teams) {
             for (Teacher teacher : team.getTeachers()) {
-//                System.out.println("老师：" + teacher.getTname());
+                System.out.println("老师:" + teacher.getTname() + ",研究方向:" + teacher.getResearchDirection());
+                System.out.print("学生:");
                 for (Student student : teacher.getStudents()) {
-                    for (Student stu : studentList) {
-                        if (student.getSid().equals(stu.getSid())) {
-                            students[i][studentList.indexOf(stu)] = 1;
-//                            System.out.println(studentList.indexOf(stu));
-                        }
-                    }
+                    System.out.println(student.getSname() + ",研究方向:" + student.getCourse().getCtype());
                 }
-                i++;
+                System.out.println("---------------------------------------------------------------------");
             }
         }
-
-        List<Integer> list = new ArrayList<>();
-        for (i = 0; i < 21; i++) {
-            if (i == 19) break;
-            while (avg > 0) {
-                if (students[i][j] == 0 && students[i][j] != 1
-                        && students[i + 1][j] != 1
-                        && students[i + 2][j] != 1
-                        && list.indexOf(j) == -1) {
-                    list.add(j);
-                    students[i][j] = 2;
-                    --avg;
-                    --scount;
-                }
-                ++j;
-            }
-            --tcount;
-            if ((i + 1) % 3 == 0) j = 0;
-            if (0 == scount || 0 == tcount) break;
-            avg = scount / tcount;
-        }
-        int k = 0;
-        for (i = 0; i < 21; i++) {
-            for (j = 0; j < 142; j++) {
-                if (students[i][j] == 2) teams.get(k).getStudents().add(studentList.get(j));
+//        for (Team team : teams) {
+//            for (Teacher teacher : team.getTeachers()) {
+//                for (Student student : teacher.getStudents()) {
+//                    for (Student stu : studentList) {
+//                        if (student.getSid().equals(stu.getSid())) {
+//                            students[i][studentList.indexOf(stu)] = 1;
+//                        }
+//                    }
+//                }
+//                i++;
+//            }
+//        }
+//        for (i = 0; i < tcount; i++) {
+//            for (j = 0; j < scount; j++) {
 //                System.out.print(students[i][j]);
-            }
-            if ((i + 1) % 3 == 0) k++;
+//            }
 //            System.out.println();
-        }
-        for (Team team : teams) {
-            System.out.println(team.getNumber() + "组：");
-            for (Student student : team.getStudents()) {
-                System.out.println(student.getSname());
-            }
-        }
+//        }
+//        j = 0;
+//        for (i = 0; i < teams.get(0).getTeachers().size(); i++, j++) {
+//            System.out.println(students[j][0]);
+//        }
     }
 
     @Test
     public void test10() {
-        List<Team> teams = new ArrayList<>();// 答辩分组
-        this.group(teams);
-        List<Student> studentList = studentMapper.selectByExample(null);// 所有学生
-        List<Teacher> teacherList = teacherMapper.selectByExample(null);//所有老师
-        List<Student> studentGroup = studentMapper.selectByStudentWithGroup(null);
-        Set<String> set = new HashSet<>();
-        for (Student student : studentGroup) {
-            set.add(student.getCourse().getCtype());
-        }
-        List<String> cType = new ArrayList(set);
-        int[][] ts = new int[teacherList.size()][studentList.size()];
-        int[][] sc = new int[studentList.size()][cType.size()];
-        int[][] tc = new int[teacherList.size()][cType.size()];
-        int i = 0;
-        for (Student student : studentGroup) {
-            for (int j = 0; j < cType.size(); j++) {
-                if (cType.get(j).equals(student.getCourse().getCtype()))
-                    sc[i][j] = 1;
-            }
-            i++;
-        }
-        i = 0;
-        for (Team team : teams) {
-            for (Teacher teacher : team.getTeachers()) {
-                for (Student student : teacher.getStudents()) {
-                    for (Student stu : studentList) {
-                        if (student.getSid().equals(stu.getSid())) {
-                            ts[i][studentList.indexOf(stu)] = 1;
-                        }
-                    }
-                }
-                i++;
-            }
-        }
-        for (i = 0; i < teacherList.size(); i++) {
-            for (int j = 0; j < cType.size(); j++) {
-                for (int k = 0; k < studentList.size(); k++) {
-                    tc[i][j] += ts[i][k] * sc[k][j];
-                }
-            }
-        }
-        for (i = 0; i < cType.size(); i++) {
-            System.out.println(cType.get(i));
-        }
-        for (i = 0; i < teacherList.size(); i++) {
-            for (int j = 0; j < cType.size(); j++) {
-                System.out.print(tc[i][j]);
-            }
-            System.out.println();
-        }
+//        List<Team> teams = new ArrayList<>();// 答辩分组
+//        this.group(teams);
+//        List<Student> studentList = studentMapper.selectByExample(null);// 所有学生
+//        List<Teacher> teacherList = teacherMapper.selectByExample(null);//所有老师
+//        List<Student> studentGroup = studentMapper.selectByStudentWithGroup(null);
+//        Set<String> set = new HashSet<>();
+//        for (Student student : studentGroup) {
+//            set.add(student.getCourse().getCtype());
+//        }
+//        List<String> cType = new ArrayList(set);
+//        int[][] ts = new int[teacherList.size()][studentList.size()];
+//        int[][] sc = new int[studentList.size()][cType.size()];
+//        int[][] tc = new int[teacherList.size()][cType.size()];
+//        int i = 0;
+//        for (Student student : studentGroup) {
+//            for (int j = 0; j < cType.size(); j++) {
+//                if (cType.get(j).equals(student.getCourse().getCtype()))
+//                    sc[i][j] = 1;
+//            }
+//            i++;
+//        }
+//        i = 0;
+//        for (Team team : teams) {
+//            for (Teacher teacher : team.getTeachers()) {
+//                for (Student student : teacher.getStudents()) {
+//                    for (Student stu : studentList) {
+//                        if (student.getSid().equals(stu.getSid())) {
+//                            ts[i][studentList.indexOf(stu)] = 1;
+//                        }
+//                    }
+//                }
+//                i++;
+//            }
+//        }
+//        for (i = 0; i < teacherList.size(); i++) {
+//            for (int j = 0; j < cType.size(); j++) {
+//                for (int k = 0; k < studentList.size(); k++) {
+//                    tc[i][j] += ts[i][k] * sc[k][j];
+//                }
+//            }
+//        }
+//        for (i = 0; i < cType.size(); i++) {
+//            System.out.println(cType.get(i));
+//        }
+//        for (i = 0; i < teacherList.size(); i++) {
+//            for (int j = 0; j < cType.size(); j++) {
+//                System.out.print(tc[i][j]);
+//            }
+//            System.out.println();
+//        }
 //        Iterator<String> iterator = cType.iterator();
 //        while (iterator.hasNext()){
 //            System.out.println(iterator.next());
@@ -357,9 +285,9 @@ public class MapperTest {
     }
 
     public void group(List<Team> teams) {
-        long groupSize = teacherMapper.groupSize();// 分组总数
-        List<Student> studentList = studentMapper.selectByExample(null);// 所有学生
-        List<Teacher> teacherList = teacherMapper.selectByExample(null);//所有老师
+        long groupSize = teacherMapper.groupSize().size();// 分组总数
+//        List<Student> studentList = studentMapper.selectByExample(null);// 所有学生
+//        List<Teacher> teacherList = teacherMapper.selectByExample(null);//所有老师
 //        Collections.shuffle(studentList);
         //将分配好的老师录入答辩分组
         for (int i = 1; i <= groupSize; i++) {
@@ -368,11 +296,11 @@ public class MapperTest {
             team.setNumber(i);
             teams.add(team);
         }
-        int scount = studentList.size(); // 学生总数
-        int tcount = teacherList.size();//老师总数
-        int sbegin = 0;
-        int avg = scount / tcount;//每个老师平均分配多少学生
-        int k = 0, count = 0;
+//        int scount = studentList.size(); // 学生总数
+//        int tcount = teacherList.size();//老师总数
+//        int sbegin = 0;
+//        int avg = scount / tcount;//每个老师平均分配多少学生
+//        int k = 0, count = 0;
         // 学生平均分组
 //        for (Student student : studentList) {
 //            while (avg > 0) {
@@ -532,13 +460,5 @@ public class MapperTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    @Test
-    public void test11() {
-        StudentExample studentExample = new StudentExample();
-        StudentExample.Criteria createCriteria = studentExample.createCriteria();
-        createCriteria.andSidEqualTo("1220126125");
-        System.out.println(studentMapper.selectByExample(studentExample).get(0).getSname());
     }
 }

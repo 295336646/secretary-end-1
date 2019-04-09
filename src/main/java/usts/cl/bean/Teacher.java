@@ -3,16 +3,18 @@ package usts.cl.bean;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Teacher {
+public class Teacher implements Cloneable {
     private String tid;
 
     private String tname;
 
+    private String profession;
+
+    private String researchDirection;
+
     private Integer tgroup;
 
     private List<Student> students = new ArrayList<>();
-
-    private Team team = new Team();
 
     public String getTid() {
         return tid;
@@ -28,6 +30,22 @@ public class Teacher {
 
     public void setTname(String tname) {
         this.tname = tname == null ? null : tname.trim();
+    }
+
+    public String getProfession() {
+        return profession;
+    }
+
+    public void setProfession(String profession) {
+        this.profession = profession == null ? null : profession.trim();
+    }
+
+    public String getResearchDirection() {
+        return researchDirection;
+    }
+
+    public void setResearchDirection(String researchDirection) {
+        this.researchDirection = researchDirection == null ? null : researchDirection.trim();
     }
 
     public Integer getTgroup() {
@@ -46,12 +64,24 @@ public class Teacher {
         this.students = students;
     }
 
-    public Team getTeam() {
-        return team;
-    }
 
-    public void setTeam(Team team) {
-        this.team = team;
+    @Override
+    public Object clone() {
+        Teacher teacher = null;
+        try {
+            //浅克隆
+            teacher = (Teacher) super.clone();
+            //深克隆
+            List<Student> listBeans = new ArrayList<>();
+            for (Student itemList :
+                    students) {
+                listBeans.add((Student) itemList.clone());
+            }
+            students = listBeans;
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return teacher;
     }
 
     @Override
@@ -59,9 +89,10 @@ public class Teacher {
         return "Teacher{" +
                 "tid='" + tid + '\'' +
                 ", tname='" + tname + '\'' +
+                ", profession='" + profession + '\'' +
+                ", researchDirection='" + researchDirection + '\'' +
                 ", tgroup=" + tgroup +
                 ", students=" + students +
-                ", team=" + team +
                 '}';
     }
 }

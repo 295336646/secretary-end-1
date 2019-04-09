@@ -17,6 +17,7 @@
     </resultMap>
     <resultMap id="StudentWithGroup" type="usts.cl.bean.Student" extends="BaseResultMap">
         <association property="course" resultMap="usts.cl.dao.CourseMapper.BaseResultMap"></association>
+        <association property="teacher" resultMap="usts.cl.dao.TeacherMapper.BaseResultMap"></association>
     </resultMap>
     <sql id="Example_Where_Clause">
         <where>
@@ -85,7 +86,7 @@
         s.*, g.*, c.*
     </sql>
     <sql id="Student_Group_List">
-        s.*, c.*
+        s.*, c.*, t.*
     </sql>
     <select id="selectByStudentWithGroup" resultMap="StudentWithGroup">
         select
@@ -94,6 +95,7 @@
         </if>
         <include refid="Student_Group_List"/>
         from tab_student s inner join tab_course c on s.cno=c.cno
+        inner join tab_teacher t on s.tid = t.tid
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
         </if>

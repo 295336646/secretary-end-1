@@ -1,6 +1,7 @@
 package usts.cl.bean;
 
-public class Student {
+
+public class Student implements Cloneable {
     private String sid;
 
     private String sname;
@@ -22,16 +23,6 @@ public class Student {
     private Grade grade;
 
     private Teacher teacher;
-
-    private Team team = new Team();
-
-    public Team getTeam() {
-        return team;
-    }
-
-    public void setTeam(Team team) {
-        this.team = team;
-    }
 
     public String getSid() {
         return sid;
@@ -122,6 +113,20 @@ public class Student {
     }
 
     @Override
+    public Object clone() {
+        Student student = null;
+        try {
+            //浅克隆
+            student = (Student) super.clone();
+            //深克隆
+            student.course = (Course) this.getCourse().clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return student;
+    }
+
+    @Override
     public String toString() {
         return "Student{" +
                 "sid='" + sid + '\'' +
@@ -135,7 +140,6 @@ public class Student {
                 ", course=" + course +
                 ", grade=" + grade +
                 ", teacher=" + teacher +
-                ", team=" + team +
                 '}';
     }
 }
