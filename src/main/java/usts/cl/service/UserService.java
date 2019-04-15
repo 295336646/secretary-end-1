@@ -21,6 +21,7 @@ public class UserService {
     // 登录
     public Boolean login(User user) throws Exception {
         User currentUser = userMapper.selectByPrimaryKey(user.getUid());
+        if (currentUser.getRole() != 2) return false;
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         HttpSession session = request.getSession();
         // 如果存在用户

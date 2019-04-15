@@ -43,15 +43,18 @@ public class MapperTest {
 
     @Test
     public void test() throws Exception {
-        User user = userMapper.selectByPrimaryKey("30008");
-        if (user != null) {
-            System.out.println("用户已注册");
-        } else {
-            String[] params = PasswordHash.createHash("123").split(":");
-            String hash = params[PasswordHash.PBKDF2_INDEX];
-            String salt = params[PasswordHash.SALT_INDEX];
-            userMapper.insert(new User("30008", "杨利娟", hash, salt, 2));
+        for (int i = 30001; i < 30022; i++) {
+            User user = userMapper.selectByPrimaryKey(String.valueOf(i));
+            if (user != null) {
+                System.out.println("用户已注册");
+            } else {
+                String[] params = PasswordHash.createHash("123").split(":");
+                String hash = params[PasswordHash.PBKDF2_INDEX];
+                String salt = params[PasswordHash.SALT_INDEX];
+                userMapper.insert(new User(String.valueOf(i), "杨利娟", hash, salt, 2));
+            }
         }
+
 //        UserExample userExample = new UserExample();
 //        Criteria criteria = userExample.createCriteria();
 //        criteria.andUidEqualTo("152040135120");

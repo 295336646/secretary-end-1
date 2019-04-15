@@ -1,36 +1,14 @@
 package usts.cl.bean;
 
+import lombok.Data;
 
+@Data
 public class Course implements Cloneable {
     private Integer cno;
 
     private String cname;
 
     private String ctype;
-
-    public Integer getCno() {
-        return cno;
-    }
-
-    public void setCno(Integer cno) {
-        this.cno = cno;
-    }
-
-    public String getCname() {
-        return cname;
-    }
-
-    public void setCname(String cname) {
-        this.cname = cname == null ? null : cname.trim();
-    }
-
-    public String getCtype() {
-        return ctype;
-    }
-
-    public void setCtype(String ctype) {
-        this.ctype = ctype == null ? null : ctype.trim();
-    }
 
     @Override
     public Object clone() {
@@ -42,14 +20,5 @@ public class Course implements Cloneable {
             e.printStackTrace();
         }
         return course;
-    }
-
-    @Override
-    public String toString() {
-        return "Course{" +
-                "cno=" + cno +
-                ", cname='" + cname + '\'' +
-                ", ctype='" + ctype + '\'' +
-                '}';
     }
 }

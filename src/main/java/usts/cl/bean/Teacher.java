@@ -1,8 +1,11 @@
 package usts.cl.bean;
 
+import lombok.Data;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
 public class Teacher implements Cloneable {
     private String tid;
 
@@ -15,55 +18,6 @@ public class Teacher implements Cloneable {
     private Integer tgroup;
 
     private List<Student> students = new ArrayList<>();
-
-    public String getTid() {
-        return tid;
-    }
-
-    public void setTid(String tid) {
-        this.tid = tid == null ? null : tid.trim();
-    }
-
-    public String getTname() {
-        return tname;
-    }
-
-    public void setTname(String tname) {
-        this.tname = tname == null ? null : tname.trim();
-    }
-
-    public String getProfession() {
-        return profession;
-    }
-
-    public void setProfession(String profession) {
-        this.profession = profession == null ? null : profession.trim();
-    }
-
-    public String getResearchDirection() {
-        return researchDirection;
-    }
-
-    public void setResearchDirection(String researchDirection) {
-        this.researchDirection = researchDirection == null ? null : researchDirection.trim();
-    }
-
-    public Integer getTgroup() {
-        return tgroup;
-    }
-
-    public void setTgroup(Integer tgroup) {
-        this.tgroup = tgroup;
-    }
-
-    public List<Student> getStudents() {
-        return students;
-    }
-
-    public void setStudents(List<Student> students) {
-        this.students = students;
-    }
-
 
     @Override
     public Object clone() {
@@ -84,15 +38,4 @@ public class Teacher implements Cloneable {
         return teacher;
     }
 
-    @Override
-    public String toString() {
-        return "Teacher{" +
-                "tid='" + tid + '\'' +
-                ", tname='" + tname + '\'' +
-                ", profession='" + profession + '\'' +
-                ", researchDirection='" + researchDirection + '\'' +
-                ", tgroup=" + tgroup +
-                ", students=" + students +
-                '}';
-    }
 }

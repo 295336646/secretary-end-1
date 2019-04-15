@@ -1,28 +1,15 @@
 package usts.cl.bean;
 
+import lombok.Data;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
 public class Team implements Cloneable {
     private List<Teacher> teachers = new ArrayList<>();
-    //    private List<Student> exchangeStudents = new ArrayList<>();
+    private List<Student> students = new ArrayList<>();
     private int number;
-
-    public List<Teacher> getTeachers() {
-        return teachers;
-    }
-
-    public void setTeachers(List<Teacher> teachers) {
-        this.teachers = teachers;
-    }
-
-    public int getNumber() {
-        return number;
-    }
-
-    public void setNumber(int number) {
-        this.number = number;
-    }
 
     @Override
     public Object clone() {
@@ -41,11 +28,6 @@ public class Team implements Cloneable {
             e.printStackTrace();
         }
         return team;
-    }
-
-    @Override
-    public String toString() {
-        return "Team{number=" + number + '}';
     }
 
 }

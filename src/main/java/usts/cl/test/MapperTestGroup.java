@@ -29,9 +29,13 @@ public class MapperTestGroup {
 
     @Test
     public void test() {
+        Teacher teacherTemp = new Teacher();
+        teacherTemp.setTid("30008");
+        teacherTemp.setTgroup(3);
+        teacherMapper.updateByPrimaryKeySelective(teacherTemp);
         List<Team> teams = new ArrayList<>();// 答辩分组
-
         this.group(teams);
+        rotate(teams, -1);
         for (Team team : teams) {
             for (Teacher teacher : team.getTeachers()) {
                 for (Student student : teacher.getStudents()) {
@@ -39,22 +43,16 @@ public class MapperTestGroup {
                     GroupExample.Criteria criteria = groupExample.createCriteria();
                     criteria.andSidEqualTo(student.getSid());
                     Group group = new Group();
-                    group.setTname(teacher.getTname());
+                    group.setTjudge(teacher.getTid());
+                    group.setTjudgename(teacher.getTname());
+                    group.setGroupnum(team.getNumber());
                     groupMapper.updateByExampleSelective(group, groupExample);
+                    student.setSgroup(team.getNumber());
+                    student.setTjudge(teacher.getTid());
+                    studentMapper.updateByPrimaryKeySelective(student);
                 }
             }
         }
-//        rotate(teams, -1);
-//        for (Team team : teams) {
-//            for (Teacher teacher : team.getTeachers()) {
-//                for (Student student : teacher.getStudents()) {
-//                    student.setSgroup(team.getNumber());
-//                    student.setTjudge(teacher.getTid());
-//                    studentMapper.updateByPrimaryKeySelective(student);
-//                }
-//            }
-//        }
-
     }
 
     /**
@@ -68,11 +66,11 @@ public class MapperTestGroup {
             int current = mod(j, teams.size());
             int next = mod(j + step, teams.size());
             if (current == last) {
-                transfer(teams.get(current), temp.getTeachers());
+                transfer(teams.get(current), temp);
 //                teams.set(current, temp);
             } else {
 //                teams.set(current, teams.get(next));
-                transfer(teams.get(current), teams.get(next).getTeachers());
+                transfer(teams.get(current), teams.get(next));
             }
         }
     }
@@ -89,38 +87,53 @@ public class MapperTestGroup {
     }
 
     /**
-     * @param team     当前组
-     * @param teachers 需要填充的数据
+     * @param team 当前组
+     * @param temp 需要填充的数据
      */
-    public void transfer(Team team, List<Teacher> teachers) {
+    public void transfer(Team team, Team temp) {
         clear(team.getTeachers());
-        int i = 0;
-        List<Student> students = new ArrayList<>();//存储分组失败的学生
-        for (Teacher teacher : teachers) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (Teacher teacher : temp.getTeachers()) {
+            int avg = temp.getStudents().size() / team.getTeachers().size();
             for (Student student : teacher.getStudents()) {
-                int count = 0;
-                boolean flag = false;
-                while (!allocation(team.getTeachers().get(mod(i, team.getTeachers().size())).getResearchDirection(), student.getCourse().getCtype())) {
-                    ++count;
+                int i = 0;
+                while (true) {
+                    int currentIndex = mod(i, team.getTeachers().size());
+                    String researchDirection = team.getTeachers().get(currentIndex).getResearchDirection();
+                    String ctype = student.getCourse().getCtype();
+                    if (team.getTeachers().get(currentIndex).getStudents().size() >= avg) {
+                        ++i;
+                        if (mod(i, team.getTeachers().size()) == 0) {
+                            if (map.isEmpty()) team.getTeachers().get(currentIndex).getStudents().add(student);
+                            else team.getTeachers().get(getMinValue(map)).getStudents().add(student);
+                            break;
+                        }
+                        continue;
+                    }
+                    int priority = allocation(researchDirection, ctype);
+                    map.put(currentIndex, priority);
                     ++i;
-                    if (0 == mod(count, team.getTeachers().size())) {
-                        students.add(student);
-                        flag = true;
+                    if (mod(i, team.getTeachers().size()) == 0) {
+                        if (!map.isEmpty()) team.getTeachers().get(getMinValue(map)).getStudents().add(student);
                         break;
                     }
                 }
-                //强制分配
-                if (!students.isEmpty()) {
-                    team.getTeachers().get(mod(i, team.getTeachers().size())).getStudents().add(student);
-                }
-                if (!flag) {
-                    team.getTeachers().get(mod(i, team.getTeachers().size())).getStudents().add(student);
-                }
-                students.clear();
-                i++;
+                map.clear();
             }
         }
 
+    }
+
+    /**
+     * 求Map<K,V>中Value(值)的最小值
+     *
+     * @param map
+     * @return
+     */
+    public Integer getMinValue(Map<Integer, Integer> map) {
+        List<Map.Entry<Integer, Integer>> list = new ArrayList(map.entrySet());
+        Collections.sort(list, (o1, o2) -> (o1.getValue() - o2.getValue()));
+        return list.get(0).getKey();
     }
 
     /**
@@ -141,18 +154,24 @@ public class MapperTestGroup {
      * @param cType     课题类型
      * @return
      */
-    public boolean allocation(String direction, String cType) {
-        if (direction.equals("信息管理")) {
-            if (cType.equals("应用设计偏硬")) {
-                return false;
-            }
+    public int allocation(String direction, String cType) {
+        if (cType.equals("应用设计")) {
+            if (direction.equals("信息管理")) return 1;
+            if (direction.equals("系统")) return 2;
+            if (direction.equals("算法")) return 3;
+            if (direction.equals("嵌入式")) return 4;
+        } else if (cType.equals("应用设计偏硬")) {
+            if (direction.equals("嵌入式")) return 1;
+            if (direction.equals("系统")) return 2;
+            if (direction.equals("算法")) return 3;
+            if (direction.equals("信息管理")) return 4;
+        } else {
+            if (direction.equals("算法")) return 1;
+            if (direction.equals("系统")) return 2;
+            if (direction.equals("嵌入式")) return 3;
+            if (direction.equals("信息管理")) return 4;
         }
-        if (direction.equals("嵌入式")) {
-            if (cType.equals("应用研究") || cType.equals("算法研究")) {
-                return false;
-            }
-        }
-        return true;
+        return 0;
     }
 
     /**
@@ -168,6 +187,11 @@ public class MapperTestGroup {
             team.setTeachers(teacherMapper.selectByTeacherWithGroup(i));
             team.setNumber(i);
             teams.add(team);
+        }
+        for (Team team : teams) {
+            for (Teacher teacher : team.getTeachers()) {
+                team.getStudents().addAll(teacher.getStudents());
+            }
         }
     }
 }

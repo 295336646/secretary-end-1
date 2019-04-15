@@ -7,8 +7,7 @@ import usts.cl.dao.GroupMapper;
 import usts.cl.dao.StudentMapper;
 import usts.cl.dao.TeacherMapper;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class GroupService {
@@ -26,29 +25,45 @@ public class GroupService {
         teacherMapper.updateByPrimaryKeySelective(teacherTemp);
         List<Team> teams = new ArrayList<>();// 答辩分组
         this.group(teams);
-        rotate(teams, -1);
-        for (Team team : teams) {
-            for (Teacher teacher : team.getTeachers()) {
-                for (Student student : teacher.getStudents()) {
-                    GroupExample groupExample = new GroupExample();
-                    GroupExample.Criteria criteria = groupExample.createCriteria();
-                    criteria.andSidEqualTo(student.getSid());
-                    Group group = new Group();
-                    group.setTjudge(teacher.getTid());
-                    group.setTjudgename(teacher.getTname());
-                    group.setGroupnum(team.getNumber());
-                    groupMapper.updateByExampleSelective(group, groupExample);
-                    student.setSgroup(team.getNumber());
-                    student.setTjudge(teacher.getTid());
-                    studentMapper.updateByPrimaryKeySelective(student);
-                }
-            }
-        }
+        this.rotate(teams, -1);
+        teams.forEach(team -> team.getTeachers()
+                .forEach(teacher -> teacher.getStudents()
+                        .forEach(student -> {
+                            GroupExample groupExample = new GroupExample();
+                            GroupExample.Criteria criteria = groupExample.createCriteria();
+                            criteria.andSidEqualTo(student.getSid());
+                            Group group = new Group();
+                            group.setTjudge(teacher.getTid());
+                            group.setTjudgename(teacher.getTname());
+                            group.setGroupnum(team.getNumber());
+                            groupMapper.updateByExampleSelective(group, groupExample);
+                            student.setSgroup(team.getNumber());
+                            student.setTjudge(teacher.getTid());
+                            studentMapper.updateByPrimaryKeySelective(student);
+                        })));
+//        for (Team team : teams) {
+//            for (Teacher teacher : team.getTeachers()) {
+//                for (Student student : teacher.getStudents()) {
+//                    GroupExample groupExample = new GroupExample();
+//                    GroupExample.Criteria criteria = groupExample.createCriteria();
+//                    criteria.andSidEqualTo(student.getSid());
+//                    Group group = new Group();
+//                    group.setTjudge(teacher.getTid());
+//                    group.setTjudgename(teacher.getTname());
+//                    group.setGroupnum(team.getNumber());
+//                    groupMapper.updateByExampleSelective(group, groupExample);
+//                    student.setSgroup(team.getNumber());
+//                    student.setTjudge(teacher.getTid());
+//                    studentMapper.updateByPrimaryKeySelective(student);
+//                }
+//            }
+//        }
         return true;
     }
 
     public List<Group> showGroup(String tjudge) {
         GroupExample groupExample = new GroupExample();
+        groupExample.setOrderByClause("tjudgeName DESC");
         GroupExample.Criteria criteria = groupExample.createCriteria();
         criteria.andGroupnumEqualTo(getGroupnum(tjudge));
         return groupMapper.selectByExample(groupExample);
@@ -73,11 +88,9 @@ public class GroupService {
             int current = mod(j, teams.size());
             int next = mod(j + step, teams.size());
             if (current == last) {
-                transfer(teams.get(current), temp.getTeachers());
-//                teams.set(current, temp);
+                this.transfer(teams.get(current), temp);
             } else {
-//                teams.set(current, teams.get(next));
-                transfer(teams.get(current), teams.get(next).getTeachers());
+                this.transfer(teams.get(current), teams.get(next));
             }
         }
     }
@@ -88,44 +101,92 @@ public class GroupService {
      * @param teachers
      */
     public void clear(List<Teacher> teachers) {
-        for (Teacher teacher1 : teachers) {
-            teacher1.getStudents().clear();
-        }
+        teachers.forEach(teacher -> teacher.getStudents().clear());
+//        for (Teacher teacher : teachers) {
+//            teacher.getStudents().clear();
+//        }
     }
 
     /**
-     * @param team     当前组
-     * @param teachers 需要填充的数据
+     * @param team 当前组
+     * @param temp 需要填充的数据
      */
-    public void transfer(Team team, List<Teacher> teachers) {
-        clear(team.getTeachers());
-        int i = 0;
-        List<Student> students = new ArrayList<>();//存储分组失败的学生
-        for (Teacher teacher : teachers) {
-            for (Student student : teacher.getStudents()) {
-                int count = 0;
-                boolean flag = false;
-                while (!allocation(team.getTeachers().get(mod(i, team.getTeachers().size())).getResearchDirection(), student.getCourse().getCtype())) {
-                    ++count;
-                    ++i;
-                    if (0 == mod(count, team.getTeachers().size())) {
-                        students.add(student);
-                        flag = true;
-                        break;
+    public void transfer(Team team, Team temp) {
+        this.clear(team.getTeachers());
+        temp.getTeachers().forEach(teacher -> teacher.getStudents()
+                .forEach(student -> {
+                    int avg = temp.getStudents().size() / team.getTeachers().size();
+                    Map<Integer, Integer> map = new HashMap<>();
+                    int i = 0;
+                    while (true) {
+                        int currentIndex = this.mod(i, team.getTeachers().size());
+                        String researchDirection = team.getTeachers().get(currentIndex).getResearchDirection();
+                        String ctype = student.getCourse().getCtype();
+                        if (team.getTeachers().get(currentIndex).getStudents().size() >= avg) {
+                            ++i;
+                            if (mod(i, team.getTeachers().size()) == 0) {
+                                if (map.isEmpty()) {
+                                    team.getTeachers().get(currentIndex).getStudents().add(student);
+                                } else {
+                                    team.getTeachers().get(getMinValue(map)).getStudents().add(student);
+                                }
+                                break;
+                            }
+                            continue;
+                        }
+                        int priority = this.allocation(researchDirection, ctype);
+                        map.put(currentIndex, priority);
+                        ++i;
+                        if (mod(i, team.getTeachers().size()) == 0) {
+                            if (!map.isEmpty()) team.getTeachers().get(getMinValue(map)).getStudents().add(student);
+                            break;
+                        }
                     }
-                }
-                //强制分配
-                if (!students.isEmpty()) {
-                    team.getTeachers().get(mod(i, team.getTeachers().size())).getStudents().add(student);
-                }
-                if (!flag) {
-                    team.getTeachers().get(mod(i, team.getTeachers().size())).getStudents().add(student);
-                }
-                students.clear();
-                i++;
-            }
-        }
+                }));
+//        for (Teacher teacher : temp.getTeachers()) {
+//            int avg = temp.getStudents().size() / team.getTeachers().size();
+//            for (Student student : teacher.getStudents()) {
+//                Map<Integer, Integer> map = new HashMap<>();
+//                int i = 0;
+//                while (true) {
+//                    int currentIndex = this.mod(i, team.getTeachers().size());
+//                    String researchDirection = team.getTeachers().get(currentIndex).getResearchDirection();
+//                    String ctype = student.getCourse().getCtype();
+//                    if (team.getTeachers().get(currentIndex).getStudents().size() >= avg) {
+//                        ++i;
+//                        if (mod(i, team.getTeachers().size()) == 0) {
+//                            if (map.isEmpty()) {
+//                                team.getTeachers().get(currentIndex).getStudents().add(student);
+//                            } else {
+//                                team.getTeachers().get(getMinValue(map)).getStudents().add(student);
+//                            }
+//                            break;
+//                        }
+//                        continue;
+//                    }
+//                    int priority = this.allocation(researchDirection, ctype);
+//                    map.put(currentIndex, priority);
+//                    ++i;
+//                    if (mod(i, team.getTeachers().size()) == 0) {
+//                        if (!map.isEmpty()) team.getTeachers().get(getMinValue(map)).getStudents().add(student);
+//                        break;
+//                    }
+//                }
+//            }
+//        }
 
+    }
+
+    /**
+     * 求Map<K,V>中Value(值)的最小值
+     *
+     * @param map
+     * @return
+     */
+    public Integer getMinValue(Map<Integer, Integer> map) {
+        List<Map.Entry<Integer, Integer>> list = new ArrayList(map.entrySet());
+        Collections.sort(list, (o1, o2) -> (o1.getValue() - o2.getValue()));
+        return list.get(0).getKey();
     }
 
     /**
@@ -146,18 +207,24 @@ public class GroupService {
      * @param cType     课题类型
      * @return
      */
-    public boolean allocation(String direction, String cType) {
-        if (direction.equals("信息管理")) {
-            if (cType.equals("应用设计偏硬")) {
-                return false;
-            }
+    public int allocation(String direction, String cType) {
+        if (cType.equals("应用设计")) {
+            if (direction.equals("信息管理")) return 1;
+            if (direction.equals("系统")) return 2;
+            if (direction.equals("算法")) return 3;
+            if (direction.equals("嵌入式")) return 4;
+        } else if (cType.equals("应用设计偏硬")) {
+            if (direction.equals("嵌入式")) return 1;
+            if (direction.equals("系统")) return 2;
+            if (direction.equals("算法")) return 3;
+            if (direction.equals("信息管理")) return 4;
+        } else {
+            if (direction.equals("算法")) return 1;
+            if (direction.equals("系统")) return 2;
+            if (direction.equals("嵌入式")) return 3;
+            if (direction.equals("信息管理")) return 4;
         }
-        if (direction.equals("嵌入式")) {
-            if (cType.equals("应用研究") || cType.equals("算法研究")) {
-                return false;
-            }
-        }
-        return true;
+        return 0;
     }
 
     /**
@@ -174,5 +241,12 @@ public class GroupService {
             team.setNumber(i);
             teams.add(team);
         }
+        teams.stream().forEach(team -> team.getTeachers()
+                .forEach(teacher -> team.getStudents().addAll(teacher.getStudents())));
+//        for (Team team : teams) {
+//            for (Teacher teacher : team.getTeachers()) {
+//                team.getStudents().addAll(teacher.getStudents());
+//            }
+//        }
     }
 }
