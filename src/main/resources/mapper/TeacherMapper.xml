@@ -7,6 +7,7 @@
         <result column="profession" jdbcType="VARCHAR" property="profession"/>
         <result column="research_direction" jdbcType="VARCHAR" property="researchDirection"/>
         <result column="tgroup" jdbcType="INTEGER" property="tgroup"/>
+        <result column="leader" jdbcType="TINYINT" property="leader"/>
     </resultMap>
     <resultMap id="TeacherWithStudent" type="usts.cl.bean.Teacher" extends="BaseResultMap">
         <collection property="students" ofType="usts.cl.bean.Student"
@@ -74,10 +75,10 @@
         </where>
     </sql>
     <sql id="Base_Column_List">
-        tid, tname, profession, research_direction, tgroup
+        tid, tname, profession, research_direction, tgroup, leader
     </sql>
     <sql id="Teacher_Student_List">
-        t.*, s.*,c.*
+        t.*, s.*, c.*
     </sql>
     <select id="selectByTeacherWithGroup" resultMap="TeacherWithStudent">
         select
@@ -118,9 +119,11 @@
     </delete>
     <insert id="insert" parameterType="usts.cl.bean.Teacher">
         insert into tab_teacher (tid, tname, profession,
-                                 research_direction, tgroup)
+                                 research_direction, tgroup, leader
+        )
         values (#{tid,jdbcType=VARCHAR}, #{tname,jdbcType=VARCHAR}, #{profession,jdbcType=VARCHAR},
-                #{researchDirection,jdbcType=VARCHAR}, #{tgroup,jdbcType=INTEGER})
+                #{researchDirection,jdbcType=VARCHAR}, #{tgroup,jdbcType=INTEGER}, #{leader,jdbcType=TINYINT}
+        )
     </insert>
     <insert id="insertSelective" parameterType="usts.cl.bean.Teacher">
         insert into tab_teacher
@@ -140,6 +143,9 @@
             <if test="tgroup != null">
                 tgroup,
             </if>
+            <if test="leader != null">
+                leader,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="tid != null">
@@ -156,6 +162,9 @@
             </if>
             <if test="tgroup != null">
                 #{tgroup,jdbcType=INTEGER},
+            </if>
+            <if test="leader != null">
+                #{leader,jdbcType=TINYINT},
             </if>
         </trim>
     </insert>
@@ -188,6 +197,9 @@
             <if test="record.tgroup != null">
                 tgroup = #{record.tgroup,jdbcType=INTEGER},
             </if>
+            <if test="record.leader != null">
+                leader = #{record.leader,jdbcType=TINYINT},
+            </if>
         </set>
         <if test="_parameter != null">
             <include refid="Update_By_Example_Where_Clause"/>
@@ -199,7 +211,8 @@
         tname = #{record.tname,jdbcType=VARCHAR},
         profession = #{record.profession,jdbcType=VARCHAR},
         research_direction = #{record.researchDirection,jdbcType=VARCHAR},
-        tgroup = #{record.tgroup,jdbcType=INTEGER}
+        tgroup = #{record.tgroup,jdbcType=INTEGER},
+        leader = #{record.leader,jdbcType=TINYINT}
         <if test="_parameter != null">
             <include refid="Update_By_Example_Where_Clause"/>
         </if>
@@ -219,6 +232,9 @@
             <if test="tgroup != null">
                 tgroup = #{tgroup,jdbcType=INTEGER},
             </if>
+            <if test="leader != null">
+                leader = #{leader,jdbcType=TINYINT},
+            </if>
         </set>
         where tid = #{tid,jdbcType=VARCHAR}
     </update>
@@ -227,7 +243,8 @@
         set tname              = #{tname,jdbcType=VARCHAR},
             profession         = #{profession,jdbcType=VARCHAR},
             research_direction = #{researchDirection,jdbcType=VARCHAR},
-            tgroup             = #{tgroup,jdbcType=INTEGER}
+            tgroup             = #{tgroup,jdbcType=INTEGER},
+            leader             = #{leader,jdbcType=TINYINT}
         where tid = #{tid,jdbcType=VARCHAR}
     </update>
 </mapper>

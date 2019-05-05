@@ -19,9 +19,9 @@ public interface TeacherMapper {
 
     int insertSelective(Teacher record);
 
-    List<Teacher> selectByExample(TeacherExample example);
-
     List<Teacher> selectByTeacherWithGroup(int group);
+
+    List<Teacher> selectByExample(TeacherExample example);
 
     Teacher selectByPrimaryKey(String tid);
 

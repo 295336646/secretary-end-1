@@ -2,8 +2,10 @@ package usts.cl.bean;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class Grade {
+public class Grade implements Serializable {
     private Integer id;
 
     private Byte advisorGrade;

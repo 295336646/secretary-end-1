@@ -1,7 +1,6 @@
 package usts.cl.dao;
 
 import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
 import usts.cl.bean.Student;
 import usts.cl.bean.StudentExample;
@@ -24,6 +23,8 @@ public interface StudentMapper {
     List<Student> selectByExample(StudentExample example);
 
     Student selectByPrimaryKey(String sid);
+
+    int updateBatch(@Param("students") List<Student> students);
 
     int updateByExampleSelective(@Param("record") Student record, @Param("example") StudentExample example);
 

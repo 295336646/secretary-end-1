@@ -1,23 +1,34 @@
 package usts.cl.service;
 
+import com.sun.istack.internal.Nullable;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import usts.cl.bean.File;
+import usts.cl.bean.Group;
+import usts.cl.bean.Teacher;
 import usts.cl.dao.FileMapper;
+import usts.cl.dao.GroupMapper;
+import usts.cl.utils.Excel;
 import usts.cl.utils.Word;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
 public class FileService {
     @Autowired
     FileMapper fileMapper;
+
 
     public File downFile(Integer fileId) {
         return fileMapper.selectByPrimaryKey(fileId);
@@ -73,10 +84,56 @@ public class FileService {
         }
     }
 
+    /**
+     * 下载答辩分组表
+     *
+     * @param request
+     * @param response
+     */
+    public void downGroupSheet(HttpServletRequest request, HttpServletResponse response, List<Group> groupList, List<Group> groups) {
+        String filePath = request.getServletContext().getRealPath("uploadfiles/");
 
-    //    public List<File> showDownFiles() {
-//        return fileMapper.selectByExampleWithUser(null);
-//    }
+        //筛选除答辩组长
+        groupList.forEach(group -> {
+            groups.forEach(group1 -> {
+                if (group.getGroupnum().equals(group1.getGroupnum())) {
+                    Teacher teacher = new Teacher();
+                    teacher.setTname(group1.getTjudgename());
+                    group.setTeacher(teacher);
+                }
+            });
+        });
+        Excel.write(filePath, groupList);
+        downSheet(filePath, "答辩分组表.xlsx", response);
+    }
+
+    public void downSheet(String realpath, String fileName, HttpServletResponse response) {
+        FileInputStream in; //输入流
+        ServletOutputStream out; //输出流
+        //设置下载文件使用的报头
+        response.setHeader("Content-Type", "application/x-msdownload");
+        response.setHeader("Content-Disposition", "attachment; filename="
+                + toUTF8String(fileName));
+        // 读入文件
+        try {
+            in = new FileInputStream(realpath + fileName);
+            //得到响应对象的输出流，用于向客户端输出二进制数据
+            out = response.getOutputStream();
+            out.flush();
+            int aRead;
+            byte b[] = new byte[1024];
+            while ((aRead = in.read(b)) != -1 & in != null) {
+                out.write(b, 0, aRead);
+            }
+            out.flush();
+            in.close();
+            out.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * 下载答辩评议书
@@ -103,7 +160,7 @@ public class FileService {
     /**
      * 下载答辩评分表
      */
-    public void downWordSheet(String sid, String sname, String cname, String task,
+    public void downWordSheet(String tname, String sid, String sname, String cname, String task,
                               String technology, String language, String answer, String replyGrade,
                               String comments,
                               HttpServletRequest request, HttpServletResponse response) {
@@ -117,6 +174,7 @@ public class FileService {
         map.put("${7}", answer);
         map.put("${8}", replyGrade);
         map.put("${9}", comments);
+        map.put("${10}", tname);
         String realpath = request.getServletContext().getRealPath("uploadfiles/");
         String fileName = sname + "_" + sid + "_评阅人评分表" + ".doc";
         String reference = "李子晗_14200107135_评阅人评分表.doc";

@@ -1,20 +1,29 @@
 package usts.cl.controller;
 
+import lombok.extern.slf4j.Slf4j;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import usts.cl.bean.File;
+import usts.cl.bean.Group;
 import usts.cl.service.FileService;
-
+import usts.cl.service.GroupService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @Controller
 @RequestMapping("/cl")
 public class FileController {
     @Autowired
     FileService fileService;
+
+    @Autowired
+    GroupService groupService;
 
     /**
      * 测试
@@ -48,14 +57,21 @@ public class FileController {
 
     @GetMapping("/downWordSheet")
     @ResponseBody
-    public void downWordSheet(String sid, String sname, String cname, String task,
+    public void downWordSheet(String tname, String sid, String sname, String cname, String task,
                               String technology, String language, String answer, String replyGrade,
                               String comments,
                               HttpServletRequest request, HttpServletResponse response) {
-        this.fileService.downWordSheet(sid, sname, cname, task,
+        this.fileService.downWordSheet(tname, sid, sname, cname, task,
                 technology, language, answer, replyGrade,
                 comments, request, response);
     }
 
-
+    @GetMapping("/downExcelSheet")
+    @ResponseBody
+    public void downExcelSheet(
+            HttpServletRequest request, HttpServletResponse response) {
+        List<Group> groupList = groupService.getGroup();//获取分组表
+        List<Group> groups = groupService.getLeader();//获取答辩组长
+        this.fileService.downGroupSheet(request, response, groupList, groups);
+    }
 }

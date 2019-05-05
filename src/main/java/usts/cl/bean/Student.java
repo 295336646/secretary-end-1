@@ -3,8 +3,10 @@ package usts.cl.bean;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class Student implements Cloneable {
+public class Student implements Cloneable,Serializable {
     private String sid;
 
     private String sname;
@@ -26,6 +28,7 @@ public class Student implements Cloneable {
     private Grade grade;
 
     private Teacher teacher;
+
 
     @Override
     public Object clone() {

@@ -20,7 +20,7 @@ public class StudentController {
     @Autowired
     StudentService studentService;
 
-    @GetMapping("reply")
+    @GetMapping("/reply")
     @ResponseBody
     public Msg ReplyGrade(@RequestParam(value = "pn", defaultValue = "1") Integer pn) {
         PageHelper.startPage(pn, 5);

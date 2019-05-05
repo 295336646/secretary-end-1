@@ -723,6 +723,66 @@ public class GroupExample {
             addCriterion("groupNum not between", value1, value2, "groupnum");
             return (Criteria) this;
         }
+
+        public Criteria andLeaderIsNull() {
+            addCriterion("leader is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderIsNotNull() {
+            addCriterion("leader is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderEqualTo(Byte value) {
+            addCriterion("leader =", value, "leader");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderNotEqualTo(Byte value) {
+            addCriterion("leader <>", value, "leader");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderGreaterThan(Byte value) {
+            addCriterion("leader >", value, "leader");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderGreaterThanOrEqualTo(Byte value) {
+            addCriterion("leader >=", value, "leader");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderLessThan(Byte value) {
+            addCriterion("leader <", value, "leader");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderLessThanOrEqualTo(Byte value) {
+            addCriterion("leader <=", value, "leader");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderIn(List<Byte> values) {
+            addCriterion("leader in", values, "leader");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderNotIn(List<Byte> values) {
+            addCriterion("leader not in", values, "leader");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderBetween(Byte value1, Byte value2) {
+            addCriterion("leader between", value1, value2, "leader");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderNotBetween(Byte value1, Byte value2) {
+            addCriterion("leader not between", value1, value2, "leader");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

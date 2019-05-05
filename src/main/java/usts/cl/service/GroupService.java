@@ -1,11 +1,14 @@
 package usts.cl.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.BoundHashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import usts.cl.bean.*;
 import usts.cl.dao.GroupMapper;
 import usts.cl.dao.StudentMapper;
 import usts.cl.dao.TeacherMapper;
+import usts.cl.redis.RedisLogService;
 
 import java.util.*;
 
@@ -17,65 +20,79 @@ public class GroupService {
     TeacherMapper teacherMapper;
     @Autowired
     StudentMapper studentMapper;
+    @Autowired
+    private RedisTemplate<String, String> redisTemplate;
 
-    public boolean dividedGroup(String tid, int groupNum) {
-        Teacher teacherTemp = new Teacher();
-        teacherTemp.setTid(tid);
-        teacherTemp.setTgroup(groupNum);
-        teacherMapper.updateByPrimaryKeySelective(teacherTemp);
+    public List<Group> groupAll() {
+        List<Group> groups = groupMapper.selectByGroup(null);
+        return groups;
+    }
+
+    @RedisLogService(key = "group")
+    public List<Group> getGroup() {
+        List<Group> groups = groupAll();
+        BoundHashOperations<String, String, Object> boundHashOperations = redisTemplate.boundHashOps("group");
+        boundHashOperations.put("groupAll", groups);
+        return groups;
+    }
+
+    @RedisLogService(key = "group")
+    public List<Group> getLeader() {
+        List<Group> groups = groupMapper.selectByLeader();
+        BoundHashOperations<String, String, Object> boundHashOperations = redisTemplate.boundHashOps("group");
+        boundHashOperations.put("getLeader", groups);
+        return groups;
+    }
+
+    //分组
+    @RedisLogService(key = "group",cacheOperation = RedisLogService.CACHE_OPERATION.UPDATE)
+    public boolean dividedGroup() {
         List<Team> teams = new ArrayList<>();// 答辩分组
         this.group(teams);
         this.rotate(teams, -1);
+        List<Group> groups = new ArrayList<>();
+        List<Student> students = new ArrayList<>();
         teams.forEach(team -> team.getTeachers()
                 .forEach(teacher -> teacher.getStudents()
                         .forEach(student -> {
-                            GroupExample groupExample = new GroupExample();
-                            GroupExample.Criteria criteria = groupExample.createCriteria();
-                            criteria.andSidEqualTo(student.getSid());
                             Group group = new Group();
+                            group.setSid(student.getSid());
                             group.setTjudge(teacher.getTid());
                             group.setTjudgename(teacher.getTname());
-                            group.setGroupnum(team.getNumber());
-                            groupMapper.updateByExampleSelective(group, groupExample);
-                            student.setSgroup(team.getNumber());
+                            group.setGroupnum(teacher.getTgroup());
+                            group.setLeader(teacher.getLeader());
+                            groups.add(group);
+                            student.setSgroup(teacher.getTgroup());
                             student.setTjudge(teacher.getTid());
-                            studentMapper.updateByPrimaryKeySelective(student);
+                            students.add(student);
                         })));
-//        for (Team team : teams) {
-//            for (Teacher teacher : team.getTeachers()) {
-//                for (Student student : teacher.getStudents()) {
-//                    GroupExample groupExample = new GroupExample();
-//                    GroupExample.Criteria criteria = groupExample.createCriteria();
-//                    criteria.andSidEqualTo(student.getSid());
-//                    Group group = new Group();
-//                    group.setTjudge(teacher.getTid());
-//                    group.setTjudgename(teacher.getTname());
-//                    group.setGroupnum(team.getNumber());
-//                    groupMapper.updateByExampleSelective(group, groupExample);
-//                    student.setSgroup(team.getNumber());
-//                    student.setTjudge(teacher.getTid());
-//                    studentMapper.updateByPrimaryKeySelective(student);
-//                }
-//            }
-//        }
+        groupMapper.updateBatch(groups);
+        studentMapper.updateBatch(students);
         return true;
     }
 
-    public List<Group> showGroup(String tjudge) {
+    //显示组
+    @RedisLogService(key = "showGroup")
+    public List<Group> showGroup(int groupNum) {
         GroupExample groupExample = new GroupExample();
         groupExample.setOrderByClause("tjudgeName DESC");
         GroupExample.Criteria criteria = groupExample.createCriteria();
-        criteria.andGroupnumEqualTo(getGroupnum(tjudge));
-        return groupMapper.selectByExample(groupExample);
+        criteria.andGroupnumEqualTo(groupNum);
+        List<Group> groups = groupMapper.selectByExample(groupExample);
+        BoundHashOperations<String, String, Object> boundHashOperations = redisTemplate.boundHashOps("group");
+        boundHashOperations.put(String.valueOf(groupNum), groups);
+        return groups;
     }
 
-    public int getGroupnum(String tjudge) {
-        GroupExample groupExample = new GroupExample();
-        GroupExample.Criteria criteria = groupExample.createCriteria();
-        criteria.andTjudgeEqualTo(tjudge);
-        List<Group> groups = groupMapper.selectByExample(groupExample);
-        return groups.get(0).getGroupnum();
-    }
+    //获取组号
+//    @RedisLogService(key = "group")
+//    public int getGroupnum(String tjudge) {
+//        GroupExample groupExample = new GroupExample();
+//        GroupExample.Criteria criteria = groupExample.createCriteria();
+//        criteria.andTjudgeEqualTo(tjudge);
+//        List<Group> groups = groupMapper.selectByExample(groupExample);
+//        return groups.get(0).getGroupnum();
+//    }
 
     /**
      * @param teams
@@ -102,9 +119,6 @@ public class GroupService {
      */
     public void clear(List<Teacher> teachers) {
         teachers.forEach(teacher -> teacher.getStudents().clear());
-//        for (Teacher teacher : teachers) {
-//            teacher.getStudents().clear();
-//        }
     }
 
     /**
@@ -143,38 +157,6 @@ public class GroupService {
                         }
                     }
                 }));
-//        for (Teacher teacher : temp.getTeachers()) {
-//            int avg = temp.getStudents().size() / team.getTeachers().size();
-//            for (Student student : teacher.getStudents()) {
-//                Map<Integer, Integer> map = new HashMap<>();
-//                int i = 0;
-//                while (true) {
-//                    int currentIndex = this.mod(i, team.getTeachers().size());
-//                    String researchDirection = team.getTeachers().get(currentIndex).getResearchDirection();
-//                    String ctype = student.getCourse().getCtype();
-//                    if (team.getTeachers().get(currentIndex).getStudents().size() >= avg) {
-//                        ++i;
-//                        if (mod(i, team.getTeachers().size()) == 0) {
-//                            if (map.isEmpty()) {
-//                                team.getTeachers().get(currentIndex).getStudents().add(student);
-//                            } else {
-//                                team.getTeachers().get(getMinValue(map)).getStudents().add(student);
-//                            }
-//                            break;
-//                        }
-//                        continue;
-//                    }
-//                    int priority = this.allocation(researchDirection, ctype);
-//                    map.put(currentIndex, priority);
-//                    ++i;
-//                    if (mod(i, team.getTeachers().size()) == 0) {
-//                        if (!map.isEmpty()) team.getTeachers().get(getMinValue(map)).getStudents().add(student);
-//                        break;
-//                    }
-//                }
-//            }
-//        }
-
     }
 
     /**
@@ -243,10 +225,5 @@ public class GroupService {
         }
         teams.stream().forEach(team -> team.getTeachers()
                 .forEach(teacher -> team.getStudents().addAll(teacher.getStudents())));
-//        for (Team team : teams) {
-//            for (Teacher teacher : team.getTeachers()) {
-//                team.getStudents().addAll(teacher.getStudents());
-//            }
-//        }
     }
 }

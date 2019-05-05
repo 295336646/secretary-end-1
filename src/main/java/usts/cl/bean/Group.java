@@ -2,8 +2,10 @@ package usts.cl.bean;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class Group {
+public class Group implements Serializable{
     private String sid;
 
     private String sclass;
@@ -21,4 +23,13 @@ public class Group {
     private String tjudgename;
 
     private Integer groupnum;
+
+    private Byte leader;
+
+    private Student student;
+
+    private Teacher teacher;
+
+    private Grade grade;
+
 }

@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class LoginInterceptor implements HandlerInterceptor {
     @Override
-    public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
-        String username = (String) httpServletRequest.getSession().getAttribute("username");
+    public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) {
+        String username = (String) httpServletRequest.getSession().getAttribute("userName");
         if (username == null) {
             return false;//终止所有请求
         } else {

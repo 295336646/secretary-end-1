@@ -36,23 +36,26 @@ public class MapperTestGroup {
         List<Team> teams = new ArrayList<>();// 答辩分组
         this.group(teams);
         rotate(teams, -1);
+        List<Group> groups = new ArrayList<>();
+        List<Student> students = new ArrayList<>();
         for (Team team : teams) {
             for (Teacher teacher : team.getTeachers()) {
                 for (Student student : teacher.getStudents()) {
-                    GroupExample groupExample = new GroupExample();
-                    GroupExample.Criteria criteria = groupExample.createCriteria();
-                    criteria.andSidEqualTo(student.getSid());
                     Group group = new Group();
+                    group.setSid(student.getSid());
                     group.setTjudge(teacher.getTid());
                     group.setTjudgename(teacher.getTname());
-                    group.setGroupnum(team.getNumber());
-                    groupMapper.updateByExampleSelective(group, groupExample);
-                    student.setSgroup(team.getNumber());
+                    group.setGroupnum(teacher.getTgroup());
+                    group.setLeader(teacher.getLeader());
+                    groups.add(group);
+                    student.setSgroup(teacher.getTgroup());
                     student.setTjudge(teacher.getTid());
-                    studentMapper.updateByPrimaryKeySelective(student);
+                    students.add(student);
                 }
             }
         }
+        groupMapper.updateBatch(groups);
+        studentMapper.updateBatch(students);
     }
 
     /**

@@ -2,11 +2,12 @@ package usts.cl.bean;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class Teacher implements Cloneable {
+public class Teacher implements Cloneable,Serializable {
     private String tid;
 
     private String tname;
@@ -16,6 +17,8 @@ public class Teacher implements Cloneable {
     private String researchDirection;
 
     private Integer tgroup;
+
+    private Byte leader;
 
     private List<Student> students = new ArrayList<>();
 
@@ -37,5 +40,4 @@ public class Teacher implements Cloneable {
         }
         return teacher;
     }
-
 }

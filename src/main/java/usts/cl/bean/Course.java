@@ -2,8 +2,10 @@ package usts.cl.bean;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class Course implements Cloneable {
+public class Course implements Cloneable,Serializable {
     private Integer cno;
 
     private String cname;

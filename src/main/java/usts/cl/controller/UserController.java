@@ -1,13 +1,13 @@
 package usts.cl.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import usts.cl.bean.Msg;
 import usts.cl.bean.User;
 import usts.cl.service.UserService;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -16,25 +16,34 @@ import java.util.List;
 public class UserController {
     @Autowired
     UserService userService;
+    @Autowired
+    private RedisTemplate<String, String> redisTemplate;
 
     /**
      * 登录
+     *
      * @param user
-     * @param request
      * @return
      * @throws Exception
      */
     @ResponseBody
     @PostMapping("/login")
-    public Msg login(@RequestBody User user, HttpServletRequest request) throws Exception {
-        HttpSession session = request.getSession();
-        if (userService.login(user))
-            return Msg.success().add("login", true).add("userName", session.getAttribute("username"));
-        else return Msg.fail().add("login", false);
+    public Msg login(@RequestBody User user, HttpSession session) throws Exception {
+        if (userService.login(user) == false)
+            return Msg.fail().add("login", false);
+        else
+            return Msg.success().add("login", true).add("userName",session.getAttribute("userName"));
+    }
+
+    @ResponseBody
+    @GetMapping("/logOut")
+    public Boolean logOut() {
+        return userService.logOut();
     }
 
     /**
      * 注册
+     *
      * @param user
      * @return
      * @throws Exception
@@ -48,6 +57,7 @@ public class UserController {
 
     /**
      * 通过uid修改密码
+     *
      * @param uid
      * @param rawPass
      * @param newPass

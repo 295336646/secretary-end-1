@@ -218,6 +218,22 @@
             <include refid="Example_Where_Clause"/>
         </if>
     </select>
+    <update id="updateBatch">
+        <foreach collection="students" item="student" separator=";">
+            UPDATE tab_student s
+            <set>
+                <if test="student.tjudge != null">
+                    s.tjudge =#{student.tjudge},
+                </if>
+                <if test="student.sgroup != null">
+                    s.sgroup =#{student.sgroup}
+                </if>
+            </set>
+            <where>
+                s.sid =#{student.sid}
+            </where>
+        </foreach>
+    </update>
     <update id="updateByExampleSelective" parameterType="map">
         update tab_student
         <set>
