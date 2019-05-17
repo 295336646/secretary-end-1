@@ -93,7 +93,7 @@ public class FileService {
     public void downGroupSheet(HttpServletRequest request, HttpServletResponse response, List<Group> groupList, List<Group> groups) {
         String filePath = request.getServletContext().getRealPath("uploadfiles/");
 
-        //筛选除答辩组长
+        //筛选出答辩组长
         groupList.forEach(group -> {
             groups.forEach(group1 -> {
                 if (group.getGroupnum().equals(group1.getGroupnum())) {

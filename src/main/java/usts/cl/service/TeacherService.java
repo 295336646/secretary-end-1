@@ -33,6 +33,7 @@ public class TeacherService {
         return teachers;
     }
 
+    //老师分组
     public Boolean dividedTeacher(int groupNum, String currentLeader, String leader, Map map) {
         Teacher newLeaderTeacher = getTeacher(leader);
         Teacher currentLeaderTeacher = getTeacher(currentLeader);

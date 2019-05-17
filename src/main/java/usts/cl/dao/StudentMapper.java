@@ -20,6 +20,8 @@ public interface StudentMapper {
 
     List<Student> selectByStudentWithGrade(StudentExample example);
 
+    List<Student> selectByLikeWithGrade(@Param("sid") String sid, @Param("sname") String sname, @Param("generalComments") String generalComments);
+
     List<Student> selectByExample(StudentExample example);
 
     Student selectByPrimaryKey(String sid);

@@ -20,12 +20,15 @@ public class StudentController {
     @Autowired
     StudentService studentService;
 
-    @GetMapping("/reply")
+    @GetMapping("/likeGrade")
     @ResponseBody
-    public Msg ReplyGrade(@RequestParam(value = "pn", defaultValue = "1") Integer pn) {
+    public Msg likeGrade(@RequestParam(value = "pn", defaultValue = "1") Integer pn,
+                         @RequestParam(required = false) String sid,
+                         @RequestParam(required = false) String sname,
+                         @RequestParam(required = false) String generalComments) {
         PageHelper.startPage(pn, 5);
-        List<Student> students = studentService.ReplyGrade();
-        PageInfo page = new PageInfo(students,5);
+        List<Student> students = studentService.getGradeByLike(sid, sname, generalComments);
+        PageInfo page = new PageInfo(students, 5);
         return Msg.success().add("pageInfo", page);
     }
 }

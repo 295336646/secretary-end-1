@@ -15,15 +15,15 @@
     </context:component-scan>
 
     <!--注册拦截器-->
-    <mvc:interceptors>
-        <!--未登录用户拦截-->
-        <mvc:interceptor>
-            <mvc:mapping path="/cl/**"/>
-            <mvc:exclude-mapping path="/cl/login"></mvc:exclude-mapping>
-            <mvc:exclude-mapping path="/cl/register"></mvc:exclude-mapping>
-            <bean class="usts.cl.utils.LoginInterceptor"></bean>
-        </mvc:interceptor>
-    </mvc:interceptors>
+    <!--<mvc:interceptors>-->
+        <!--&lt;!&ndash;未登录用户拦截&ndash;&gt;-->
+        <!--<mvc:interceptor>-->
+            <!--<mvc:mapping path="/cl/**"/>-->
+            <!--<mvc:exclude-mapping path="/cl/login"></mvc:exclude-mapping>-->
+            <!--<mvc:exclude-mapping path="/cl/register"></mvc:exclude-mapping>-->
+            <!--<bean class="usts.cl.utils.LoginInterceptor"></bean>-->
+        <!--</mvc:interceptor>-->
+    <!--</mvc:interceptors>-->
 
     <!--静态资源配置-->
     <mvc:resources location="/secretary/" mapping="/secretary/**"/>

@@ -15,4 +15,8 @@ public class StudentService {
     public List<Student> ReplyGrade() {
         return studentMapper.selectByStudentWithGrade(null);
     }
+    public List<Student> getGradeByLike(String sid, String sname, String generalComments) {
+        List<Student> students = studentMapper.selectByLikeWithGrade(sid, sname, generalComments);
+        return students;
+    }
 }

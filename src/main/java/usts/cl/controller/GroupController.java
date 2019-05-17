@@ -12,41 +12,30 @@ import usts.cl.service.GroupService;
 import usts.cl.service.TeacherService;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/cl")
 public class GroupController {
     @Autowired
     GroupService groupService;
-    @Autowired
-    TeacherService teacherService;
-
-    @GetMapping("/showGroup")
-    @ResponseBody
-    public List<Group> showGroup(int groupNum) {
-        List<Group> result = groupService.showGroup(groupNum);
-        return result;
-    }
 
     @GetMapping("/groupAll")
     @ResponseBody
     public Msg groupAll(@RequestParam(value = "pn", defaultValue = "1") Integer pn) {
-        PageHelper.startPage(pn, 5);
-        List<Group> groups = groupService.groupAll();
-        PageInfo page = new PageInfo(groups, 5);
-        page.setList(groups);
-        return Msg.success().add("pageInfo", page);
+        return Msg.success().add("pageInfo", groupService.getGroup(pn));
     }
 
-    @PutMapping("/dividedGroup")
+    @GetMapping("/showGroup")
     @ResponseBody
-    public boolean dividedGroup() {
-        List<Teacher> teachers = teacherService.getAllTeacher();
-        for (Teacher teacher : teachers) {
-            if (teacher.getTgroup() == 0) {
-                return false;
-            }
-        }
-        return groupService.dividedGroup();
+    public List<Group> showGroup(int groupNum) {
+        return groupService.showGroup(groupNum);
+    }
+
+    @PutMapping("/dividedGroup/{groupNum}/{currentLeader}/{leader}")
+    @ResponseBody
+    public boolean dividedGroup(@PathVariable int groupNum, @PathVariable String currentLeader,
+                                @PathVariable String leader, @RequestBody Map map) {
+        return groupService.dividedGroup(groupNum, currentLeader, leader, map);
     }
 }

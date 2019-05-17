@@ -1,9 +1,5 @@
 package usts.cl.controller;
 
-import lombok.extern.slf4j.Slf4j;
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -65,12 +61,12 @@ public class FileController {
                 technology, language, answer, replyGrade,
                 comments, request, response);
     }
-
+ 
     @GetMapping("/downExcelSheet")
     @ResponseBody
     public void downExcelSheet(
             HttpServletRequest request, HttpServletResponse response) {
-        List<Group> groupList = groupService.getGroup();//获取分组表
+        List<Group> groupList = groupService.groupAll();//获取分组表
         List<Group> groups = groupService.getLeader();//获取答辩组长
         this.fileService.downGroupSheet(request, response, groupList, groups);
     }

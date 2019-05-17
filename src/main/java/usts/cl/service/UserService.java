@@ -24,12 +24,13 @@ public class UserService {
 
     // 登录
     public Boolean login(User user) throws Exception {
+        System.out.println(user.getRole());
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         HttpSession session = request.getSession();
         User currentUser = userMapper.selectByPrimaryKey(user.getUid());
         if (currentUser == null) return false;
         else {
-            if (currentUser.getRole() != 2) return false;
+            if (currentUser.getRole() != user.getRole()) return false;
             // 如果存在用户
             if (user.getPassword() == null || user.getUid() == null
                     || user.getPassword().equals("") || user.getUid().equals(""))
@@ -46,6 +47,7 @@ public class UserService {
             } else return false;
         }
     }
+
     //销毁session
     public Boolean logOut() {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();

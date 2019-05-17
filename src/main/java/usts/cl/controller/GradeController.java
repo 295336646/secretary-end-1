@@ -10,7 +10,7 @@ import usts.cl.service.GradeService;
 @RequestMapping("/cl")
 public class GradeController {
     @Autowired
-    GradeService gradeService;
+    GradeService gradeService; 
 
     @PutMapping("/updateGrade/{sid}")
     @ResponseBody

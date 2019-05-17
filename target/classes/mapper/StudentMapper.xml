@@ -118,6 +118,23 @@
             order by ${orderByClause}
         </if>
     </select>
+    <select id="selectByLikeWithGrade" resultMap="StudentWithGrade">
+        select
+        <include refid="Student_Grade_List"/>
+        from tab_student s inner join tab_course c on s.cno=c.cno
+        inner join tab_grade g on s.gid = g.id
+        <where>
+            <if test="sid != null">
+                s.sid like CONCAT(#{sid},'%')
+            </if>
+            <if test="sname != null">
+                and s.sname like CONCAT(#{sname},'%')
+            </if>
+            <if test="generalComments != null">
+                and g.general_comments like CONCAT(#{generalComments},'%')
+            </if>
+        </where>
+    </select>
     <select id="selectByExample" parameterType="usts.cl.bean.StudentExample" resultMap="BaseResultMap">
         select
         <if test="distinct">

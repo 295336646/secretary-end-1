@@ -7,13 +7,19 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.BoundHashOperations;
+import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.scripting.support.ResourceScriptSource;
 import org.springframework.stereotype.Component;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisCluster;
 import usts.cl.bean.User;
 import usts.cl.service.GroupService;
 
@@ -62,20 +68,10 @@ public class RedisInterceptor {
 
     private Object executeUpdate(RedisLogService redisLogService, ProceedingJoinPoint proceedingJoinPoint, Method method) throws Throwable {
         Object result = true;
-        //获取方法参数
-        Object[] args = proceedingJoinPoint.getArgs();
-        // 获取被拦截方法参数名列表(使用Spring支持类库)
-        LocalVariableTableParameterNameDiscoverer u = new LocalVariableTableParameterNameDiscoverer();
-        //获取方法参数名
-        String[] paraNameArr = u.getParameterNames(method);
         // 获取key的后缀的参数名
         String key = redisLogService.key();
         if (StringUtils.isNotBlank(key)) {
-            DefaultRedisScript<Boolean> redisScript = new DefaultRedisScript<Boolean>();
-            redisScript.setScriptSource(new ResourceScriptSource(new ClassPathResource("/delGroup.lua")));
-            redisScript.setResultType(Boolean.class);
-            //保证事务原子性，执行Lua脚本
-            redisTemplate.execute(redisScript, Collections.singletonList("group"));
+            redisTemplate.delete(key);
             result = proceedingJoinPoint.proceed();
         }
         return result;
