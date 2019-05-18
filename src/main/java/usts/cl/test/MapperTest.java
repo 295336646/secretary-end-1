@@ -55,7 +55,7 @@ public class MapperTest {
                 String[] params = PasswordHash.createHash("123").split(":");
                 String hash = params[PasswordHash.PBKDF2_INDEX];
                 String salt = params[PasswordHash.SALT_INDEX];
-                userMapper.insert(new User(String.valueOf(i), "杨利娟", hash, salt, 2));
+                userMapper.insert(new User(String.valueOf(i), "杨利娟", hash, salt, (byte)2));
             }
         }
 

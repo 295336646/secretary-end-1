@@ -8,6 +8,7 @@
         <result column="research_direction" jdbcType="VARCHAR" property="researchDirection"/>
         <result column="tgroup" jdbcType="INTEGER" property="tgroup"/>
         <result column="leader" jdbcType="TINYINT" property="leader"/>
+        <result column="secretary" jdbcType="TINYINT" property="secretary"/>
     </resultMap>
     <resultMap id="TeacherWithStudent" type="usts.cl.bean.Teacher" extends="BaseResultMap">
         <collection property="students" ofType="usts.cl.bean.Student"
@@ -75,8 +76,8 @@
         </where>
     </sql>
     <sql id="Base_Column_List">
-        tid, tname, profession, research_direction, tgroup, leader
-    </sql>
+    tid, tname, profession, research_direction, tgroup, leader, secretary
+  </sql>
     <sql id="Teacher_Student_List">
         t.*, s.*, c.*
     </sql>
@@ -86,6 +87,11 @@
         from tab_teacher t inner join tab_student s on t.tid = s.tid
         inner join tab_course c on s.cno = c.cno
         where t.tgroup=#{group}
+    </select>
+    <select id="groupSize" resultType="java.lang.Long">
+        select count(*)
+        from tab_teacher
+        group by tgroup
     </select>
     <select id="selectByExample" parameterType="usts.cl.bean.TeacherExample" resultMap="BaseResultMap">
         select
@@ -108,9 +114,9 @@
         where tid = #{tid,jdbcType=VARCHAR}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-        delete from tab_teacher
-        where tid = #{tid,jdbcType=VARCHAR}
-    </delete>
+    delete from tab_teacher
+    where tid = #{tid,jdbcType=VARCHAR}
+  </delete>
     <delete id="deleteByExample" parameterType="usts.cl.bean.TeacherExample">
         delete from tab_teacher
         <if test="_parameter != null">
@@ -118,13 +124,13 @@
         </if>
     </delete>
     <insert id="insert" parameterType="usts.cl.bean.Teacher">
-        insert into tab_teacher (tid, tname, profession,
-                                 research_direction, tgroup, leader
-        )
-        values (#{tid,jdbcType=VARCHAR}, #{tname,jdbcType=VARCHAR}, #{profession,jdbcType=VARCHAR},
-                #{researchDirection,jdbcType=VARCHAR}, #{tgroup,jdbcType=INTEGER}, #{leader,jdbcType=TINYINT}
-        )
-    </insert>
+    insert into tab_teacher (tid, tname, profession, 
+      research_direction, tgroup, leader, 
+      secretary)
+    values (#{tid,jdbcType=VARCHAR}, #{tname,jdbcType=VARCHAR}, #{profession,jdbcType=VARCHAR}, 
+      #{researchDirection,jdbcType=VARCHAR}, #{tgroup,jdbcType=INTEGER}, #{leader,jdbcType=TINYINT}, 
+      #{secretary,jdbcType=TINYINT})
+  </insert>
     <insert id="insertSelective" parameterType="usts.cl.bean.Teacher">
         insert into tab_teacher
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -146,6 +152,9 @@
             <if test="leader != null">
                 leader,
             </if>
+            <if test="secretary != null">
+                secretary,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="tid != null">
@@ -166,6 +175,9 @@
             <if test="leader != null">
                 #{leader,jdbcType=TINYINT},
             </if>
+            <if test="secretary != null">
+                #{secretary,jdbcType=TINYINT},
+            </if>
         </trim>
     </insert>
     <select id="countByExample" parameterType="usts.cl.bean.TeacherExample" resultType="java.lang.Long">
@@ -173,11 +185,6 @@
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
         </if>
-    </select>
-    <select id="groupSize" resultType="java.lang.Long">
-        select count(*)
-        from tab_teacher
-        group by tgroup
     </select>
     <update id="updateByExampleSelective" parameterType="map">
         update tab_teacher
@@ -200,6 +207,9 @@
             <if test="record.leader != null">
                 leader = #{record.leader,jdbcType=TINYINT},
             </if>
+            <if test="record.secretary != null">
+                secretary = #{record.secretary,jdbcType=TINYINT},
+            </if>
         </set>
         <if test="_parameter != null">
             <include refid="Update_By_Example_Where_Clause"/>
@@ -212,7 +222,8 @@
         profession = #{record.profession,jdbcType=VARCHAR},
         research_direction = #{record.researchDirection,jdbcType=VARCHAR},
         tgroup = #{record.tgroup,jdbcType=INTEGER},
-        leader = #{record.leader,jdbcType=TINYINT}
+        leader = #{record.leader,jdbcType=TINYINT},
+        secretary = #{record.secretary,jdbcType=TINYINT}
         <if test="_parameter != null">
             <include refid="Update_By_Example_Where_Clause"/>
         </if>
@@ -235,16 +246,20 @@
             <if test="leader != null">
                 leader = #{leader,jdbcType=TINYINT},
             </if>
+            <if test="secretary != null">
+                secretary = #{secretary,jdbcType=TINYINT},
+            </if>
         </set>
         where tid = #{tid,jdbcType=VARCHAR}
     </update>
     <update id="updateByPrimaryKey" parameterType="usts.cl.bean.Teacher">
-        update tab_teacher
-        set tname              = #{tname,jdbcType=VARCHAR},
-            profession         = #{profession,jdbcType=VARCHAR},
-            research_direction = #{researchDirection,jdbcType=VARCHAR},
-            tgroup             = #{tgroup,jdbcType=INTEGER},
-            leader             = #{leader,jdbcType=TINYINT}
-        where tid = #{tid,jdbcType=VARCHAR}
-    </update>
+    update tab_teacher
+    set tname = #{tname,jdbcType=VARCHAR},
+      profession = #{profession,jdbcType=VARCHAR},
+      research_direction = #{researchDirection,jdbcType=VARCHAR},
+      tgroup = #{tgroup,jdbcType=INTEGER},
+      leader = #{leader,jdbcType=TINYINT},
+      secretary = #{secretary,jdbcType=TINYINT}
+    where tid = #{tid,jdbcType=VARCHAR}
+  </update>
 </mapper>

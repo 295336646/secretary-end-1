@@ -503,6 +503,76 @@ public class TeacherExample {
             addCriterion("leader not between", value1, value2, "leader");
             return (Criteria) this;
         }
+
+        public Criteria andSecretaryIsNull() {
+            addCriterion("secretary is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSecretaryIsNotNull() {
+            addCriterion("secretary is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSecretaryEqualTo(String value) {
+            addCriterion("secretary =", value, "secretary");
+            return (Criteria) this;
+        }
+
+        public Criteria andSecretaryNotEqualTo(String value) {
+            addCriterion("secretary <>", value, "secretary");
+            return (Criteria) this;
+        }
+
+        public Criteria andSecretaryGreaterThan(String value) {
+            addCriterion("secretary >", value, "secretary");
+            return (Criteria) this;
+        }
+
+        public Criteria andSecretaryGreaterThanOrEqualTo(String value) {
+            addCriterion("secretary >=", value, "secretary");
+            return (Criteria) this;
+        }
+
+        public Criteria andSecretaryLessThan(String value) {
+            addCriterion("secretary <", value, "secretary");
+            return (Criteria) this;
+        }
+
+        public Criteria andSecretaryLessThanOrEqualTo(String value) {
+            addCriterion("secretary <=", value, "secretary");
+            return (Criteria) this;
+        }
+
+        public Criteria andSecretaryLike(String value) {
+            addCriterion("secretary like", value, "secretary");
+            return (Criteria) this;
+        }
+
+        public Criteria andSecretaryNotLike(String value) {
+            addCriterion("secretary not like", value, "secretary");
+            return (Criteria) this;
+        }
+
+        public Criteria andSecretaryIn(List<String> values) {
+            addCriterion("secretary in", values, "secretary");
+            return (Criteria) this;
+        }
+
+        public Criteria andSecretaryNotIn(List<String> values) {
+            addCriterion("secretary not in", values, "secretary");
+            return (Criteria) this;
+        }
+
+        public Criteria andSecretaryBetween(String value1, String value2) {
+            addCriterion("secretary between", value1, value2, "secretary");
+            return (Criteria) this;
+        }
+
+        public Criteria andSecretaryNotBetween(String value1, String value2) {
+            addCriterion("secretary not between", value1, value2, "secretary");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

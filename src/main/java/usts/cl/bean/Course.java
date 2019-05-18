@@ -5,12 +5,18 @@ import lombok.Data;
 import java.io.Serializable;
 
 @Data
-public class Course implements Cloneable,Serializable {
+public class Course implements Cloneable, Serializable {
     private Integer cno;
 
     private String cname;
 
     private String ctype;
+
+    private String tid;
+
+    private Byte state;
+
+    private Teacher teacher;
 
     @Override
     public Object clone() {

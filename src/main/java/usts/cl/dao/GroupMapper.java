@@ -20,6 +20,9 @@ public interface GroupMapper {
 
     List<Group> selectByLeader();
 
+    List<Group> selectByLikeWithGrade(@Param("groupNum") Integer groupNum,
+                                      @Param("tjudge") String tjudge, @Param("tjudgeName") String tjudgeName);
+
     List<Group> selectByGroup(GroupExample example);
 
     List<Group> selectByExample(GroupExample example);

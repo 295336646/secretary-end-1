@@ -1,15 +1,11 @@
 package usts.cl.controller;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import usts.cl.bean.Group;
 import usts.cl.bean.Msg;
-import usts.cl.bean.Teacher;
 import usts.cl.service.GroupService;
-import usts.cl.service.TeacherService;
 
 import java.util.List;
 import java.util.Map;
@@ -20,10 +16,11 @@ public class GroupController {
     @Autowired
     GroupService groupService;
 
+    //获取当前组（模糊查询）
     @GetMapping("/groupAll")
     @ResponseBody
-    public Msg groupAll(@RequestParam(value = "pn", defaultValue = "1") Integer pn) {
-        return Msg.success().add("pageInfo", groupService.getGroup(pn));
+    public Msg groupAll(String tid, String tjudge, String tjudgeName) {
+        return Msg.success().add("currentGroup", groupService.getGroup(tid, tjudge, tjudgeName));
     }
 
     @GetMapping("/showGroup")
@@ -32,10 +29,12 @@ public class GroupController {
         return groupService.showGroup(groupNum);
     }
 
-    @PutMapping("/dividedGroup/{groupNum}/{currentLeader}/{leader}")
+    @PutMapping("/dividedGroup/{groupNum}/{currentLeader}/{leader}/{currentSecretary}/{secretary}")
     @ResponseBody
-    public boolean dividedGroup(@PathVariable int groupNum, @PathVariable String currentLeader,
-                                @PathVariable String leader, @RequestBody Map map) {
-        return groupService.dividedGroup(groupNum, currentLeader, leader, map);
+    public boolean dividedGroup(@PathVariable int groupNum, @RequestBody Map map,
+                                @PathVariable String currentLeader, @PathVariable String leader,
+                                @PathVariable String currentSecretary, @PathVariable String secretary
+    ) {
+        return groupService.dividedGroup(groupNum, currentLeader, leader, currentSecretary, secretary, map);
     }
 }

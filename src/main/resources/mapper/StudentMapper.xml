@@ -6,7 +6,7 @@
         <result column="sname" jdbcType="VARCHAR" property="sname"/>
         <result column="sclass" jdbcType="VARCHAR" property="sclass"/>
         <result column="sgroup" jdbcType="INTEGER" property="sgroup"/>
-        <result column="cno" jdbcType="INTEGER" property="cno"/>
+        <result column="cno" jdbcType="VARCHAR" property="cno"/>
         <result column="tid" jdbcType="VARCHAR" property="tid"/>
         <result column="tjudge" jdbcType="VARCHAR" property="tjudge"/>
         <result column="gid" jdbcType="INTEGER" property="gid"/>
@@ -170,7 +170,7 @@
                                  sgroup, cno, tid, tjudge,
                                  gid)
         values (#{sid,jdbcType=VARCHAR}, #{sname,jdbcType=VARCHAR}, #{sclass,jdbcType=VARCHAR},
-                #{sgroup,jdbcType=INTEGER}, #{cno,jdbcType=INTEGER}, #{tid,jdbcType=VARCHAR},
+                #{sgroup,jdbcType=INTEGER}, #{cno,jdbcType=VARCHAR}, #{tid,jdbcType=VARCHAR},
                 #{tjudge,jdbcType=VARCHAR},
                 #{gid,jdbcType=INTEGER})
     </insert>
@@ -216,7 +216,7 @@
                 #{sgroup,jdbcType=INTEGER},
             </if>
             <if test="cno != null">
-                #{cno,jdbcType=INTEGER},
+                #{cno,jdbcType=VARCHAR},
             </if>
             <if test="tid != null">
                 #{tid,jdbcType=VARCHAR},
@@ -267,7 +267,7 @@
                 sgroup = #{record.sgroup,jdbcType=INTEGER},
             </if>
             <if test="record.cno != null">
-                cno = #{record.cno,jdbcType=INTEGER},
+                cno = #{record.cno,jdbcType=VARCHAR},
             </if>
             <if test="record.tid != null">
                 tid = #{record.tid,jdbcType=VARCHAR},
@@ -289,7 +289,7 @@
         sname = #{record.sname,jdbcType=VARCHAR},
         sclass = #{record.sclass,jdbcType=VARCHAR},
         sgroup = #{record.sgroup,jdbcType=INTEGER},
-        cno = #{record.cno,jdbcType=INTEGER},
+        cno = #{record.cno,jdbcType=VARCHAR},
         tid = #{record.tid,jdbcType=VARCHAR},
         tjudge = #{record.tjudge,jdbcType=VARCHAR},
         gid = #{record.gid,jdbcType=INTEGER}
@@ -310,7 +310,7 @@
                 sgroup = #{sgroup,jdbcType=INTEGER},
             </if>
             <if test="cno != null">
-                cno = #{cno,jdbcType=INTEGER},
+                cno = #{cno,jdbcType=VARCHAR},
             </if>
             <if test="tid != null">
                 tid = #{tid,jdbcType=VARCHAR},
@@ -329,7 +329,7 @@
         set sname  = #{sname,jdbcType=VARCHAR},
             sclass = #{sclass,jdbcType=VARCHAR},
             sgroup = #{sgroup,jdbcType=INTEGER},
-            cno    = #{cno,jdbcType=INTEGER},
+            cno    = #{cno,jdbcType=VARCHAR},
             tid    = #{tid,jdbcType=VARCHAR},
             tjudge = #{tjudge,jdbcType=VARCHAR},
             gid    = #{gid,jdbcType=INTEGER}

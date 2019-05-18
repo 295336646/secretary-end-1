@@ -303,6 +303,136 @@ public class CourseExample {
             addCriterion("ctype not between", value1, value2, "ctype");
             return (Criteria) this;
         }
+
+        public Criteria andTidIsNull() {
+            addCriterion("tid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTidIsNotNull() {
+            addCriterion("tid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTidEqualTo(String value) {
+            addCriterion("tid =", value, "tid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTidNotEqualTo(String value) {
+            addCriterion("tid <>", value, "tid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTidGreaterThan(String value) {
+            addCriterion("tid >", value, "tid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTidGreaterThanOrEqualTo(String value) {
+            addCriterion("tid >=", value, "tid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTidLessThan(String value) {
+            addCriterion("tid <", value, "tid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTidLessThanOrEqualTo(String value) {
+            addCriterion("tid <=", value, "tid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTidLike(String value) {
+            addCriterion("tid like", value, "tid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTidNotLike(String value) {
+            addCriterion("tid not like", value, "tid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTidIn(List<String> values) {
+            addCriterion("tid in", values, "tid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTidNotIn(List<String> values) {
+            addCriterion("tid not in", values, "tid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTidBetween(String value1, String value2) {
+            addCriterion("tid between", value1, value2, "tid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTidNotBetween(String value1, String value2) {
+            addCriterion("tid not between", value1, value2, "tid");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateIsNull() {
+            addCriterion("state is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateIsNotNull() {
+            addCriterion("state is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateEqualTo(Byte value) {
+            addCriterion("state =", value, "state");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateNotEqualTo(Byte value) {
+            addCriterion("state <>", value, "state");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateGreaterThan(Byte value) {
+            addCriterion("state >", value, "state");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateGreaterThanOrEqualTo(Byte value) {
+            addCriterion("state >=", value, "state");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateLessThan(Byte value) {
+            addCriterion("state <", value, "state");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateLessThanOrEqualTo(Byte value) {
+            addCriterion("state <=", value, "state");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateIn(List<Byte> values) {
+            addCriterion("state in", values, "state");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateNotIn(List<Byte> values) {
+            addCriterion("state not in", values, "state");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateBetween(Byte value1, Byte value2) {
+            addCriterion("state between", value1, value2, "state");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateNotBetween(Byte value1, Byte value2) {
+            addCriterion("state not between", value1, value2, "state");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

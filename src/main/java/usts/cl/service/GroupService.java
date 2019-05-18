@@ -14,6 +14,7 @@ import usts.cl.bean.*;
 import usts.cl.dao.GroupMapper;
 import usts.cl.dao.StudentMapper;
 import usts.cl.dao.TeacherMapper;
+import usts.cl.dao.UserMapper;
 import usts.cl.redis.RedisLogService;
 
 import java.util.*;
@@ -27,6 +28,8 @@ public class GroupService {
     @Autowired
     private StudentMapper studentMapper;
     @Autowired
+    UserMapper userMapper;
+    @Autowired
     RedisTemplate redisTemplate;
 
     @RedisLogService(key = "group")
@@ -37,11 +40,13 @@ public class GroupService {
         return groups;
     }
 
-    public PageInfo getGroup(Integer pn) {
-        PageHelper.startPage(pn, 5);
-        List<Group> groups = groupMapper.selectByGroup(null);
-        PageInfo page = new PageInfo(groups, 5);
-        return page;
+    public List<Group> getGroup(String tid,String tjudge,String tjudgeName) {
+        TeacherExample teacherExample = new TeacherExample();
+        TeacherExample.Criteria criteria = teacherExample.createCriteria();
+        criteria.andTidEqualTo(tid);
+        Teacher teacher = teacherMapper.selectByPrimaryKey(tid);
+        List<Group> currentGroups = groupMapper.selectByLikeWithGrade(teacher.getTgroup(),tjudge,tjudgeName);
+        return currentGroups;
     }
 
     @RedisLogService(key = "group")
@@ -52,9 +57,13 @@ public class GroupService {
         return groupMapper.selectByLeader();
     }
 
-    public Boolean dividedTeacher(int groupNum, String currentLeader, String leader, Map map) {
+    public Boolean dividedTeacher(int groupNum, String currentLeader, String leader,
+                                  String currentSecretary, String secretary,
+                                  Map map) {
         Teacher newLeaderTeacher = teacherMapper.selectByPrimaryKey(leader);
         Teacher currentLeaderTeacher = teacherMapper.selectByPrimaryKey(currentLeader);
+        Teacher currentSecretaryTeacher = teacherMapper.selectByPrimaryKey(currentSecretary);
+        Teacher newSecretaryTeacher = teacherMapper.selectByPrimaryKey(secretary);
         if (!currentLeader.equals(leader)) {
             //选的人已经时答辩组长，则分组失败
             if (newLeaderTeacher.getLeader() == 1) {
@@ -65,6 +74,18 @@ public class GroupService {
                 //新答辩组长上台
                 newLeaderTeacher.setTgroup(groupNum);
                 newLeaderTeacher.setLeader((byte) 1);
+            }
+        }
+        if (!currentSecretaryTeacher.equals(newSecretaryTeacher)) {
+            //选的人已经是秘书，则分组失败
+            if (newSecretaryTeacher.getSecretary() == 2) {
+                return false;
+            } else {//换秘书
+                //当前组的答辩秘书下台
+                currentSecretaryTeacher.setSecretary((byte) 1);
+                //新答辩秘书上台
+                newSecretaryTeacher.setTgroup(groupNum);
+                newSecretaryTeacher.setSecretary((byte) 2);
             }
         }
         JSONArray allocated = JSONArray.fromObject(map.get("allocated"));
@@ -90,15 +111,29 @@ public class GroupService {
             unallocatedTeacher.setTgroup(0);
             teacherMapper.updateByPrimaryKeySelective(unallocatedTeacher);
         }
+        User originUser = new User();
+        originUser.setUid(currentSecretaryTeacher.getTid());
+        originUser.setRole(currentSecretaryTeacher.getSecretary());
+        User newUser = new User();
+        newUser.setUid(newSecretaryTeacher.getTid());
+        newUser.setRole(newSecretaryTeacher.getSecretary());
+        //更新秘书，组长
         teacherMapper.updateByPrimaryKeySelective(newLeaderTeacher);
+        teacherMapper.updateByPrimaryKeySelective(newSecretaryTeacher);
+        //更新用户权限
+        userMapper.updateByPrimaryKeySelective(newUser);
+        userMapper.updateByPrimaryKeySelective(originUser);
         teacherMapper.updateByPrimaryKeySelective(currentLeaderTeacher);
+        teacherMapper.updateByPrimaryKeySelective(currentSecretaryTeacher);
         return true;
     }
 
     @RedisLogService(key = "group", cacheOperation = RedisLogService.CACHE_OPERATION.UPDATE)
 //    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public boolean dividedGroup(int groupNum, String currentLeader, String leader, Map map) {
-        boolean flag = dividedTeacher(groupNum, currentLeader, leader, map);
+    public boolean dividedGroup(int groupNum, String currentLeader, String leader,
+                                String currentSecretary, String secretary,
+                                Map map) {
+        boolean flag = dividedTeacher(groupNum, currentLeader, leader, currentSecretary, secretary, map);
         JSONArray unallocated = JSONArray.fromObject(map.get("unallocated"));
         // 全部老师已经分配完，分配学生
         if (unallocated.size() == 0 && flag) {

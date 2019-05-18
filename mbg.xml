@@ -9,7 +9,7 @@
             <property name="suppressAllComments" value="true"></property>
         </commentGenerator>
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/secretary"
+                        connectionURL="jdbc:mysql://192.168.131.129:3306/secretary"
                         userId="root"
                         password="root">
         </jdbcConnection>
@@ -37,7 +37,10 @@
         <!--<table tableName="tab_course" domainObjectName="Course"></table>-->
         <!--<table tableName="tab_student" domainObjectName="Student"></table>-->
         <!--<table tableName="selectsubject" domainObjectName="General"></table>-->
-        <table tableName="tab_teacher" domainObjectName="Teacher"></table>
+        <!--<table tableName="tab_teacher" domainObjectName="Teacher"></table>-->
         <!--<table tableName="tab_group" domainObjectName="Group"></table>-->
+        <table tableName="volunteer1" domainObjectName="Volunteer1"></table>
+        <table tableName="volunteer2" domainObjectName="Volunteer2"></table>
+        <table tableName="volunteer3" domainObjectName="Volunteer3"></table>
     </context>
 </generatorConfiguration>

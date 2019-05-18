@@ -15,7 +15,7 @@ public class Student implements Cloneable,Serializable {
 
     private Integer sgroup;
 
-    private Integer cno;
+    private String cno;
 
     private String tid;
 

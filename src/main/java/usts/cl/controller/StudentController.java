@@ -31,4 +31,9 @@ public class StudentController {
         PageInfo page = new PageInfo(students, 5);
         return Msg.success().add("pageInfo", page);
     }
+    @GetMapping("/isSelected")
+    @ResponseBody
+    public Msg isSelected(String sid) {
+        return studentService.isSelected(sid);
+    }
 }

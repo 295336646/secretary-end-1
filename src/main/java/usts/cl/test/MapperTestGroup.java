@@ -24,7 +24,10 @@ public class MapperTestGroup {
 
     @Test
     public void test1() {
-        System.out.println(studentMapper.selectByStudentWithGroup(null));
+        Teacher teacher = new Teacher();
+        teacher.setTid("30007");
+        teacher.setSecretary((byte)2);
+        System.out.println(teacherMapper.updateByPrimaryKeySelective(teacher));
     }
 
     @Test

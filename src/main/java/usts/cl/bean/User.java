@@ -17,14 +17,14 @@ public class User implements Serializable {
 
     private String salt;
     @NotNull
-    private Integer role;
+    private Byte role;
 
     private List<File> fileList;
 
     public User() {
     }
 
-    public User(String uid, String userName, String password, String salt, Integer role) {
+    public User(String uid, String userName, String password, String salt, Byte role) {
         this.uid = uid;
         this.userName = userName;
         this.password = password;

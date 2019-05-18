@@ -1,6 +1,7 @@
 package usts.cl.dao;
 
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 import usts.cl.bean.Course;
 import usts.cl.bean.CourseExample;
@@ -17,6 +18,8 @@ public interface CourseMapper {
     int insertSelective(Course record);
 
     List<Course> selectByExample(CourseExample example);
+
+    List<Course> selectByCourseWithTeacher(CourseExample example);
 
     Course selectByPrimaryKey(Integer cno);
 

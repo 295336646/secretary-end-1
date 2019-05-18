@@ -3,6 +3,7 @@ package usts.cl.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import usts.cl.bean.Msg;
 import usts.cl.bean.Teacher;
 import usts.cl.service.TeacherService;
 
@@ -24,13 +25,6 @@ public class TeacherController {
     @ResponseBody
     public List<Teacher> getAllTeacher() {
         return teacherService.getAllTeacher();
-    }
-
-    @PostMapping("/dividedTeacher/{groupNum}/{currentLeader}/{leader}")
-    @ResponseBody
-    public Boolean dividedTeacher(@PathVariable int groupNum, @PathVariable String currentLeader,
-                                  @PathVariable String leader, @RequestBody Map map) {
-        return teacherService.dividedTeacher(groupNum, currentLeader, leader, map);
     }
 
     @GetMapping("/getGroupTeacher")

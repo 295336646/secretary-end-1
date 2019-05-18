@@ -92,11 +92,38 @@
     </select>
     <select id="selectByGroup" parameterType="usts.cl.bean.GroupExample" resultMap="Group">
         select
+        <if test="distinct">
+            distinct
+        </if>
         <include refid="Group_Column_List"/>
         from tab_group g
         inner join tab_student s on g.sid=s.sid
         inner join tab_grade grade on s.gid = grade.id
-        order by g.groupNum
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByLikeWithGrade" parameterType="usts.cl.bean.GroupExample" resultMap="Group">
+        select
+        <include refid="Group_Column_List"/>
+        from tab_group g
+        inner join tab_student s on g.sid=s.sid
+        inner join tab_grade grade on s.gid = grade.id
+        <where>
+            <if test="groupNum != null">
+                g.groupNum = #{groupNum}
+            </if>
+            <if test="tjudge != null">
+                and g.tjudge like CONCAT(#{tjudge},'%')
+            </if>
+            <if test="tjudgeName != null">
+                and g.tjudgeName like CONCAT(#{tjudgeName},'%')
+            </if>
+
+        </where>
     </select>
     <select id="selectByExample" parameterType="usts.cl.bean.GroupExample" resultMap="BaseResultMap">
         select

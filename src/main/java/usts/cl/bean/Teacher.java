@@ -20,6 +20,7 @@ public class Teacher implements Cloneable,Serializable {
 
     private Byte leader;
 
+    private Byte secretary;
     private List<Student> students = new ArrayList<>();
 
     @Override
@@ -29,7 +30,7 @@ public class Teacher implements Cloneable,Serializable {
             //浅克隆
             teacher = (Teacher) super.clone();
             //深克隆
-            List<Student> listBeans = new ArrayList<>();
+            List<Student> listBeans = new ArrayList();
             for (Student itemList :
                     students) {
                 listBeans.add((Student) itemList.clone());
@@ -40,4 +41,5 @@ public class Teacher implements Cloneable,Serializable {
         }
         return teacher;
     }
+
 }
